@@ -1,0 +1,40 @@
+{
+  "prod": {
+    "source": {
+      "type": "jira",
+      "server": "https://hemanthyadav887.atlassian.net/",
+      "project": "Test",
+      "basic_auth": [
+        
+      ],
+      "verify_ssl": false,
+      "module": "connectors.jira_connector",
+      "class": "JiraConnector"
+    },
+    "target": {
+      "type": "jira",
+      "server": "https://hemanthyadav887.atlassian.net/",
+      "project": "Test",
+      "basic_auth": [
+        
+      ],
+      "verify_ssl": false,
+      "module": "connectors.jira_connector",
+      "class": "JiraConnector"
+    }
+  },
+  "local": {
+    "source": {
+      "type": "json",
+      "location": "./source",
+      "module": "connectors.json_connector",
+      "class": "JsonConnector"
+    },
+    "target": {
+      "type": "json",
+      "location": "./target",
+      "module": "connectors.json_connector",
+      "class": "JsonConnector"
+    }
+  }
+}

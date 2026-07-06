@@ -1,0 +1,38 @@
+2026-07-06 13:39:18,422 - INFO - Starting migration
+2026-07-06 13:39:20,383 - INFO - Fetched source issue 10071 (TEST-4): summary='test' description='' issueType='Sub-task' status='To Do' parent='TEST-2' comments=0 attachments=0 linked_issues=0
+2026-07-06 13:39:20,384 - INFO - Fetched source issue 10051 (TEST-3): summary='new' description='' issueType='Sub-task' status='To Do' parent='TEST-1' comments=0 attachments=0 linked_issues=0
+2026-07-06 13:39:20,385 - INFO - Fetched source issue 10038 (TEST-2): summary='Summary test' description='Hi \n ' issueType='Story' status='To Do' parent=None comments=1 attachments=1 linked_issues=1
+2026-07-06 13:39:20,387 - INFO - Fetched source issue 10037 (TEST-1): summary='test1 ' description='' issueType='Story' status='To Do' parent=None comments=2 attachments=1 linked_issues=18
+2026-07-06 13:39:20,397 - INFO - Wrote 4 source issues to D:\Workspace\springboot\projects\jira\source\issues.json
+2026-07-06 13:39:20,398 - INFO - Wrote 0 target issues to D:\Workspace\springboot\projects\jira\target\issues.json
+2026-07-06 13:39:20,399 - INFO - Loaded 4 issues from source
+2026-07-06 13:39:21,062 - WARNING - Project creation skipped: Jira request failed (400): {"errorMessages":[],"errors":{"projectName":"A project with that name already exists.","projectKey":"Project 'Migration Test' uses this project key."}}
+2026-07-06 13:39:21,063 - INFO - Created project 'Migration Test'
+2026-07-06 13:39:25,047 - INFO - Migrated issue 10038
+2026-07-06 13:39:26,276 - WARNING - Sub-task issue 'test' was rejected by Jira; creating it as a task and linking to the parent instead: Jira request failed (400): {"errorMessages":[],"errors":{"issuetype":"Specify a valid issue type"}}
+2026-07-06 13:39:27,710 - INFO - Migrated issue 10071
+2026-07-06 13:39:49,988 - INFO - Migrated issue 10037
+2026-07-06 13:39:51,365 - WARNING - Sub-task issue 'new' was rejected by Jira; creating it as a task and linking to the parent instead: Jira request failed (400): {"errorMessages":[],"errors":{"issuetype":"Specify a valid issue type"}}
+2026-07-06 13:39:52,490 - INFO - Migrated issue 10051
+2026-07-06 13:39:52,499 - INFO - Wrote 4 source issues to D:\Workspace\springboot\projects\jira\source\issues.json
+2026-07-06 13:39:52,500 - INFO - Wrote 4 target issues to D:\Workspace\springboot\projects\jira\target\issues.json
+2026-07-06 13:39:52,502 - INFO - Migration completed. 4 issues migrated
+2026-07-06 13:44:21,249 - INFO - Starting migration
+2026-07-06 13:44:23,494 - INFO - Fetched source issue 10071 (TEST-4): summary='test' description='' issueType='Sub-task' status='To Do' parent='TEST-2' comments=0 attachments=0 linked_issues=0
+2026-07-06 13:44:23,495 - INFO - Fetched source issue 10051 (TEST-3): summary='new' description='' issueType='Sub-task' status='To Do' parent='TEST-1' comments=0 attachments=0 linked_issues=0
+2026-07-06 13:44:23,495 - INFO - Fetched source issue 10038 (TEST-2): summary='Summary test' description='Hi \n ' issueType='Story' status='To Do' parent=None comments=1 attachments=1 linked_issues=1
+2026-07-06 13:44:23,496 - INFO - Fetched source issue 10037 (TEST-1): summary='test1 ' description='' issueType='Story' status='To Do' parent=None comments=2 attachments=1 linked_issues=19
+2026-07-06 13:44:23,508 - INFO - Wrote 4 source issues to D:\Workspace\springboot\projects\jira\source\issues.json
+2026-07-06 13:44:23,509 - INFO - Wrote 0 target issues to D:\Workspace\springboot\projects\jira\target\issues.json
+2026-07-06 13:44:23,509 - INFO - Loaded 4 issues from source
+2026-07-06 13:44:24,165 - WARNING - Project creation skipped: Jira request failed (400): {"errorMessages":[],"errors":{"projectName":"A project with that name already exists.","projectKey":"Project 'Migration Test' uses this project key."}}
+2026-07-06 13:44:24,166 - INFO - Created project 'Migration Test'
+2026-07-06 13:44:28,351 - INFO - Migrated issue 10038
+2026-07-06 13:44:29,691 - WARNING - Sub-task issue 'test' was rejected by Jira; creating it as a task and linking to the parent instead: Jira request failed (400): {"errorMessages":[],"errors":{"issuetype":"Specify a valid issue type"}}
+2026-07-06 13:44:31,023 - INFO - Migrated issue 10071
+2026-07-06 13:44:54,677 - INFO - Migrated issue 10037
+2026-07-06 13:44:56,214 - WARNING - Sub-task issue 'new' was rejected by Jira; creating it as a task and linking to the parent instead: Jira request failed (400): {"errorMessages":[],"errors":{"issuetype":"Specify a valid issue type"}}
+2026-07-06 13:44:57,241 - INFO - Migrated issue 10051
+2026-07-06 13:44:57,250 - INFO - Wrote 4 source issues to D:\Workspace\springboot\projects\jira\source\issues.json
+2026-07-06 13:44:57,251 - INFO - Wrote 4 target issues to D:\Workspace\springboot\projects\jira\target\issues.json
+2026-07-06 13:44:57,255 - INFO - Migration completed. 4 issues migrated

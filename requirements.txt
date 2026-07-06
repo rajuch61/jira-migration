@@ -1,0 +1,2 @@
+# Core runtime dependencies
+# No third-party packages are required for the local JSON-based migration flow.

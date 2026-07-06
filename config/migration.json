@@ -1,0 +1,34 @@
+{
+  "project_info": {
+    "id": "Test",
+    "name": "Test",
+    "description": "test description"
+  },
+  "target_project": {
+    "id": "MT",
+    "name": "Migration Test",
+    "description": "ABC description",
+    "lead_account_id": "hemanthyadav887@gmail.com"
+  },
+  "transformations": {
+    "issueType": {
+      "Story": "Story",
+      "Task": "Task",
+      "Bug": "Bug",
+      "Epic": "Epic",
+      "Sub-task": "Sub-task"
+    },
+    "status": {
+      "To Do": "To Do",
+      "In Progress": "In Progress",
+      "Done": "Done",
+      "Open": "Open"
+    }
+  },
+  "validation": {
+    "require_summary": true,
+    "require_issue_type": true,
+    "require_status": true
+  },
+  "mapping_file": "./target/mapping.json"
+}
