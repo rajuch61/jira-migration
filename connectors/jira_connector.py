@@ -129,7 +129,7 @@ class JiraConnector(Connector):
         normalized_path = str(path).lstrip("/")
         if normalized_path.startswith(base_path.lstrip("/")):
             return f"{self.server.rstrip('/')}/{normalized_path}"
-        return f"{self.server.rstrip('/')}/{base_path}/{normalized_path}"
+        return f"{self.server.rstrip('/')}{base_path}/{normalized_path}"
 
     def _fallback_api_paths(self, path: str) -> list[str]:
         normalized = path.lstrip("/")
