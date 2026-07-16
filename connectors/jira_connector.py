@@ -150,6 +150,7 @@ class JiraConnector(Connector):
 
     def _request(self, method: str, path: str, payload: Any = None, *, content_type: str | None = None) -> Any:
         url = self._build_url(path)
+        self.logger.debug(f"Making {method} request to {url}")
         data = None
         headers = {"Accept": "application/json"}
         if payload is not None:
@@ -223,8 +224,13 @@ class JiraConnector(Connector):
     def connect(self) -> None:
         if not self.server:
             raise ValueError("Jira server URL is required")
-        user_info = self._request("GET", "/myself")
-        self.current_account_id = self._extract_account_id(user_info)
+        try:
+            self.logger.info(f"Attempting to fetch current user from {self.server}/rest/api/2/myself")
+            user_info = self._request("GET", "/myself")
+            self.current_account_id = self._extract_account_id(user_info)
+            self.logger.info(f"Successfully connected. Account ID: {self.current_account_id}")
+        except Exception as exc:
+            self.logger.warning(f"Unable to fetch current user info from /myself endpoint. This may indicate an API compatibility issue. Error: {exc}. Continuing without account ID.")
         self.connected = True
 
     def read_project(self) -> dict:
@@ -248,7 +254,7 @@ class JiraConnector(Connector):
         query = f'project="{self.project}"'
         data = self._request(
             "POST",
-            "/search/jql",
+            "/search",
             {
                 "jql": query,
                 "maxResults": 100,
