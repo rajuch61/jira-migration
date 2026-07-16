@@ -252,6 +252,7 @@ class JiraConnector(Connector):
             return []
 
         query = f'project="{self.project}"'
+        self.logger.info(f"Fetching issues with JQL query: {query}")
         data = self._request(
             "POST",
             "/search",
@@ -261,6 +262,7 @@ class JiraConnector(Connector):
                 "fields": ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks"],
             },
         )
+        self.logger.debug(f"Search response: total={data.get('total')}, issues_count={len(data.get('issues', []))}, maxResults={data.get('maxResults')}, startAt={data.get('startAt')}")
         issues = []
         for item in data.get("issues", []):
             fields = item.get("fields", {})
@@ -476,7 +478,7 @@ class JiraConnector(Connector):
 
     def _extract_account_id(self, user_info: Any) -> str | None:
         if isinstance(user_info, dict):
-            for key in ("accountId", "account_id", "accountid"):
+            for key in ("accountId", "account_id", "accountid", "key", "name"):
                 value = user_info.get(key)
                 if isinstance(value, str) and value.strip():
                     return value.strip()
