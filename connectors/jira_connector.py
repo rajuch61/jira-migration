@@ -263,6 +263,8 @@ class JiraConnector(Connector):
             },
         )
         self.logger.debug(f"Search response: total={data.get('total')}, issues_count={len(data.get('issues', []))}, maxResults={data.get('maxResults')}, startAt={data.get('startAt')}")
+        if not data.get('issues') and data.get('total', 0) > 0:
+            self.logger.warning(f"Search returned 0 issues but total={data.get('total')}. Full response: {data}")
         issues = []
         for item in data.get("issues", []):
             fields = item.get("fields", {})
@@ -363,7 +365,7 @@ class JiraConnector(Connector):
             "projectTypeKey": "software",
         }
         if lead:
-            payload["leadAccountId"] = lead
+            payload["lead"] = lead
         try:
             self._request("POST", "/project", payload)
         except Exception as exc:
