@@ -2,23 +2,25 @@
   "prod": {
     "source": {
       "type": "jira",
-      "server": "https://hemanthyadav887.atlassian.net/",
-      "project": "Test",
-      "basic_auth": [
-        
-      ],
+      "server": "${JIRA_SERVER}",
+      "project": "${JIRA_PROJECT}",
+      "auth_type": "${JIRA_AUTH_TYPE}",
+      "bearer_token": "${JIRA_BEARER_TOKEN}",
       "verify_ssl": false,
+      "api_path": "${JIRA_API_PATH}",
+      "timeout": 60,
       "module": "connectors.jira_connector",
       "class": "JiraConnector"
     },
     "target": {
       "type": "jira",
-      "server": "https://hemanthyadav887.atlassian.net/",
-      "project": "Test",
-      "basic_auth": [
-        
-      ],
+      "server": "${JIRA_SERVER}",
+      "project": "${JIRA_PROJECT}",
+      "auth_type": "${JIRA_AUTH_TYPE}",
+      "bearer_token": "${JIRA_BEARER_TOKEN}",
       "verify_ssl": false,
+      "api_path": "${JIRA_API_PATH}",
+      "timeout": 60,
       "module": "connectors.jira_connector",
       "class": "JiraConnector"
     }

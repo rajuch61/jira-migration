@@ -1,5 +1,6 @@
 import base64
 import json
+import os
 import re
 import ssl
 import uuid
@@ -14,12 +15,22 @@ class JiraConnector(Connector):
     def __init__(self, config: dict):
         super().__init__(config)
         self.logger = get_logger("jira_connector")
-        self.server = self._normalize_server_url(config.get("server") or config.get("url", ""))
+        self.server = self._normalize_server_url(
+            self._resolve_config_value(
+                config,
+                "server",
+                "url",
+                default="https://usazrapnjiira02.sncorp.smith-nephew.com:8443",
+                env_names=("JIRA_SERVER",),
+            )
+        )
         self.project = self._resolve_project_key(config)
-        self.verify_ssl = bool(config.get("verify_ssl", True))
-        self.timeout = int(config.get("timeout", 30))
-        self.api_path = config.get("api_path", "/rest/api/3")
+        self.verify_ssl = bool(self._resolve_config_value(config, "verify_ssl", default=True, env_names=("JIRA_VERIFY_SSL",)))
+        self.timeout = int(self._resolve_config_value(config, "timeout", default=30, env_names=("JIRA_TIMEOUT",)))
+        self.api_path = self._resolve_config_value(config, "api_path", default="/rest/api/2", env_names=("JIRA_API_PATH",))
+        self.auth_type = self._resolve_auth_type(config)
         self.basic_auth = self._parse_basic_auth(config)
+        self.bearer_token = self._parse_bearer_token(config)
         self.connected = False
         self.current_account_id = None
         self.created_issue_keys: dict[str, str] = {}
@@ -28,6 +39,27 @@ class JiraConnector(Connector):
         self.pending_child_issues: list[dict[str, Any]] = []
         self._processing_pending_child_issues = False
 
+    def _resolve_config_value(self, config: dict, *keys: str, default: Any = None, env_names: tuple[str, ...] = ()) -> Any:
+        for env_name in env_names:
+            env_value = os.getenv(env_name)
+            if env_value is not None and str(env_value).strip():
+                return env_value
+
+        for key in keys:
+            if key in config:
+                value = config.get(key)
+                if value is None:
+                    continue
+                if isinstance(value, str):
+                    if value.startswith("${") and value.endswith("}"):
+                        continue
+                    if value.startswith("{{") and value.endswith("}}"):
+                        continue
+                    if value.startswith("env:"):
+                        continue
+                return value
+        return default
+
     def _resolve_project_key(self, config: dict) -> str | None:
         project_info = config.get("project_info")
         if isinstance(project_info, dict):
@@ -35,9 +67,20 @@ class JiraConnector(Connector):
             if isinstance(project_id, str) and project_id.strip():
                 return project_id
 
-        project = config.get("project") or config.get("project_key")
+        project = self._resolve_config_value(config, "project", "project_key", default=None, env_names=("JIRA_PROJECT",))
         if isinstance(project, str) and project.strip():
             return project
+        return None
+
+    def _resolve_auth_type(self, config: dict) -> str | None:
+        auth_type = self._resolve_config_value(config, "auth_type", "authorization_type", "token_type", default=None, env_names=("JIRA_AUTH_TYPE",))
+        if not isinstance(auth_type, str):
+            return None
+        normalized = auth_type.strip().lower()
+        if normalized in {"bearer", "bearer_token", "token"}:
+            return "bearer"
+        if normalized in {"basic", "basic_auth"}:
+            return "basic"
         return None
 
     def _parse_basic_auth(self, config: dict) -> tuple[str, str] | None:
@@ -45,13 +88,24 @@ class JiraConnector(Connector):
         if isinstance(basic_auth, (list, tuple)) and len(basic_auth) >= 2:
             return str(basic_auth[0]), str(basic_auth[1])
 
-        username = config.get("username")
-        password = config.get("password")
-        token = config.get("token")
+        username = self._resolve_config_value(config, "username", default=None, env_names=("JIRA_USERNAME",))
+        password = self._resolve_config_value(config, "password", default=None, env_names=("JIRA_PASSWORD",))
+        token = self._resolve_config_value(config, "token", default=None, env_names=("JIRA_TOKEN",))
         if username and password:
             return str(username), str(password)
         if username and token:
             return str(username), str(token)
+        return None
+
+    def _parse_bearer_token(self, config: dict) -> str | None:
+        bearer_token = self._resolve_config_value(config, "bearer_token", default=None, env_names=("JIRA_BEARER_TOKEN",))
+        if isinstance(bearer_token, str) and bearer_token.strip():
+            return bearer_token.strip()
+
+        if self._resolve_auth_type(config) == "bearer":
+            token = self._resolve_config_value(config, "token", default=None, env_names=("JIRA_TOKEN",))
+            if isinstance(token, str) and token.strip():
+                return token.strip()
         return None
 
     def _normalize_server_url(self, server: str) -> str:
@@ -93,7 +147,9 @@ class JiraConnector(Connector):
         req = request.Request(url, data=data, headers=headers, method=method)
         if "/attachments" in path:
             req.add_header("X-Atlassian-Token", "no-check")
-        if self.basic_auth:
+        if self.bearer_token:
+            req.add_header("Authorization", f"Bearer {self.bearer_token}")
+        elif self.basic_auth:
             username, password = self.basic_auth
             token = base64.b64encode(f"{username}:{password}".encode("utf-8")).decode("ascii")
             req.add_header("Authorization", f"Basic {token}")
