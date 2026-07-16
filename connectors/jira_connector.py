@@ -259,7 +259,6 @@ class JiraConnector(Connector):
             {
                 "jql": query,
                 "maxResults": 100,
-                "fields": ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks"],
             },
         )
         self.logger.debug(f"Search response: total={data.get('total')}, issues_count={len(data.get('issues', []))}, maxResults={data.get('maxResults')}, startAt={data.get('startAt')}")
@@ -480,7 +479,7 @@ class JiraConnector(Connector):
 
     def _extract_account_id(self, user_info: Any) -> str | None:
         if isinstance(user_info, dict):
-            for key in ("accountId", "account_id", "accountid", "key", "name"):
+            for key in ("name", "emailAddress", "accountId", "account_id", "accountid", "key"):
                 value = user_info.get(key)
                 if isinstance(value, str) and value.strip():
                     return value.strip()
