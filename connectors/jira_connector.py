@@ -131,6 +131,23 @@ class JiraConnector(Connector):
             return f"{self.server}/{normalized_path}"
         return f"{self.server}/{base_path}/{normalized_path}"
 
+    def _fallback_api_paths(self, path: str) -> list[str]:
+        normalized = path.lstrip("/")
+        if not normalized:
+            return []
+
+        candidates = []
+        stripped = normalized.replace("/rest/api/2", "").replace("/rest/api/3", "")
+        if normalized.startswith("rest/api/"):
+            candidates.append(normalized)
+        else:
+            candidates.append(normalized)
+            candidates.append(f"rest/api/2/{normalized}")
+            candidates.append(f"rest/api/3/{normalized}")
+            if stripped:
+                candidates.append(stripped)
+        return list(dict.fromkeys(candidates))
+
     def _request(self, method: str, path: str, payload: Any = None, *, content_type: str | None = None) -> Any:
         url = self._build_url(path)
         data = None
@@ -158,9 +175,47 @@ class JiraConnector(Connector):
         try:
             with request.urlopen(req, timeout=self.timeout, context=context) as response:
                 body = response.read().decode("utf-8")
-                return json.loads(body) if body else None
+                if not body:
+                    return None
+                try:
+                    return json.loads(body)
+                except json.JSONDecodeError:
+                    return {"raw_body": body}
         except error.HTTPError as exc:
             body = exc.read().decode("utf-8", errors="ignore")
+            if exc.code == 404:
+                for fallback_path in self._fallback_api_paths(path):
+                    if fallback_path == path.lstrip("/"):
+                        continue
+                    try:
+                        fallback_req = request.Request(
+                            self._build_url(f"/{fallback_path}"),
+                            data=data,
+                            headers=dict(headers),
+                            method=method,
+                        )
+                        if "/attachments" in path:
+                            fallback_req.add_header("X-Atlassian-Token", "no-check")
+                        if self.bearer_token:
+                            fallback_req.add_header("Authorization", f"Bearer {self.bearer_token}")
+                        elif self.basic_auth:
+                            username, password = self.basic_auth
+                            token = base64.b64encode(f"{username}:{password}".encode("utf-8")).decode("ascii")
+                            fallback_req.add_header("Authorization", f"Basic {token}")
+                        with request.urlopen(fallback_req, timeout=self.timeout, context=context) as fallback_response:
+                            fallback_body = fallback_response.read().decode("utf-8")
+                            if not fallback_body:
+                                return None
+                            try:
+                                return json.loads(fallback_body)
+                            except json.JSONDecodeError:
+                                return {"raw_body": fallback_body}
+                    except error.HTTPError as fallback_exc:
+                        if fallback_exc.code != 404:
+                            raise RuntimeError(f"Jira request failed ({fallback_exc.code}): {fallback_exc.read().decode('utf-8', errors='ignore')}") from fallback_exc
+                        continue
+                    except error.URLError as fallback_exc:
+                        raise RuntimeError(f"Unable to reach Jira server: {fallback_exc}") from fallback_exc
             raise RuntimeError(f"Jira request failed ({exc.code}): {body}") from exc
         except error.URLError as exc:
             raise RuntimeError(f"Unable to reach Jira server: {exc}") from exc
