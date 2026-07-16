@@ -126,10 +126,10 @@ class JiraConnector(Connector):
             raise ValueError("Jira server URL is required")
 
         base_path = str(self.api_path).rstrip("/")
-        normalized_path = path.lstrip("/")
+        normalized_path = str(path).lstrip("/")
         if normalized_path.startswith(base_path.lstrip("/")):
-            return f"{self.server}/{normalized_path}"
-        return f"{self.server}/{base_path}/{normalized_path}"
+            return f"{self.server.rstrip('/')}/{normalized_path}"
+        return f"{self.server.rstrip('/')}/{base_path}/{normalized_path}"
 
     def _fallback_api_paths(self, path: str) -> list[str]:
         normalized = path.lstrip("/")
