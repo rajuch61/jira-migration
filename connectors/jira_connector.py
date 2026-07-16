@@ -253,13 +253,15 @@ class JiraConnector(Connector):
 
         query = f'project="{self.project}"'
         self.logger.info(f"Fetching issues with JQL query: {query}")
+        payload = {
+            "jql": query,
+            "maxResults": 100,
+        }
+        self.logger.debug(f"Search request payload: {payload}")
         data = self._request(
             "POST",
             "/search",
-            {
-                "jql": query,
-                "maxResults": 100,
-            },
+            payload,
         )
         self.logger.debug(f"Search response: total={data.get('total')}, issues_count={len(data.get('issues', []))}, maxResults={data.get('maxResults')}, startAt={data.get('startAt')}")
         if not data.get('issues') and data.get('total', 0) > 0:
@@ -364,7 +366,11 @@ class JiraConnector(Connector):
             "projectTypeKey": "software",
         }
         if lead:
+            self.logger.debug(f"Setting project lead to: {lead}")
             payload["lead"] = lead
+        else:
+            self.logger.warning(f"No project lead configured. Attempting to create without lead.")
+        self.logger.debug(f"Project creation payload: {payload}")
         try:
             self._request("POST", "/project", payload)
         except Exception as exc:
@@ -479,9 +485,11 @@ class JiraConnector(Connector):
 
     def _extract_account_id(self, user_info: Any) -> str | None:
         if isinstance(user_info, dict):
-            for key in ("name", "emailAddress", "accountId", "account_id", "accountid", "key"):
+            self.logger.debug(f"Extracting account ID from user_info: {list(user_info.keys())}")
+            for key in ("emailAddress", "name", "accountId", "account_id", "accountid", "key"):
                 value = user_info.get(key)
                 if isinstance(value, str) and value.strip():
+                    self.logger.debug(f"Found account ID from field '{key}': {value}")
                     return value.strip()
         return None
 
