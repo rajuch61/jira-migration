@@ -283,7 +283,9 @@ class JiraConnector(Connector):
         while True:
             search_path_with_pagination = search_path
             if start_at > 0:
-                search_path_with_pagination = f"{search_path}&startAt={start_at}&maxResults={page_size}"
+                search_path_with_pagination = f"{search_path}&startAt={start_at}"
+                if page_size != 100:
+                    search_path_with_pagination = f"{search_path_with_pagination}&maxResults={page_size}"
             self.logger.debug(f"Fetching search page at startAt={start_at}")
             search_data = self._request("GET", search_path_with_pagination)
             if not isinstance(search_data, dict):
@@ -302,6 +304,7 @@ class JiraConnector(Connector):
             if search_data.get("total", 0) == 0:
                 self.logger.warning(f"Search returned 0 total issues. Full response: {search_data}")
 
+            total = int(search_data.get("total") or 0)
             search_issues = search_data.get("issues", []) if isinstance(search_data.get("issues"), list) else []
             if search_issues:
                 for item in search_issues:
@@ -316,11 +319,21 @@ class JiraConnector(Connector):
                     payload = self._request("GET", self._build_issue_path(issue_key, fields))
                     if isinstance(payload, dict):
                         issue_payloads.append(payload)
+            elif total and start_at == 0:
+                self.logger.warning(
+                    "Initial Jira search returned %s total issues but no issue items; retrying with minimal fields to discover issue keys.",
+                    total,
+                )
+                issue_keys = self._search_issue_keys(query, page_size)
+                for issue_key in issue_keys:
+                    payload = self._request("GET", self._build_issue_path(issue_key, fields))
+                    if isinstance(payload, dict):
+                        issue_payloads.append(payload)
+                break
             elif isinstance(search_data, dict) and ("fields" in search_data or "key" in search_data or "id" in search_data):
                 issue_payloads = [search_data]
                 break
 
-            total = int(search_data.get("total") or 0)
             if not total:
                 break
             if start_at + len(search_issues) >= total:
@@ -443,6 +456,32 @@ class JiraConnector(Connector):
         params.append(f"fields={encoded_fields}")
         return f"{path}?{'&'.join(params)}"
 
+    def _search_issue_keys(self, query: str, page_size: int = 100) -> list[str]:
+        issue_keys: list[str] = []
+        fields = ["key"]
+        search_path = self._build_search_path(query, fields)
+        start_at = 0
+        while True:
+            page_path = search_path if start_at == 0 else f"{search_path}&startAt={start_at}"
+            search_data = self._request("GET", page_path)
+            if not isinstance(search_data, dict):
+                break
+
+            search_issues = search_data.get("issues", []) if isinstance(search_data.get("issues"), list) else []
+            if search_issues:
+                for item in search_issues:
+                    if isinstance(item, dict):
+                        issue_key = item.get("key")
+                        if isinstance(issue_key, str) and issue_key.strip():
+                            issue_keys.append(issue_key.strip())
+
+            total = int(search_data.get("total") or 0)
+            if not total or start_at + len(search_issues) >= total:
+                break
+            start_at += page_size
+
+        return list(dict.fromkeys(issue_keys))
+
     def _build_issue_path(self, issue_key: str, fields: list[str]) -> str:
         encoded_fields = quote(",".join(fields), safe="")
         return f"/issue/{issue_key}?fields={encoded_fields}"
@@ -543,7 +582,18 @@ class JiraConnector(Connector):
         try:
             self._request("POST", "/project", payload)
         except Exception as exc:
-            self.logger.warning("Project creation skipped: %s", exc)
+            error_text = str(exc)
+            if "leadAccountId" in error_text or "Unrecognized field \"leadAccountId\"" in error_text:
+                fallback_payload = dict(payload)
+                fallback_payload.pop("leadAccountId", None)
+                fallback_payload["lead"] = lead
+                try:
+                    self.logger.debug("Retrying project creation with legacy lead field after leadAccountId rejection.")
+                    self._request("POST", "/project", fallback_payload)
+                except Exception as inner_exc:
+                    self.logger.warning("Project creation skipped: %s", inner_exc)
+            else:
+                self.logger.warning("Project creation skipped: %s", exc)
         return target_project
 
     def create_issue(self, issue: dict) -> dict:
