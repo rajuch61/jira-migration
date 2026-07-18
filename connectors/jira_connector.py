@@ -41,6 +41,7 @@ class JiraConnector(Connector):
         self.auth_type = self._resolve_auth_type(config)
         self.basic_auth = self._parse_basic_auth(config)
         self.bearer_token = self._parse_bearer_token(config)
+        self.prefer_key_search = bool(self._resolve_config_value(config, "prefer_key_search", default=True, env_names=("JIRA_PREFER_KEY_SEARCH",)))
         self.connected = False
         self.current_account_id = None
         self.created_issue_keys: dict[str, str] = {}
@@ -280,6 +281,8 @@ class JiraConnector(Connector):
             search_path = search_path.replace("&startAt=0&maxResults=100", "")
         start_at = 0
         page_size = int(self._resolve_config_value(self.config, "page_size", default=100, env_names=("JIRA_PAGE_SIZE",))) or 100
+
+        
         while True:
             search_path_with_pagination = search_path
             if start_at > 0:
