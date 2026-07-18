@@ -1,4 +1,6 @@
 import importlib
+import os
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -62,7 +64,7 @@ class JiraConnectorTests(unittest.TestCase):
         self.assertEqual(project["name"], "Configured Project")
         self.assertEqual(project["description"], "Defined in config")
 
-    def test_read_issues_uses_jql_search_endpoint(self):
+    def test_read_issues_uses_search_endpoint_with_jql_query(self):
         connector_module = importlib.import_module("connectors.jira_connector")
         JiraConnector = connector_module.JiraConnector
 
@@ -78,15 +80,59 @@ class JiraConnectorTests(unittest.TestCase):
         with patch.object(connector, "_request", return_value={"issues": []}) as request_mock:
             connector.read_issues()
 
-        request_mock.assert_called_once_with(
-            "POST",
-            "/search/jql",
-            {
-                "jql": 'project="ABC"',
-                "maxResults": 100,
-                "fields": ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks"],
-            },
-        )
+        expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks"
+        request_mock.assert_called_once_with("GET", expected_path)
+
+    def test_read_issues_fetches_individual_issues_from_csv_issue_keys(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".csv", delete=False) as handle:
+            handle.write("Issue key,Summary\nCSTEST-721,Test 1\nCSTEST-720,Test 2\n")
+            csv_path = handle.name
+
+        try:
+            connector = JiraConnector(
+                {
+                    "type": "jira",
+                    "server": "https://example.atlassian.net",
+                    "project": "ABC",
+                    "csv_file": csv_path,
+                    "csv_issue_key_column": "Issue key",
+                    "verify_ssl": False,
+                }
+            )
+
+            issue_payload_1 = {
+                "id": "10037",
+                "key": "CSTEST-721",
+                "fields": {
+                    "summary": "Test 1",
+                    "description": None,
+                    "issuetype": {"name": "Task"},
+                    "status": {"name": "Open"},
+                },
+            }
+            issue_payload_2 = {
+                "id": "10038",
+                "key": "CSTEST-720",
+                "fields": {
+                    "summary": "Test 2",
+                    "description": None,
+                    "issuetype": {"name": "Task"},
+                    "status": {"name": "Open"},
+                },
+            }
+
+            with patch.object(connector, "_request", side_effect=[issue_payload_1, issue_payload_2]) as request_mock:
+                issues = connector.read_issues()
+
+            self.assertEqual(len(issues), 2)
+            self.assertEqual(request_mock.call_count, 2)
+            self.assertEqual(request_mock.call_args_list[0].args[1], "/issue/CSTEST-721?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
+            self.assertEqual(request_mock.call_args_list[1].args[1], "/issue/CSTEST-720?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
+        finally:
+            os.unlink(csv_path)
 
     def test_read_issues_logs_fetched_issue_details(self):
         connector_module = importlib.import_module("connectors.jira_connector")
@@ -149,15 +195,75 @@ class JiraConnectorTests(unittest.TestCase):
         with patch.object(connector, "_request", return_value={"issues": []}) as request_mock:
             connector.read_issues()
 
-        request_mock.assert_called_once_with(
-            "POST",
-            "/search/jql",
+        expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks"
+        request_mock.assert_called_once_with("GET", expected_path)
+
+    def test_read_issues_paginates_search_results(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
             {
-                "jql": 'project="ABC"',
-                "maxResults": 100,
-                "fields": ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks"],
-            },
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
         )
+
+        responses = [
+            {
+                "total": 250,
+                "startAt": 0,
+                "maxResults": 100,
+                "issues": [{"key": "ABC-1", "fields": {"summary": "One", "issuetype": {"name": "Task"}, "status": {"name": "Open"}}}],
+            },
+            {
+                "total": 250,
+                "startAt": 100,
+                "maxResults": 100,
+                "issues": [{"key": "ABC-2", "fields": {"summary": "Two", "issuetype": {"name": "Task"}, "status": {"name": "Open"}}}],
+            },
+            {
+                "total": 250,
+                "startAt": 200,
+                "maxResults": 100,
+                "issues": [{"key": "ABC-3", "fields": {"summary": "Three", "issuetype": {"name": "Task"}, "status": {"name": "Open"}}}],
+            },
+            {
+                "total": 250,
+                "startAt": 300,
+                "maxResults": 100,
+                "issues": [],
+            },
+        ]
+
+        with patch.object(connector, "_request", side_effect=responses) as request_mock:
+            issues = connector.read_issues()
+
+        self.assertEqual(len(issues), 3)
+        self.assertEqual([issue["key"] for issue in issues], ["ABC-1", "ABC-2", "ABC-3"])
+        self.assertGreaterEqual(request_mock.call_count, 3)
+
+    def test_export_project_data_includes_project_and_issues(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        with patch.object(connector, "read_project", return_value={"id": "ABC", "name": "Example"}), patch.object(connector, "read_issues", return_value=[{"key": "ABC-1"}]):
+            exported = connector.export_project_data()
+
+        self.assertEqual(exported["project"]["name"], "Example")
+        self.assertEqual(exported["issues"][0]["key"], "ABC-1")
+        self.assertIn("exported_at", exported["metadata"])
 
     def test_read_issues_extracts_attachments_links_and_history(self):
         connector_module = importlib.import_module("connectors.jira_connector")

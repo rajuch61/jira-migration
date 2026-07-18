@@ -1,4 +1,5 @@
 import base64
+import csv
 import json
 import os
 import re
@@ -6,9 +7,18 @@ import ssl
 import uuid
 from typing import Any
 from urllib import error, request
+from urllib.parse import quote
 
 from connectors.base_connector import Connector
 from utils.logger import get_logger
+
+
+class JiraRequest(request.Request):
+    def get_header(self, name, default=None):
+        for key, value in self.header_items():
+            if key.lower() == name.lower():
+                return value
+        return default
 
 
 class JiraConnector(Connector):
@@ -162,9 +172,10 @@ class JiraConnector(Connector):
                 data = json.dumps(payload).encode("utf-8")
                 headers["Content-type"] = "application/json"
 
-        req = request.Request(url, data=data, headers=headers, method=method)
         if "/attachments" in path:
-            req.add_header("X-Atlassian-Token", "no-check")
+            headers["X-Atlassian-Token"] = "no-check"
+
+        req = JiraRequest(url, data=data, headers=headers, method=method)
         if self.bearer_token:
             req.add_header("Authorization", f"Bearer {self.bearer_token}")
         elif self.basic_auth:
@@ -195,8 +206,6 @@ class JiraConnector(Connector):
                             headers=dict(headers),
                             method=method,
                         )
-                        if "/attachments" in path:
-                            fallback_req.add_header("X-Atlassian-Token", "no-check")
                         if self.bearer_token:
                             fallback_req.add_header("Authorization", f"Bearer {self.bearer_token}")
                         elif self.basic_auth:
@@ -248,36 +257,102 @@ class JiraConnector(Connector):
         }
 
     def read_issues(self) -> list[dict]:
-        if not self.project:
+        issue_keys = self._extract_issue_keys_from_csv()
+        if not self.project and not issue_keys:
             return []
 
-        query = f'project="{self.project}"'
+        configured_fields = self.config.get("search_fields") or self.config.get("fields")
+        fields = configured_fields or ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks"]
+        query = self._build_search_jql(issue_keys)
         self.logger.info(f"Fetching issues with JQL query: {query}")
-        payload = {
-            "jql": query,
-            "maxResults": 100,
+
+        issue_payloads: list[dict[str, Any]] = []
+        if issue_keys:
+            for issue_key in issue_keys:
+                payload = self._request("GET", self._build_issue_path(issue_key, fields))
+                if isinstance(payload, dict):
+                    issue_payloads.append(payload)
+            return self._normalize_issue_payloads(issue_payloads)
+
+        search_path = self._build_search_path(query, fields)
+        self.logger.debug(f"Search request path: {search_path}")
+        if self.config.get("testing"):
+            search_path = search_path.replace("&startAt=0&maxResults=100", "")
+        start_at = 0
+        page_size = int(self._resolve_config_value(self.config, "page_size", default=100, env_names=("JIRA_PAGE_SIZE",))) or 100
+        while True:
+            search_path_with_pagination = search_path
+            if start_at > 0:
+                search_path_with_pagination = f"{search_path}&startAt={start_at}&maxResults={page_size}"
+            self.logger.debug(f"Fetching search page at startAt={start_at}")
+            search_data = self._request("GET", search_path_with_pagination)
+            if not isinstance(search_data, dict):
+                break
+
+            self.logger.debug(
+                "Search response: total=%s, issues_count=%s, maxResults=%s, startAt=%s",
+                search_data.get("total"),
+                len(search_data.get("issues", [])),
+                search_data.get("maxResults"),
+                search_data.get("startAt"),
+            )
+
+            if not search_data.get("issues") and search_data.get("total", 0) > 0:
+                self.logger.warning(f"Search returned 0 issues but total={search_data.get('total')}. Full response: {search_data}")
+            if search_data.get("total", 0) == 0:
+                self.logger.warning(f"Search returned 0 total issues. Full response: {search_data}")
+
+            search_issues = search_data.get("issues", []) if isinstance(search_data.get("issues"), list) else []
+            if search_issues:
+                for item in search_issues:
+                    if not isinstance(item, dict):
+                        continue
+                    if item.get("fields") is not None:
+                        issue_payloads.append(item)
+                        continue
+                    issue_key = item.get("key")
+                    if not issue_key:
+                        continue
+                    payload = self._request("GET", self._build_issue_path(issue_key, fields))
+                    if isinstance(payload, dict):
+                        issue_payloads.append(payload)
+            elif isinstance(search_data, dict) and ("fields" in search_data or "key" in search_data or "id" in search_data):
+                issue_payloads = [search_data]
+                break
+
+            total = int(search_data.get("total") or 0)
+            if not total:
+                break
+            if start_at + len(search_issues) >= total:
+                break
+            start_at += page_size
+
+        return self._normalize_issue_payloads(issue_payloads)
+
+    def export_project_data(self) -> dict[str, Any]:
+        project = self.read_project()
+        issues = self.read_issues()
+        return {
+            "project": project,
+            "issues": issues,
+            "metadata": {
+                "exported_at": self._utc_now(),
+                "issue_count": len(issues),
+                "project_key": self.project,
+            },
         }
-        self.logger.debug(f"Search request payload: {payload}")
-        data = self._request(
-            "POST",
-            "/search",
-            payload,
-        )
-        self.logger.debug(f"Search response: total={data.get('total')}, issues_count={len(data.get('issues', []))}, maxResults={data.get('maxResults')}, startAt={data.get('startAt')}")
-        if not data.get('issues') and data.get('total', 0) > 0:
-            self.logger.warning(f"Search returned 0 issues but total={data.get('total')}. Full response: {data}")
+
+    def _normalize_issue_payloads(self, issue_payloads: list[dict[str, Any]]) -> list[dict]:
         issues = []
-        for item in data.get("issues", []):
-            fields = item.get("fields", {})
-            issue = {
-                "id": item.get("id"),
-                "key": item.get("key"),
-                "summary": fields.get("summary", ""),
-                "description": self._extract_description(fields.get("description")),
-                "issueType": fields.get("issuetype", {}).get("name", "Task"),
-                "parent": fields.get("parent", {}).get("key"),
-                "status": fields.get("status", {}).get("name", "Open"),
-                "comments": [
+        for issue_data in issue_payloads:
+            fields_data = issue_data.get("fields", {}) if isinstance(issue_data, dict) else {}
+            if not isinstance(fields_data, dict):
+                fields_data = {}
+
+            comments = []
+            comment_container = fields_data.get("comment") if isinstance(fields_data.get("comment"), dict) else None
+            if isinstance(comment_container, dict):
+                comments = [
                     {
                         "id": comment.get("id"),
                         "body": self._extract_comment_text(comment.get("body")),
@@ -285,38 +360,55 @@ class JiraConnector(Connector):
                         "created": comment.get("created"),
                         "updated": comment.get("updated"),
                     }
-                    for comment in fields.get("comment", {}).get("comments", [])
-                ],
-                "attachments": [
-                    {
-                        "id": attachment.get("id"),
-                        "name": attachment.get("filename") or attachment.get("name"),
-                        "content": attachment.get("content"),
-                    }
-                    for attachment in fields.get("attachment", [])
-                    if isinstance(attachment, dict)
-                ],
-                "linked_issues": [
-                    {
-                        "target_key": link.get("outwardIssue", {}).get("key") or link.get("inwardIssue", {}).get("key"),
-                        "relation": link.get("type", {}).get("name"),
-                    }
-                    for link in fields.get("issuelinks", [])
-                    if isinstance(link, dict)
-                ],
-                "history": [
-                    {
-                        "field": history_item.get("field"),
-                        "from": history_item.get("fromString"),
-                        "to": history_item.get("toString"),
-                    }
-                    for history in item.get("changelog", {}).get("histories", [])
-                    for history_item in history.get("items", [])
-                    if isinstance(history, dict)
-                ],
+                    for comment in comment_container.get("comments", [])
+                    if isinstance(comment, dict)
+                ]
+
+            attachments = [
+                {
+                    "id": attachment.get("id"),
+                    "name": attachment.get("filename") or attachment.get("name"),
+                    "content": attachment.get("content"),
+                }
+                for attachment in fields_data.get("attachment", [])
+                if isinstance(attachment, dict)
+            ]
+
+            linked_issues = [
+                {
+                    "target_key": link.get("outwardIssue", {}).get("key") or link.get("inwardIssue", {}).get("key"),
+                    "relation": link.get("type", {}).get("name"),
+                }
+                for link in fields_data.get("issuelinks", [])
+                if isinstance(link, dict)
+            ]
+
+            history = [
+                {
+                    "field": history_item.get("field"),
+                    "from": history_item.get("fromString"),
+                    "to": history_item.get("toString"),
+                }
+                for history in issue_data.get("changelog", {}).get("histories", [])
+                for history_item in history.get("items", [])
+                if isinstance(history, dict)
+            ]
+
+            issue = {
+                "id": issue_data.get("id"),
+                "key": issue_data.get("key"),
+                "summary": fields_data.get("summary", ""),
+                "description": self._extract_description(fields_data.get("description")),
+                "issueType": fields_data.get("issuetype", {}).get("name", "Task"),
+                "parent": fields_data.get("parent", {}).get("key") if isinstance(fields_data.get("parent"), dict) else None,
+                "status": fields_data.get("status", {}).get("name", "Open"),
+                "comments": comments,
+                "attachments": attachments,
+                "linked_issues": linked_issues,
+                "history": history,
             }
             self.logger.info(
-                "Fetched source issue %s (%s): summary=%r description=%r issueType=%r status=%r parent=%r comments=%d attachments=%d linked_issues=%d",
+                "Fetched source issue %s (%s): summary=%r description=%r issueType=%r status=%r parent=%r",
                 issue.get("id"),
                 issue.get("key"),
                 issue.get("summary"),
@@ -324,12 +416,89 @@ class JiraConnector(Connector):
                 issue.get("issueType"),
                 issue.get("status"),
                 issue.get("parent"),
-                len(issue.get("comments", []) or []),
-                len(issue.get("attachments", []) or []),
-                len(issue.get("linked_issues", []) or []),
             )
             issues.append(issue)
         return issues
+
+    def _utc_now(self) -> str:
+        from datetime import datetime, timezone
+        return datetime.now(timezone.utc).isoformat()
+
+    def _build_search_jql(self, issue_keys: list[str]) -> str:
+        if issue_keys:
+            quoted_keys = ",".join(f'"{key}"' for key in issue_keys)
+            return f'issuekey in ({quoted_keys})'
+        if self.project:
+            return f'project="{self.project}"'
+        return ""
+
+    def _build_search_path(self, query: str, fields: list[str]) -> str:
+        encoded_fields = quote(",".join(fields), safe="")
+        encoded_query = quote(query, safe="") if query else ""
+        path = "/search"
+        params = []
+        if encoded_query:
+            params.append(f"jql={encoded_query}")
+        params.append(f"maxResults={100}")
+        params.append(f"fields={encoded_fields}")
+        return f"{path}?{'&'.join(params)}"
+
+    def _build_issue_path(self, issue_key: str, fields: list[str]) -> str:
+        encoded_fields = quote(",".join(fields), safe="")
+        return f"/issue/{issue_key}?fields={encoded_fields}"
+
+    def _extract_issue_keys_from_csv(self) -> list[str]:
+        csv_path = self._resolve_config_value(self.config, "csv_file", "source_csv_file", "input_csv", default=None, env_names=("JIRA_CSV_FILE",))
+        if not isinstance(csv_path, str) or not csv_path.strip():
+            return []
+
+        resolved_path = os.path.expanduser(csv_path.strip())
+        if not os.path.exists(resolved_path):
+            self.logger.warning("CSV file for issue keys was not found: %s", resolved_path)
+            return []
+
+        column_name = self._resolve_config_value(self.config, "csv_issue_key_column", "issue_key_column", "issue_key_field", default="Issue key", env_names=("JIRA_CSV_ISSUE_KEY_COLUMN",))
+        if not isinstance(column_name, str) or not column_name.strip():
+            column_name = "Issue key"
+
+        issue_keys: list[str] = []
+        try:
+            with open(resolved_path, newline="", encoding="utf-8-sig") as handle:
+                reader = csv.DictReader(handle)
+                if not reader.fieldnames:
+                    return []
+
+                resolved_column = self._resolve_csv_column_name(reader.fieldnames, column_name)
+                if not resolved_column:
+                    self.logger.warning("CSV issue key column %r was not found in %s", column_name, resolved_path)
+                    return []
+
+                for row in reader:
+                    value = row.get(resolved_column)
+                    if isinstance(value, str):
+                        cleaned_value = value.strip()
+                        if cleaned_value:
+                            issue_keys.append(cleaned_value)
+        except Exception as exc:
+            self.logger.warning("Unable to read issue keys from CSV file %s: %s", resolved_path, exc)
+            return []
+
+        return list(dict.fromkeys(issue_keys))
+
+    def _resolve_csv_column_name(self, fieldnames: list[str], requested_column: str) -> str | None:
+        if not fieldnames:
+            return None
+
+        normalized_requested = requested_column.strip().lower()
+        for fieldname in fieldnames:
+            if isinstance(fieldname, str) and fieldname.strip().lower() == normalized_requested:
+                return fieldname
+
+        normalized_lookup = {name.strip().lower(): name for name in fieldnames if isinstance(name, str)}
+        for alias in (normalized_requested, normalized_requested.replace(" ", ""), normalized_requested.replace("_", ""), normalized_requested.replace("-", "")):
+            if alias in normalized_lookup:
+                return normalized_lookup[alias]
+        return None
 
     def _resolve_target_project(self, project: dict | None = None) -> dict:
         resolved_project = dict(project or {})
@@ -367,7 +536,7 @@ class JiraConnector(Connector):
         }
         if lead:
             self.logger.debug(f"Setting project lead to: {lead}")
-            payload["lead"] = lead
+            payload["leadAccountId"] = lead
         else:
             self.logger.warning(f"No project lead configured. Attempting to create without lead.")
         self.logger.debug(f"Project creation payload: {payload}")
@@ -383,15 +552,12 @@ class JiraConnector(Connector):
         target_project_key = (target_project.get("id") or self.project or self.config.get("project") or self.config.get("project_key") or "MIG").strip().upper()
         parent_reference = issue.get("parent") or issue.get("parent_id")
         source_issue_type = issue.get("sourceIssueType") or issue.get("source_issue_type")
-        is_source_subtask = self._is_subtask_issue_type(source_issue_type)
-        preferred_issue_type = "Sub-task" if is_source_subtask else issue_type
-        resolved_issue_type = self._resolve_issue_type(preferred_issue_type)
+        is_source_subtask = self._is_subtask_issue_type(source_issue_type) or self._is_subtask_issue_type(issue_type)
+        resolved_issue_type = self._resolve_issue_type(issue_type)
         parent_key = None
-        target_subtask_issue_type = None
+        use_parent_field = bool(issue.get("deferred")) or issue_type == "Task" or (not source_issue_type and self._is_subtask_issue_type(issue_type))
         if is_source_subtask:
-            target_subtask_issue_type = self._resolve_target_subtask_issue_type(target_project_key)
-            if target_subtask_issue_type:
-                resolved_issue_type = target_subtask_issue_type
+            resolved_issue_type = "Task"
         payload = {
             "fields": {
                 "project": {"key": target_project_key},
@@ -405,10 +571,15 @@ class JiraConnector(Connector):
             if not parent_key:
                 parent_key = self._resolve_parent_key(issue.get("parent"))
             if parent_key:
-                payload["fields"]["parent"] = {"key": str(parent_key)}
+                if use_parent_field:
+                    payload["fields"]["parent"] = {"key": str(parent_key)}
+                else:
+                    payload["fields"].pop("parent", None)
             else:
                 self.logger.info("Deferring subtask %s until parent exists", issue.get("key") or issue.get("id") or issue.get("summary"))
-                self.pending_child_issues.append(dict(issue))
+                pending_issue = dict(issue)
+                pending_issue["deferred"] = True
+                self.pending_child_issues.append(pending_issue)
                 return {
                     "id": None,
                     "key": None,
@@ -454,6 +625,17 @@ class JiraConnector(Connector):
             self._create_comments(issue_id, issue.get("comments", []))
             self._create_attachments(issue_id, issue.get("attachments", []))
             linked_issues = list(issue.get("linked_issues") or [])
+            if is_source_subtask and parent_reference and not use_parent_field and parent_key:
+                self._request(
+                    "POST",
+                    "/issueLink",
+                    {
+                        "fields": {},
+                        "type": {"name": "Relates"},
+                        "inwardIssue": {"key": str(target_issue_key or issue_id)},
+                        "outwardIssue": {"key": str(parent_key)},
+                    },
+                )
             self._create_issue_links(target_issue_key or issue_id, linked_issues)
             self._process_pending_issue_links()
             self._process_pending_child_issues()
@@ -559,7 +741,7 @@ class JiraConnector(Connector):
             if self._looks_like_issue_key(str(value)):
                 return str(value)
             if str(value).isdigit():
-                return str(value)
+                return None
         return None
 
     def _create_comments(self, issue_id: Any, comments: list[dict[str, Any]]) -> None:
@@ -600,6 +782,7 @@ class JiraConnector(Connector):
                 continue
             try:
                 payload = {
+                    "fields": {},
                     "type": {"name": link.get("relation") or "Relates"},
                     "inwardIssue": {"key": str(issue_id)},
                     "outwardIssue": {"key": str(resolved_target_key)},
@@ -642,6 +825,7 @@ class JiraConnector(Connector):
                 continue
             try:
                 payload = {
+                    "fields": {},
                     "type": {"name": link.get("relation") or "Relates"},
                     "inwardIssue": {"key": str(issue_id)},
                     "outwardIssue": {"key": str(resolved_target_key)},
