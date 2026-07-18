@@ -735,7 +735,6 @@ class JiraConnector(Connector):
                     "POST",
                     "/issueLink",
                     {
-                        "fields": {},
                         "type": {"name": "Relates"},
                         "inwardIssue": {"key": str(target_issue_key or issue_id)},
                         "outwardIssue": {"key": str(parent_key)},
@@ -887,7 +886,6 @@ class JiraConnector(Connector):
                 continue
             try:
                 payload = {
-                    "fields": {},
                     "type": {"name": link.get("relation") or "Relates"},
                     "inwardIssue": {"key": str(issue_id)},
                     "outwardIssue": {"key": str(resolved_target_key)},
@@ -930,7 +928,6 @@ class JiraConnector(Connector):
                 continue
             try:
                 payload = {
-                    "fields": {},
                     "type": {"name": link.get("relation") or "Relates"},
                     "inwardIssue": {"key": str(issue_id)},
                     "outwardIssue": {"key": str(resolved_target_key)},
