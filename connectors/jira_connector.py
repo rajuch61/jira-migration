@@ -57,6 +57,8 @@ class JiraConnector(Connector):
         self.pending_issue_links: list[tuple[Any, dict[str, Any]]] = []
         self.pending_child_issues: list[dict[str, Any]] = []
         self._processing_pending_child_issues = False
+        self._createmeta_cache: dict[str, str | None] = {}
+        self._adf_supported = True
 
     def _resolve_config_value(self, config: dict, *keys: str, default: Any = None, env_names: tuple[str, ...] = ()) -> Any:
         for env_name in env_names:
@@ -342,6 +344,8 @@ class JiraConnector(Connector):
                         search_data = fallback_search_data
                         search_issues = fallback_issues
                         total = int(search_data.get("total") or 0)
+                        # Use the bare fallback path for subsequent pagination
+                        search_path = fallback_path
                     else:
                         self.logger.warning(
                             "Bare search fallback also returned no issues; discovering issue keys via key-only search.",
@@ -686,7 +690,7 @@ class JiraConnector(Connector):
             "fields": {
                 "project": {"key": target_project_key},
                 "summary": issue.get("summary", ""),
-                "description": self._to_adf(issue.get("description", "")),
+                "description": self._to_adf(issue.get("description", "")) if self._adf_supported else self._extract_description(issue.get("description", "")),
                 "issuetype": {"name": resolved_issue_type},
             }
         }
@@ -829,6 +833,8 @@ class JiraConnector(Connector):
                 "Issue description ADF rejected by Jira; retrying with plain string description: %s",
                 exc,
             )
+            # Remember that this server doesn't accept ADF descriptions to avoid repeated retries
+            self._adf_supported = False
             payload["fields"]["description"] = self._extract_description(issue.get("description", ""))
             try:
                 return self._request("POST", "/issue", payload)
@@ -872,9 +878,14 @@ class JiraConnector(Connector):
     def _resolve_target_subtask_issue_type(self, target_project_key: str) -> str | None:
         if not target_project_key:
             return None
+        # Return cached value if available
+        cached = self._createmeta_cache.get(target_project_key)
+        if cached is not None:
+            return cached
         try:
             data = self._request("GET", f"/issue/createmeta/{target_project_key}/issuetypes")
         except Exception:
+            self._createmeta_cache[target_project_key] = None
             return None
         values = data.get("values") if isinstance(data, dict) else None
         if not isinstance(values, list):
@@ -885,7 +896,9 @@ class JiraConnector(Connector):
             if item.get("subtask") is True:
                 name = item.get("name")
                 if isinstance(name, str) and name.strip():
+                    self._createmeta_cache[target_project_key] = name.strip()
                     return name.strip()
+        self._createmeta_cache[target_project_key] = None
         return None
 
     def _should_drop_parent_for_fallback(self, issue_type: Any, fallback_issue_type: str) -> bool:
