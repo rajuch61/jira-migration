@@ -658,30 +658,11 @@ class JiraConnector(Connector):
         resolved_issue_type = self._resolve_issue_type(issue_type)
         parent_key = None
         use_parent_field = bool(issue.get("deferred")) or issue_type == "Task" or (not source_issue_type and self._is_subtask_issue_type(issue_type))
-        if is_source_subtask:
-            resolved_issue_type = "Task"
-        payload = {
-            "fields": {
-                "project": {"key": target_project_key},
-                "summary": issue.get("summary", ""),
-                "description": self._to_adf(issue.get("description", "")),
-                "issuetype": {"name": resolved_issue_type},
-            }
-        }
-        if resolved_issue_type == "Epic":
-            epic_name = issue.get("epic_name") or issue.get("epicName") or issue.get("summary", "")
-            if isinstance(epic_name, str) and epic_name.strip():
-                payload["fields"][self.epic_name_field] = epic_name.strip()
         if is_source_subtask and parent_reference:
             parent_key = self._resolve_parent_key(parent_reference)
             if not parent_key:
                 parent_key = self._resolve_parent_key(issue.get("parent"))
-            if parent_key:
-                if use_parent_field:
-                    payload["fields"]["parent"] = {"key": str(parent_key)}
-                else:
-                    payload["fields"].pop("parent", None)
-            else:
+            if not parent_key:
                 self.logger.info("Deferring subtask %s until parent exists", issue.get("key") or issue.get("id") or issue.get("summary"))
                 pending_issue = dict(issue)
                 pending_issue["deferred"] = True
@@ -695,37 +676,46 @@ class JiraConnector(Connector):
                     "status": issue.get("status", "Open"),
                     "deferred": True,
                 }
+            if parent_key:
+                supported_subtask_type = self._resolve_target_subtask_issue_type(target_project_key)
+                resolved_issue_type = supported_subtask_type or "Task"
+        elif is_source_subtask:
+            resolved_issue_type = "Task"
+
+        payload = {
+            "fields": {
+                "project": {"key": target_project_key},
+                "summary": issue.get("summary", ""),
+                "description": self._to_adf(issue.get("description", "")),
+                "issuetype": {"name": resolved_issue_type},
+            }
+        }
+        if resolved_issue_type == "Epic":
+            epic_name = issue.get("epic_name") or issue.get("epicName") or issue.get("summary", "")
+            if isinstance(epic_name, str) and epic_name.strip():
+                payload["fields"][self.epic_name_field] = epic_name.strip()
+        if is_source_subtask and parent_reference and parent_key:
+            if use_parent_field:
+                payload["fields"]["parent"] = {"key": str(parent_key)}
+            else:
+                payload["fields"].pop("parent", None)
 
         try:
             response = self._request("POST", "/issue", payload)
         except Exception as exc:
-            error_text = str(exc)
-            description_field = payload["fields"].get("description")
-            if (
-                isinstance(description_field, dict)
-                and "description" in error_text.lower()
-                and ("operation value must be a string" in error_text.lower() or "expected string" in error_text.lower() or "must be a string" in error_text.lower())
-            ):
-                self.logger.warning("Issue description ADF rejected by Jira; retrying with plain string description: %s", exc)
-                payload["fields"]["description"] = str(issue.get("description", "") or "")
-                response = self._request("POST", "/issue", payload)
-            else:
-                fallback_issue_type = self._resolve_issue_type("Task")
-                if is_source_subtask and parent_reference:
-                    self.logger.warning("Sub-task issue %r was rejected by Jira; creating it as a task and linking to the parent instead: %s", issue.get("summary") or issue.get("key"), exc)
-                    payload["fields"]["issuetype"] = {"name": fallback_issue_type}
-                    payload["fields"].pop("parent", None)
-                    response = self._request("POST", "/issue", payload)
-                elif self._is_subtask_issue_type(resolved_issue_type) or self._is_subtask_issue_type(issue_type):
-                    self.logger.warning("Sub-task issue %r was rejected by Jira; retrying as %r: %s", issue.get("summary") or issue.get("key"), fallback_issue_type, exc)
-                    payload["fields"]["issuetype"] = {"name": fallback_issue_type}
-                    response = self._request("POST", "/issue", payload)
-                elif fallback_issue_type != payload["fields"]["issuetype"]["name"]:
-                    self.logger.warning("Issue type %r rejected, retrying with %r: %s", issue_type, fallback_issue_type, exc)
-                    payload["fields"]["issuetype"] = {"name": fallback_issue_type}
-                    response = self._request("POST", "/issue", payload)
-                else:
-                    raise
+            response = self._create_issue_with_fallbacks(
+                issue,
+                payload,
+                exc,
+                resolved_issue_type,
+                is_source_subtask,
+                parent_reference,
+                parent_key,
+                use_parent_field,
+            )
+
+        if response is None:
+            raise RuntimeError("Failed to create Jira issue after fallback attempts")
 
         issue_id = response.get("id") or response.get("key")
         if issue_id:
@@ -812,6 +802,72 @@ class JiraConnector(Connector):
     def _is_subtask_issue_type(self, issue_type: Any) -> bool:
         normalized = str(issue_type or "").strip().lower()
         return normalized in {"sub-task", "subtask"}
+
+    def _create_issue_with_fallbacks(
+        self,
+        issue: dict,
+        payload: dict[str, Any],
+        exc: Exception,
+        resolved_issue_type: str,
+        is_source_subtask: bool,
+        parent_reference: Any,
+        parent_key: str | None,
+        use_parent_field: bool,
+    ) -> dict[str, Any] | None:
+        error_text = str(exc)
+        description_field = payload["fields"].get("description")
+        if (
+            isinstance(description_field, dict)
+            and "description" in error_text.lower()
+            and (
+                "operation value must be a string" in error_text.lower()
+                or "expected string" in error_text.lower()
+                or "must be a string" in error_text.lower()
+            )
+        ):
+            self.logger.warning(
+                "Issue description ADF rejected by Jira; retrying with plain string description: %s",
+                exc,
+            )
+            payload["fields"]["description"] = self._extract_description(issue.get("description", ""))
+            try:
+                return self._request("POST", "/issue", payload)
+            except Exception as second_exc:
+                exc = second_exc
+                error_text = str(second_exc)
+
+        fallback_issue_type = self._resolve_issue_type("Task")
+        issue_type = issue.get("issueType") or "Task"
+        if is_source_subtask and parent_reference:
+            self.logger.warning(
+                "Sub-task issue %r was rejected by Jira; creating it as a task and linking to the parent instead: %s",
+                issue.get("summary") or issue.get("key"),
+                exc,
+            )
+            payload["fields"]["issuetype"] = {"name": fallback_issue_type}
+            payload["fields"].pop("parent", None)
+            return self._request("POST", "/issue", payload)
+        if self._is_subtask_issue_type(resolved_issue_type) or self._is_subtask_issue_type(issue_type):
+            self.logger.warning(
+                "Sub-task issue %r was rejected by Jira; retrying as %r: %s",
+                issue.get("summary") or issue.get("key"),
+                fallback_issue_type,
+                exc,
+            )
+            payload["fields"]["issuetype"] = {"name": fallback_issue_type}
+            if self._should_drop_parent_for_fallback(issue_type, fallback_issue_type):
+                payload["fields"].pop("parent", None)
+            return self._request("POST", "/issue", payload)
+        if fallback_issue_type != payload["fields"]["issuetype"]["name"]:
+            self.logger.warning(
+                "Issue type %r rejected, retrying with %r: %s",
+                issue_type,
+                fallback_issue_type,
+                exc,
+            )
+            payload["fields"]["issuetype"] = {"name": fallback_issue_type}
+            return self._request("POST", "/issue", payload)
+        return None
 
     def _resolve_target_subtask_issue_type(self, target_project_key: str) -> str | None:
         if not target_project_key:

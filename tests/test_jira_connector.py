@@ -229,7 +229,7 @@ class JiraConnectorTests(unittest.TestCase):
         self.assertEqual(len(issues), 1)
         self.assertEqual(issues[0]["summary"], "Added summary")
         self.assertEqual(request_mock.call_args_list[0].args[1], "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
-        self.assertEqual(request_mock.call_args_list[1].args[1], "/search?jql=project%3D%22ABC%22&maxResults=100&fields=key")
+        self.assertEqual(request_mock.call_args_list[1].args[1], "/search?jql=project%3D%22ABC%22")
         self.assertEqual(request_mock.call_args_list[2].args[1], "/issue/ABC-1?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
 
     def test_read_issues_paginates_search_results(self):
@@ -773,10 +773,10 @@ class JiraConnectorTests(unittest.TestCase):
                 }
             )
 
-        self.assertEqual(request_mock.call_count, 2)
-        self.assertEqual(request_mock.call_args_list[0].args[2]["fields"]["issuetype"]["name"], "Task")
-        self.assertEqual(request_mock.call_args_list[1].args[1], "/issueLink")
-        self.assertEqual(request_mock.call_args_list[1].args[2]["outwardIssue"]["key"], "ABC-10037")
+        self.assertEqual(request_mock.call_count, 3)
+        self.assertEqual(request_mock.call_args_list[1].args[2]["fields"]["issuetype"]["name"], "Task")
+        self.assertEqual(request_mock.call_args_list[2].args[1], "/issueLink")
+        self.assertEqual(request_mock.call_args_list[2].args[2]["outwardIssue"]["key"], "ABC-10037")
         self.assertNotIn("parent", request_mock.call_args_list[1].args[2]["fields"])
 
     def test_create_issue_uses_task_type_for_source_subtasks_with_parent(self):
@@ -819,7 +819,7 @@ class JiraConnectorTests(unittest.TestCase):
             connector.created_issue_keys["10037"] = "ABC-1"
             connector._process_pending_child_issues()
 
-        self.assertEqual(request_mock.call_count, 1)
+        self.assertEqual(request_mock.call_count, 2)
         self.assertEqual(request_mock.call_args.args[2]["fields"]["parent"], {"key": "ABC-1"})
 
     def test_create_issue_uses_migrated_parent_key_for_subtasks(self):
