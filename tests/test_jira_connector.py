@@ -394,6 +394,25 @@ class JiraConnectorTests(unittest.TestCase):
             },
         )
 
+    def test_create_issue_includes_epic_name_field_for_epics(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+                "epic_name_field": "customfield_10104",
+            }
+        )
+
+        with patch.object(connector, "_request", return_value={"id": "456", "key": "ABC-456"}) as request_mock:
+            connector.create_issue({"summary": "Epic summary", "description": "hello", "issueType": "Epic", "epic_name": "Epic summary"})
+
+        self.assertEqual(request_mock.call_args.args[2]["fields"]["customfield_10104"], "Epic summary")
+
     def test_create_issue_retries_with_plain_description_when_adf_is_rejected(self):
         connector_module = importlib.import_module("connectors.jira_connector")
         JiraConnector = connector_module.JiraConnector

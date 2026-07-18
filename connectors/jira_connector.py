@@ -41,6 +41,14 @@ class JiraConnector(Connector):
         self.auth_type = self._resolve_auth_type(config)
         self.basic_auth = self._parse_basic_auth(config)
         self.bearer_token = self._parse_bearer_token(config)
+        self.epic_name_field = self._resolve_config_value(
+            config,
+            "epic_name_field",
+            "epicNameField",
+            "epic_name",
+            "epicName",
+            default="customfield_10104",
+        )
         self.prefer_key_search = bool(self._resolve_config_value(config, "prefer_key_search", default=False, env_names=("JIRA_PREFER_KEY_SEARCH",)))
         self.connected = False
         self.current_account_id = None
@@ -660,6 +668,10 @@ class JiraConnector(Connector):
                 "issuetype": {"name": resolved_issue_type},
             }
         }
+        if resolved_issue_type == "Epic":
+            epic_name = issue.get("epic_name") or issue.get("epicName") or issue.get("summary", "")
+            if isinstance(epic_name, str) and epic_name.strip():
+                payload["fields"][self.epic_name_field] = epic_name.strip()
         if is_source_subtask and parent_reference:
             parent_key = self._resolve_parent_key(parent_reference)
             if not parent_key:
