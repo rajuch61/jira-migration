@@ -86,3 +86,400 @@
 2026-07-18 14:20:27,961 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
 2026-07-18 14:20:27,961 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
 2026-07-18 14:20:27,968 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments
+2026-07-18 15:29:41,998 - INFO - Deferring subtask 10051 until parent exists
+2026-07-18 15:29:42,003 - WARNING - Issue type 'Story' rejected, retrying with 'Task': invalid issue type
+2026-07-18 15:29:42,024 - DEBUG - Setting project lead to: account-456
+2026-07-18 15:29:42,024 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-456'}
+2026-07-18 15:29:42,027 - DEBUG - Setting project lead to: account-123
+2026-07-18 15:29:42,028 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-123'}
+2026-07-18 15:29:42,040 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:29:42,040 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:29:42,041 - DEBUG - Prefer key-only search enabled; discovering issue keys first
+2026-07-18 15:29:42,042 - INFO - Fetched source issue None (None): summary='' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:29:42,052 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:29:42,053 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:29:42,054 - DEBUG - Prefer key-only search enabled; discovering issue keys first
+2026-07-18 15:29:42,054 - INFO - Fetched source issue None (None): summary='' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:29:42,076 - INFO - Fetching issues with JQL query: issuekey in ("CSTEST-721","CSTEST-720")
+2026-07-18 15:29:42,077 - INFO - Fetched source issue 10037 (CSTEST-721): summary='Test 1' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:29:42,077 - INFO - Fetched source issue 10038 (CSTEST-720): summary='Test 2' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:29:42,082 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:29:42,083 - DEBUG - Prefer key-only search enabled; discovering issue keys first
+2026-07-18 15:29:42,089 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:29:42,089 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:29:42,089 - DEBUG - Prefer key-only search enabled; discovering issue keys first
+2026-07-18 15:29:42,191 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:29:42,192 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:29:42,193 - DEBUG - Prefer key-only search enabled; discovering issue keys first
+2026-07-18 15:29:42,194 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:29:42,194 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 15:29:42,195 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 15:29:42,202 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:29:42,203 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:29:42,204 - DEBUG - Prefer key-only search enabled; discovering issue keys first
+2026-07-18 15:29:42,205 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:29:42,205 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 15:29:42,206 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 15:29:42,214 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments
+2026-07-18 15:30:43,438 - INFO - Deferring subtask 10051 until parent exists
+2026-07-18 15:30:43,446 - WARNING - Issue type 'Story' rejected, retrying with 'Task': invalid issue type
+2026-07-18 15:30:43,475 - DEBUG - Setting project lead to: account-456
+2026-07-18 15:30:43,476 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-456'}
+2026-07-18 15:30:43,480 - DEBUG - Setting project lead to: account-123
+2026-07-18 15:30:43,481 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-123'}
+2026-07-18 15:30:43,493 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:30:43,494 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:30:43,495 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:30:43,495 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 15:30:43,496 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}, 'comment': {'comments': []}, 'attachment': [{'id': 'att-1', 'filename': 'file.txt', 'content': 'abc'}], 'issuelinks': [{'type': {'name': 'Relates'}, 'outwardIssue': {'key': 'ABC-2'}}]}, 'changelog': {'histories': [{'created': '2024-01-01', 'items': [{'field': 'status', 'fromString': 'Open', 'toString': 'Done'}]}]}}]}
+2026-07-18 15:30:43,496 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent='ABC-0'
+2026-07-18 15:30:43,500 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:30:43,500 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:30:43,501 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:30:43,501 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 15:30:43,502 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'comment': {'comments': [{'id': 'c-1', 'body': {'type': 'doc', 'version': 1, 'content': [{'type': 'paragraph', 'content': [{'type': 'text', 'text': 'Hello'}]}]}, 'created': '2024-01-02T03:04:05.000Z', 'updated': '2024-01-02T03:05:06.000Z'}]}}}]}
+2026-07-18 15:30:43,502 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-18 15:30:43,524 - INFO - Fetching issues with JQL query: issuekey in ("CSTEST-721","CSTEST-720")
+2026-07-18 15:30:43,525 - INFO - Fetched source issue 10037 (CSTEST-721): summary='Test 1' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:30:43,525 - INFO - Fetched source issue 10038 (CSTEST-720): summary='Test 2' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:30:43,534 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:30:43,535 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:30:43,535 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 15:30:43,536 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}}}]}
+2026-07-18 15:30:43,539 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:30:43,540 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:30:43,541 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:30:43,541 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=0
+2026-07-18 15:30:43,541 - DEBUG - Fetching search page at startAt=100
+2026-07-18 15:30:43,542 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=100
+2026-07-18 15:30:43,542 - DEBUG - Fetching search page at startAt=200
+2026-07-18 15:30:43,542 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=200
+2026-07-18 15:30:43,543 - DEBUG - Fetching search page at startAt=300
+2026-07-18 15:30:43,543 - DEBUG - Search response: total=250, issues_count=0, maxResults=100, startAt=300
+2026-07-18 15:30:43,543 - WARNING - Search returned 0 issues but total=250. Full response: {'total': 250, 'startAt': 300, 'maxResults': 100, 'issues': []}
+2026-07-18 15:30:43,544 - INFO - Fetched source issue None (ABC-1): summary='One' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:30:43,544 - INFO - Fetched source issue None (ABC-2): summary='Two' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:30:43,545 - INFO - Fetched source issue None (ABC-3): summary='Three' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:30:43,548 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:30:43,549 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:30:43,549 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:30:43,550 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 15:30:43,550 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 15:30:43,553 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:30:43,553 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:30:43,554 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:30:43,554 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 15:30:43,554 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 15:30:43,561 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments
+2026-07-18 15:40:59,144 - INFO - Deferring subtask 10051 until parent exists
+2026-07-18 15:40:59,148 - WARNING - Issue type 'Story' rejected, retrying with 'Task': invalid issue type
+2026-07-18 15:40:59,168 - DEBUG - Setting project lead to: account-456
+2026-07-18 15:40:59,168 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-456'}
+2026-07-18 15:40:59,171 - DEBUG - Setting project lead to: account-123
+2026-07-18 15:40:59,171 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-123'}
+2026-07-18 15:40:59,181 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:40:59,182 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:40:59,182 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:40:59,182 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 15:40:59,183 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}, 'comment': {'comments': []}, 'attachment': [{'id': 'att-1', 'filename': 'file.txt', 'content': 'abc'}], 'issuelinks': [{'type': {'name': 'Relates'}, 'outwardIssue': {'key': 'ABC-2'}}]}, 'changelog': {'histories': [{'created': '2024-01-01', 'items': [{'field': 'status', 'fromString': 'Open', 'toString': 'Done'}]}]}}]}
+2026-07-18 15:40:59,183 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent='ABC-0'
+2026-07-18 15:40:59,185 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:40:59,185 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:40:59,186 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:40:59,186 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 15:40:59,186 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'comment': {'comments': [{'id': 'c-1', 'body': {'type': 'doc', 'version': 1, 'content': [{'type': 'paragraph', 'content': [{'type': 'text', 'text': 'Hello'}]}]}, 'created': '2024-01-02T03:04:05.000Z', 'updated': '2024-01-02T03:05:06.000Z'}]}}}]}
+2026-07-18 15:40:59,186 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-18 15:40:59,196 - INFO - Fetching issues with JQL query: issuekey in ("CSTEST-721","CSTEST-720")
+2026-07-18 15:40:59,197 - INFO - Fetched source issue 10037 (CSTEST-721): summary='Test 1' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:40:59,197 - INFO - Fetched source issue 10038 (CSTEST-720): summary='Test 2' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:40:59,200 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:40:59,201 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:40:59,201 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 15:40:59,201 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}}}]}
+2026-07-18 15:40:59,203 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:40:59,203 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:40:59,204 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:40:59,204 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=0
+2026-07-18 15:40:59,204 - DEBUG - Fetching search page at startAt=100
+2026-07-18 15:40:59,204 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=100
+2026-07-18 15:40:59,204 - DEBUG - Fetching search page at startAt=200
+2026-07-18 15:40:59,204 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=200
+2026-07-18 15:40:59,205 - DEBUG - Fetching search page at startAt=300
+2026-07-18 15:40:59,205 - DEBUG - Search response: total=250, issues_count=0, maxResults=100, startAt=300
+2026-07-18 15:40:59,205 - WARNING - Search returned 0 issues but total=250. Full response: {'total': 250, 'startAt': 300, 'maxResults': 100, 'issues': []}
+2026-07-18 15:40:59,205 - INFO - Fetched source issue None (ABC-1): summary='One' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:40:59,205 - INFO - Fetched source issue None (ABC-2): summary='Two' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:40:59,205 - INFO - Fetched source issue None (ABC-3): summary='Three' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:40:59,207 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:40:59,207 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:40:59,207 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:40:59,207 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 15:40:59,208 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 15:40:59,209 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:40:59,209 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:40:59,209 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:40:59,210 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 15:40:59,210 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 15:40:59,214 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments
+2026-07-18 15:48:08,938 - INFO - Deferring subtask 10051 until parent exists
+2026-07-18 15:48:08,939 - WARNING - Issue type 'Story' rejected, retrying with 'Task': invalid issue type
+2026-07-18 15:48:08,947 - DEBUG - Setting project lead to: account-456
+2026-07-18 15:48:08,948 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-456'}
+2026-07-18 15:48:08,949 - DEBUG - Setting project lead to: account-123
+2026-07-18 15:48:08,950 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-123'}
+2026-07-18 15:48:08,955 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:48:08,956 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:48:08,956 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:48:08,956 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 15:48:08,956 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}, 'comment': {'comments': []}, 'attachment': [{'id': 'att-1', 'filename': 'file.txt', 'content': 'abc'}], 'issuelinks': [{'type': {'name': 'Relates'}, 'outwardIssue': {'key': 'ABC-2'}}]}, 'changelog': {'histories': [{'created': '2024-01-01', 'items': [{'field': 'status', 'fromString': 'Open', 'toString': 'Done'}]}]}}]}
+2026-07-18 15:48:08,956 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent='ABC-0'
+2026-07-18 15:48:08,957 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:48:08,958 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:48:08,958 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:48:08,958 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 15:48:08,958 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'comment': {'comments': [{'id': 'c-1', 'body': {'type': 'doc', 'version': 1, 'content': [{'type': 'paragraph', 'content': [{'type': 'text', 'text': 'Hello'}]}]}, 'created': '2024-01-02T03:04:05.000Z', 'updated': '2024-01-02T03:05:06.000Z'}]}}}]}
+2026-07-18 15:48:08,958 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-18 15:48:08,968 - INFO - Fetching issues with JQL query: issuekey in ("CSTEST-721","CSTEST-720")
+2026-07-18 15:48:08,968 - INFO - Fetched source issue 10037 (CSTEST-721): summary='Test 1' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:48:08,969 - INFO - Fetched source issue 10038 (CSTEST-720): summary='Test 2' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:48:08,971 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:48:08,971 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:48:08,972 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 15:48:08,972 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}}}]}
+2026-07-18 15:48:08,973 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:48:08,973 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:48:08,974 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:48:08,974 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=0
+2026-07-18 15:48:08,974 - DEBUG - Fetching search page at startAt=100
+2026-07-18 15:48:08,974 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=100
+2026-07-18 15:48:08,974 - DEBUG - Fetching search page at startAt=200
+2026-07-18 15:48:08,974 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=200
+2026-07-18 15:48:08,974 - DEBUG - Fetching search page at startAt=300
+2026-07-18 15:48:08,975 - DEBUG - Search response: total=250, issues_count=0, maxResults=100, startAt=300
+2026-07-18 15:48:08,975 - WARNING - Search returned 0 issues but total=250. Full response: {'total': 250, 'startAt': 300, 'maxResults': 100, 'issues': []}
+2026-07-18 15:48:08,975 - INFO - Fetched source issue None (ABC-1): summary='One' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:48:08,975 - INFO - Fetched source issue None (ABC-2): summary='Two' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:48:08,975 - INFO - Fetched source issue None (ABC-3): summary='Three' description='' issueType='Task' status='Open' parent=None
+2026-07-18 15:48:08,976 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:48:08,976 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:48:08,977 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:48:08,977 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 15:48:08,977 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 15:48:08,978 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 15:48:08,978 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 15:48:08,979 - DEBUG - Fetching search page at startAt=0
+2026-07-18 15:48:08,979 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 15:48:08,979 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 15:48:08,982 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments
+2026-07-18 16:14:01,302 - INFO - Deferring subtask 10051 until parent exists
+2026-07-18 16:14:01,303 - WARNING - Issue type 'Story' rejected, retrying with 'Task': invalid issue type
+2026-07-18 16:14:01,312 - DEBUG - Setting project lead to: account-456
+2026-07-18 16:14:01,313 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-456'}
+2026-07-18 16:14:01,314 - DEBUG - Setting project lead to: account-123
+2026-07-18 16:14:01,314 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-123'}
+2026-07-18 16:14:01,320 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:14:01,320 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:14:01,320 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:14:01,321 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 16:14:01,321 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}, 'comment': {'comments': []}, 'attachment': [{'id': 'att-1', 'filename': 'file.txt', 'content': 'abc'}], 'issuelinks': [{'type': {'name': 'Relates'}, 'outwardIssue': {'key': 'ABC-2'}}]}, 'changelog': {'histories': [{'created': '2024-01-01', 'items': [{'field': 'status', 'fromString': 'Open', 'toString': 'Done'}]}]}}]}
+2026-07-18 16:14:01,321 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent='ABC-0'
+2026-07-18 16:14:01,322 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:14:01,322 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:14:01,323 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:14:01,323 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 16:14:01,323 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'comment': {'comments': [{'id': 'c-1', 'body': {'type': 'doc', 'version': 1, 'content': [{'type': 'paragraph', 'content': [{'type': 'text', 'text': 'Hello'}]}]}, 'created': '2024-01-02T03:04:05.000Z', 'updated': '2024-01-02T03:05:06.000Z'}]}}}]}
+2026-07-18 16:14:01,323 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-18 16:14:01,332 - INFO - Fetching issues with JQL query: issuekey in ("CSTEST-721","CSTEST-720")
+2026-07-18 16:14:01,333 - INFO - Fetched source issue 10037 (CSTEST-721): summary='Test 1' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:14:01,333 - INFO - Fetched source issue 10038 (CSTEST-720): summary='Test 2' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:14:01,335 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:14:01,336 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:14:01,336 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 16:14:01,336 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}}}]}
+2026-07-18 16:14:01,338 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:14:01,338 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:14:01,338 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:14:01,338 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=0
+2026-07-18 16:14:01,338 - DEBUG - Fetching search page at startAt=100
+2026-07-18 16:14:01,339 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=100
+2026-07-18 16:14:01,339 - DEBUG - Fetching search page at startAt=200
+2026-07-18 16:14:01,339 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=200
+2026-07-18 16:14:01,339 - DEBUG - Fetching search page at startAt=300
+2026-07-18 16:14:01,339 - DEBUG - Search response: total=250, issues_count=0, maxResults=100, startAt=300
+2026-07-18 16:14:01,339 - WARNING - Search returned 0 issues but total=250. Full response: {'total': 250, 'startAt': 300, 'maxResults': 100, 'issues': []}
+2026-07-18 16:14:01,339 - INFO - Fetched source issue None (ABC-1): summary='One' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:14:01,339 - INFO - Fetched source issue None (ABC-2): summary='Two' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:14:01,340 - INFO - Fetched source issue None (ABC-3): summary='Three' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:14:01,341 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:14:01,342 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:14:01,342 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:14:01,342 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 16:14:01,342 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 16:14:01,344 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:14:01,344 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:14:01,344 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:14:01,344 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 16:14:01,344 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 16:14:01,347 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments
+2026-07-18 16:21:37,070 - INFO - Deferring subtask 10051 until parent exists
+2026-07-18 16:21:37,072 - WARNING - Issue type 'Story' rejected, retrying with 'Task': invalid issue type
+2026-07-18 16:21:37,085 - DEBUG - Setting project lead to: account-456
+2026-07-18 16:21:37,085 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-456'}
+2026-07-18 16:21:37,087 - DEBUG - Setting project lead to: account-123
+2026-07-18 16:21:37,087 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-123'}
+2026-07-18 16:21:37,094 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:21:37,095 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:21:37,095 - INFO - Using key-only search discovery for issue keys because prefer_key_search is enabled.
+2026-07-18 16:21:37,096 - DEBUG - Trying search key discovery with path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=key
+2026-07-18 16:21:37,096 - DEBUG - Discovered 1 issue keys using variant query='project="ABC"' fields=['key']
+2026-07-18 16:21:37,096 - INFO - Fetched source issue None (None): summary='' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:21:37,100 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:21:37,100 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:21:37,101 - INFO - Using key-only search discovery for issue keys because prefer_key_search is enabled.
+2026-07-18 16:21:37,101 - DEBUG - Trying search key discovery with path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=key
+2026-07-18 16:21:37,101 - DEBUG - Discovered 1 issue keys using variant query='project="ABC"' fields=['key']
+2026-07-18 16:21:37,102 - INFO - Fetched source issue None (None): summary='' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:21:37,114 - INFO - Fetching issues with JQL query: issuekey in ("CSTEST-721","CSTEST-720")
+2026-07-18 16:21:37,114 - INFO - Fetched source issue 10037 (CSTEST-721): summary='Test 1' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:21:37,115 - INFO - Fetched source issue 10038 (CSTEST-720): summary='Test 2' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:21:37,118 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:21:37,118 - DEBUG - Trying search key discovery with path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=key
+2026-07-18 16:21:37,118 - DEBUG - Discovered 1 issue keys using variant query='project="ABC"' fields=['key']
+2026-07-18 16:21:37,121 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:21:37,122 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:21:37,122 - INFO - Using key-only search discovery for issue keys because prefer_key_search is enabled.
+2026-07-18 16:21:37,122 - DEBUG - Trying search key discovery with path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=key
+2026-07-18 16:21:37,122 - DEBUG - Discovered 3 issue keys using variant query='project="ABC"' fields=['key']
+2026-07-18 16:21:37,130 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:21:37,130 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:21:37,130 - INFO - Using key-only search discovery for issue keys because prefer_key_search is enabled.
+2026-07-18 16:21:37,131 - DEBUG - Trying search key discovery with path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=key
+2026-07-18 16:21:37,131 - DEBUG - Trying search key discovery with path: /search?jql=project%3D%22ABC%22&maxResults=100
+2026-07-18 16:21:37,131 - DEBUG - Trying search key discovery with path: /search?maxResults=100&fields=key
+2026-07-18 16:21:37,131 - DEBUG - Trying search key discovery with path: /search?maxResults=100
+2026-07-18 16:21:37,134 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:21:37,134 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:21:37,135 - INFO - Using key-only search discovery for issue keys because prefer_key_search is enabled.
+2026-07-18 16:21:37,135 - DEBUG - Trying search key discovery with path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=key
+2026-07-18 16:21:37,136 - DEBUG - Trying search key discovery with path: /search?jql=project%3D%22ABC%22&maxResults=100
+2026-07-18 16:21:37,136 - DEBUG - Trying search key discovery with path: /search?maxResults=100&fields=key
+2026-07-18 16:21:37,136 - DEBUG - Trying search key discovery with path: /search?maxResults=100
+2026-07-18 16:21:37,141 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments
+2026-07-18 16:22:11,128 - INFO - Deferring subtask 10051 until parent exists
+2026-07-18 16:22:11,130 - WARNING - Issue type 'Story' rejected, retrying with 'Task': invalid issue type
+2026-07-18 16:22:11,140 - DEBUG - Setting project lead to: account-456
+2026-07-18 16:22:11,141 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-456'}
+2026-07-18 16:22:11,143 - DEBUG - Setting project lead to: account-123
+2026-07-18 16:22:11,143 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-123'}
+2026-07-18 16:22:11,149 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:22:11,149 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:22:11,149 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:22:11,150 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 16:22:11,150 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}, 'comment': {'comments': []}, 'attachment': [{'id': 'att-1', 'filename': 'file.txt', 'content': 'abc'}], 'issuelinks': [{'type': {'name': 'Relates'}, 'outwardIssue': {'key': 'ABC-2'}}]}, 'changelog': {'histories': [{'created': '2024-01-01', 'items': [{'field': 'status', 'fromString': 'Open', 'toString': 'Done'}]}]}}]}
+2026-07-18 16:22:11,151 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent='ABC-0'
+2026-07-18 16:22:11,152 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:22:11,153 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:22:11,153 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:22:11,153 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 16:22:11,154 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'comment': {'comments': [{'id': 'c-1', 'body': {'type': 'doc', 'version': 1, 'content': [{'type': 'paragraph', 'content': [{'type': 'text', 'text': 'Hello'}]}]}, 'created': '2024-01-02T03:04:05.000Z', 'updated': '2024-01-02T03:05:06.000Z'}]}}}]}
+2026-07-18 16:22:11,154 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-18 16:22:11,158 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:22:11,158 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:22:11,159 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:22:11,159 - DEBUG - Search response: total=1, issues_count=0, maxResults=100, startAt=0
+2026-07-18 16:22:11,160 - WARNING - Search returned 0 issues but total=1. Full response: {'total': 1, 'startAt': 0, 'maxResults': 100, 'issues': []}
+2026-07-18 16:22:11,160 - WARNING - Initial Jira search returned 1 total issues but no issue items; retrying with minimal fields to discover issue keys.
+2026-07-18 16:22:11,160 - DEBUG - Trying search key discovery with path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=key
+2026-07-18 16:22:11,160 - DEBUG - Discovered 1 issue keys using variant query='project="ABC"' fields=['key']
+2026-07-18 16:22:11,161 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-18 16:22:11,169 - INFO - Fetching issues with JQL query: issuekey in ("CSTEST-721","CSTEST-720")
+2026-07-18 16:22:11,170 - INFO - Fetched source issue 10037 (CSTEST-721): summary='Test 1' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:22:11,170 - INFO - Fetched source issue 10038 (CSTEST-720): summary='Test 2' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:22:11,174 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:22:11,174 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:22:11,175 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 16:22:11,175 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}}}]}
+2026-07-18 16:22:11,177 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:22:11,177 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:22:11,178 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:22:11,178 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=0
+2026-07-18 16:22:11,178 - DEBUG - Fetching search page at startAt=100
+2026-07-18 16:22:11,179 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=100
+2026-07-18 16:22:11,179 - DEBUG - Fetching search page at startAt=200
+2026-07-18 16:22:11,179 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=200
+2026-07-18 16:22:11,180 - DEBUG - Fetching search page at startAt=300
+2026-07-18 16:22:11,180 - DEBUG - Search response: total=250, issues_count=0, maxResults=100, startAt=300
+2026-07-18 16:22:11,180 - WARNING - Search returned 0 issues but total=250. Full response: {'total': 250, 'startAt': 300, 'maxResults': 100, 'issues': []}
+2026-07-18 16:22:11,180 - INFO - Fetched source issue None (ABC-1): summary='One' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:22:11,181 - INFO - Fetched source issue None (ABC-2): summary='Two' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:22:11,181 - INFO - Fetched source issue None (ABC-3): summary='Three' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:22:11,183 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:22:11,183 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:22:11,184 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:22:11,184 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 16:22:11,184 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 16:22:11,186 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:22:11,186 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:22:11,187 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:22:11,187 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 16:22:11,187 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 16:22:11,193 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments
+2026-07-18 16:23:38,980 - INFO - Deferring subtask 10051 until parent exists
+2026-07-18 16:23:38,982 - WARNING - Issue type 'Story' rejected, retrying with 'Task': invalid issue type
+2026-07-18 16:23:38,992 - DEBUG - Setting project lead to: account-456
+2026-07-18 16:23:38,993 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-456'}
+2026-07-18 16:23:38,995 - DEBUG - Setting project lead to: account-123
+2026-07-18 16:23:38,996 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-123'}
+2026-07-18 16:23:39,002 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:23:39,002 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:23:39,002 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:23:39,003 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 16:23:39,003 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}, 'comment': {'comments': []}, 'attachment': [{'id': 'att-1', 'filename': 'file.txt', 'content': 'abc'}], 'issuelinks': [{'type': {'name': 'Relates'}, 'outwardIssue': {'key': 'ABC-2'}}]}, 'changelog': {'histories': [{'created': '2024-01-01', 'items': [{'field': 'status', 'fromString': 'Open', 'toString': 'Done'}]}]}}]}
+2026-07-18 16:23:39,003 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent='ABC-0'
+2026-07-18 16:23:39,005 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:23:39,005 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:23:39,006 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:23:39,006 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 16:23:39,006 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'comment': {'comments': [{'id': 'c-1', 'body': {'type': 'doc', 'version': 1, 'content': [{'type': 'paragraph', 'content': [{'type': 'text', 'text': 'Hello'}]}]}, 'created': '2024-01-02T03:04:05.000Z', 'updated': '2024-01-02T03:05:06.000Z'}]}}}]}
+2026-07-18 16:23:39,007 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-18 16:23:39,009 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:23:39,010 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:23:39,010 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:23:39,010 - DEBUG - Search response: total=1, issues_count=0, maxResults=100, startAt=0
+2026-07-18 16:23:39,011 - WARNING - Search returned 0 issues but total=1. Full response: {'total': 1, 'startAt': 0, 'maxResults': 100, 'issues': []}
+2026-07-18 16:23:39,011 - WARNING - Initial Jira search returned 1 total issues but no issue items; retrying with minimal fields to discover issue keys.
+2026-07-18 16:23:39,011 - DEBUG - Trying search key discovery with path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=key
+2026-07-18 16:23:39,012 - DEBUG - Discovered 1 issue keys using variant query='project="ABC"' fields=['key']
+2026-07-18 16:23:39,012 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-18 16:23:39,021 - INFO - Fetching issues with JQL query: issuekey in ("CSTEST-721","CSTEST-720")
+2026-07-18 16:23:39,022 - INFO - Fetched source issue 10037 (CSTEST-721): summary='Test 1' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:23:39,022 - INFO - Fetched source issue 10038 (CSTEST-720): summary='Test 2' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:23:39,026 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:23:39,026 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:23:39,027 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-18 16:23:39,027 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}}}]}
+2026-07-18 16:23:39,029 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:23:39,030 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:23:39,030 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:23:39,031 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=0
+2026-07-18 16:23:39,031 - DEBUG - Fetching search page at startAt=100
+2026-07-18 16:23:39,031 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=100
+2026-07-18 16:23:39,032 - DEBUG - Fetching search page at startAt=200
+2026-07-18 16:23:39,032 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=200
+2026-07-18 16:23:39,032 - DEBUG - Fetching search page at startAt=300
+2026-07-18 16:23:39,033 - DEBUG - Search response: total=250, issues_count=0, maxResults=100, startAt=300
+2026-07-18 16:23:39,033 - WARNING - Search returned 0 issues but total=250. Full response: {'total': 250, 'startAt': 300, 'maxResults': 100, 'issues': []}
+2026-07-18 16:23:39,033 - INFO - Fetched source issue None (ABC-1): summary='One' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:23:39,034 - INFO - Fetched source issue None (ABC-2): summary='Two' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:23:39,034 - INFO - Fetched source issue None (ABC-3): summary='Three' description='' issueType='Task' status='Open' parent=None
+2026-07-18 16:23:39,036 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:23:39,036 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:23:39,036 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:23:39,036 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 16:23:39,037 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 16:23:39,038 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-18 16:23:39,038 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-18 16:23:39,038 - DEBUG - Fetching search page at startAt=0
+2026-07-18 16:23:39,039 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-18 16:23:39,039 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-18 16:23:39,045 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments

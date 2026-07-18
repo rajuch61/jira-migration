@@ -198,6 +198,40 @@ class JiraConnectorTests(unittest.TestCase):
         expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks"
         request_mock.assert_called_once_with("GET", expected_path)
 
+    def test_read_issues_falls_back_to_key_search_when_search_returns_no_items(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        search_response = {"total": 1, "startAt": 0, "maxResults": 100, "issues": []}
+        issue_payload = {
+            "id": "10037",
+            "key": "ABC-1",
+            "fields": {
+                "summary": "Added summary",
+                "description": {"content": [{"content": [{"text": "Detail"}]}]},
+                "issuetype": {"name": "Task"},
+                "status": {"name": "Open"},
+            },
+        }
+
+        with patch.object(connector, "_request", side_effect=[search_response, {"issues": [{"key": "ABC-1"}]}, issue_payload]) as request_mock:
+            issues = connector.read_issues()
+
+        self.assertEqual(len(issues), 1)
+        self.assertEqual(issues[0]["summary"], "Added summary")
+        self.assertEqual(request_mock.call_args_list[0].args[1], "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
+        self.assertEqual(request_mock.call_args_list[1].args[1], "/search?jql=project%3D%22ABC%22&maxResults=100&fields=key")
+        self.assertEqual(request_mock.call_args_list[2].args[1], "/issue/ABC-1?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
+
     def test_read_issues_paginates_search_results(self):
         connector_module = importlib.import_module("connectors.jira_connector")
         JiraConnector = connector_module.JiraConnector

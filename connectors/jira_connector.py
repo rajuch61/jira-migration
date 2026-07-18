@@ -41,7 +41,7 @@ class JiraConnector(Connector):
         self.auth_type = self._resolve_auth_type(config)
         self.basic_auth = self._parse_basic_auth(config)
         self.bearer_token = self._parse_bearer_token(config)
-        self.prefer_key_search = bool(self._resolve_config_value(config, "prefer_key_search", default=True, env_names=("JIRA_PREFER_KEY_SEARCH",)))
+        self.prefer_key_search = bool(self._resolve_config_value(config, "prefer_key_search", default=False, env_names=("JIRA_PREFER_KEY_SEARCH",)))
         self.connected = False
         self.current_account_id = None
         self.created_issue_keys: dict[str, str] = {}
@@ -275,20 +275,27 @@ class JiraConnector(Connector):
                     issue_payloads.append(payload)
             return self._normalize_issue_payloads(issue_payloads)
 
-        search_path = self._build_search_path(query, fields)
+        page_size = int(self._resolve_config_value(self.config, "page_size", default=100, env_names=("JIRA_PAGE_SIZE",))) or 100
+        search_path = self._build_search_path(query, fields, page_size)
         self.logger.debug(f"Search request path: {search_path}")
+
+        if self.prefer_key_search:
+            self.logger.info("Using key-only search discovery for issue keys because prefer_key_search is enabled.")
+            issue_keys = self._search_issue_keys(query, page_size)
+            for issue_key in issue_keys:
+                payload = self._request("GET", self._build_issue_path(issue_key, fields))
+                if isinstance(payload, dict):
+                    issue_payloads.append(payload)
+            return self._normalize_issue_payloads(issue_payloads)
+
         if self.config.get("testing"):
             search_path = search_path.replace("&startAt=0&maxResults=100", "")
         start_at = 0
-        page_size = int(self._resolve_config_value(self.config, "page_size", default=100, env_names=("JIRA_PAGE_SIZE",))) or 100
 
-        
         while True:
             search_path_with_pagination = search_path
             if start_at > 0:
                 search_path_with_pagination = f"{search_path}&startAt={start_at}"
-                if page_size != 100:
-                    search_path_with_pagination = f"{search_path_with_pagination}&maxResults={page_size}"
             self.logger.debug(f"Fetching search page at startAt={start_at}")
             search_data = self._request("GET", search_path_with_pagination)
             if not isinstance(search_data, dict):
@@ -309,6 +316,35 @@ class JiraConnector(Connector):
 
             total = int(search_data.get("total") or 0)
             search_issues = search_data.get("issues", []) if isinstance(search_data.get("issues"), list) else []
+            if not search_issues and total and start_at == 0:
+                self.logger.warning(
+                    "Initial Jira search returned %s total issues but no issue items; retrying with bare search endpoint.",
+                    total,
+                )
+                fallback_path = self._build_search_path(query, None, None)
+                self.logger.debug("Retrying search with bare query path: %s", fallback_path)
+                fallback_search_data = self._request("GET", fallback_path)
+                if isinstance(fallback_search_data, dict):
+                    fallback_issues = fallback_search_data.get("issues", []) if isinstance(fallback_search_data.get("issues"), list) else []
+                    if fallback_issues:
+                        self.logger.info(
+                            "Bare search endpoint returned %s issues; using fallback issue data.",
+                            len(fallback_issues),
+                        )
+                        search_data = fallback_search_data
+                        search_issues = fallback_issues
+                        total = int(search_data.get("total") or 0)
+                    else:
+                        self.logger.warning(
+                            "Bare search fallback also returned no issues; discovering issue keys via key-only search.",
+                        )
+                        issue_keys = self._search_issue_keys(query, page_size)
+                        for issue_key in issue_keys:
+                            payload = self._request("GET", self._build_issue_path(issue_key, fields))
+                            if isinstance(payload, dict):
+                                issue_payloads.append(payload)
+                        break
+
             if search_issues:
                 for item in search_issues:
                     if not isinstance(item, dict):
@@ -322,17 +358,6 @@ class JiraConnector(Connector):
                     payload = self._request("GET", self._build_issue_path(issue_key, fields))
                     if isinstance(payload, dict):
                         issue_payloads.append(payload)
-            elif total and start_at == 0:
-                self.logger.warning(
-                    "Initial Jira search returned %s total issues but no issue items; retrying with minimal fields to discover issue keys.",
-                    total,
-                )
-                issue_keys = self._search_issue_keys(query, page_size)
-                for issue_key in issue_keys:
-                    payload = self._request("GET", self._build_issue_path(issue_key, fields))
-                    if isinstance(payload, dict):
-                        issue_payloads.append(payload)
-                break
             elif isinstance(search_data, dict) and ("fields" in search_data or "key" in search_data or "id" in search_data):
                 issue_payloads = [search_data]
                 break
@@ -448,40 +473,56 @@ class JiraConnector(Connector):
             return f'project="{self.project}"'
         return ""
 
-    def _build_search_path(self, query: str, fields: list[str]) -> str:
-        encoded_fields = quote(",".join(fields), safe="")
+    def _build_search_path(self, query: str, fields: list[str] | None, max_results: int | None = 100) -> str:
         encoded_query = quote(query, safe="") if query else ""
         path = "/search"
         params = []
         if encoded_query:
             params.append(f"jql={encoded_query}")
-        params.append(f"maxResults={100}")
-        params.append(f"fields={encoded_fields}")
+        if max_results is not None:
+            params.append(f"maxResults={max_results}")
+        if fields:
+            encoded_fields = quote(",".join(fields), safe="")
+            params.append(f"fields={encoded_fields}")
+        if not params:
+            return path
         return f"{path}?{'&'.join(params)}"
 
-    def _search_issue_keys(self, query: str, page_size: int = 100) -> list[str]:
+    def _search_issue_keys(self, query: str, page_size: int = 100, try_no_fields_if_empty: bool = True) -> list[str]:
         issue_keys: list[str] = []
-        fields = ["key"]
-        search_path = self._build_search_path(query, fields)
-        start_at = 0
-        while True:
-            page_path = search_path if start_at == 0 else f"{search_path}&startAt={start_at}"
-            search_data = self._request("GET", page_path)
-            if not isinstance(search_data, dict):
-                break
+        search_variants = [(query, ["key"])]
+        if try_no_fields_if_empty:
+            search_variants.append((query, None))
+            if query:
+                search_variants.append(("", ["key"]))
+                search_variants.append(("", None))
 
-            search_issues = search_data.get("issues", []) if isinstance(search_data.get("issues"), list) else []
-            if search_issues:
-                for item in search_issues:
-                    if isinstance(item, dict):
-                        issue_key = item.get("key")
-                        if isinstance(issue_key, str) and issue_key.strip():
-                            issue_keys.append(issue_key.strip())
+        for variant_query, fields in search_variants:
+            search_path = self._build_search_path(variant_query, fields, page_size)
+            start_at = 0
+            self.logger.debug("Trying search key discovery with path: %s", search_path)
+            while True:
+                page_path = search_path if start_at == 0 else f"{search_path}&startAt={start_at}"
+                search_data = self._request("GET", page_path)
+                if not isinstance(search_data, dict):
+                    break
 
-            total = int(search_data.get("total") or 0)
-            if not total or start_at + len(search_issues) >= total:
+                search_issues = search_data.get("issues", []) if isinstance(search_data.get("issues"), list) else []
+                if search_issues:
+                    for item in search_issues:
+                        if isinstance(item, dict):
+                            issue_key = item.get("key")
+                            if isinstance(issue_key, str) and issue_key.strip():
+                                issue_keys.append(issue_key.strip())
+
+                total = int(search_data.get("total") or 0)
+                if not total or start_at + len(search_issues) >= total:
+                    break
+                start_at += page_size
+
+            if issue_keys:
+                self.logger.debug("Discovered %s issue keys using variant query=%r fields=%r", len(issue_keys), variant_query, fields)
                 break
-            start_at += page_size
 
         return list(dict.fromkeys(issue_keys))
 
