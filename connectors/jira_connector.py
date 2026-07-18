@@ -59,6 +59,7 @@ class JiraConnector(Connector):
         self._processing_pending_child_issues = False
         self._createmeta_cache: dict[str, str | None] = {}
         self._adf_supported = True
+        self._created_links: set[tuple[str, str, str]] = set()
 
     def _resolve_config_value(self, config: dict, *keys: str, default: Any = None, env_names: tuple[str, ...] = ()) -> Any:
         for env_name in env_names:
@@ -378,7 +379,30 @@ class JiraConnector(Connector):
                 break
             if start_at + len(search_issues) >= total:
                 break
-            start_at += page_size
+            # Determine the step for the next page from the server response when available.
+            # This avoids skipping pages when the server returns a different `maxResults`
+            # (e.g., Jira Server defaulting to 50) than the requested `page_size`.
+            try:
+                step = int(search_data.get("maxResults") or 0)
+            except Exception:
+                step = 0
+            if not step:
+                step = len(search_issues) or page_size or 1
+            # Keep page_size in sync for any subsequent logic that relies on it.
+            # Log computed pagination step to aid debugging of Server vs client page sizes.
+            try:
+                self.logger.debug(
+                    "Pagination step computed: step=%s maxResults=%s len_issues=%s page_size_before=%s",
+                    step,
+                    search_data.get("maxResults"),
+                    len(search_issues),
+                    page_size,
+                )
+            except Exception:
+                # Best-effort debug logging; don't fail pagination on logging error.
+                pass
+            page_size = step
+            start_at += step
 
         return self._normalize_issue_payloads(issue_payloads)
 
@@ -429,8 +453,12 @@ class JiraConnector(Connector):
 
             linked_issues = [
                 {
-                    "target_key": link.get("outwardIssue", {}).get("key") or link.get("inwardIssue", {}).get("key"),
+                    "target_key": (link.get("outwardIssue", {}).get("key") if link.get("outwardIssue") else link.get("inwardIssue", {}).get("key")),
+                    # preserve the general relation name and the direction so we create the link with the same orientation
                     "relation": link.get("type", {}).get("name"),
+                    "direction": ("outward" if link.get("outwardIssue") else "inward"),
+                    "type_raw": link.get("type", {}),
+                    "source_key": issue_data.get("key"),
                 }
                 for link in fields_data.get("issuelinks", [])
                 if isinstance(link, dict)
@@ -685,6 +713,10 @@ class JiraConnector(Connector):
                 resolved_issue_type = supported_subtask_type or "Task"
         elif is_source_subtask:
             resolved_issue_type = "Task"
+
+        # If the target supports a real sub-task issue type, ensure we use the parent field
+        if is_source_subtask and parent_key and self._is_subtask_issue_type(resolved_issue_type):
+            use_parent_field = True
 
         payload = {
             "fields": {
@@ -965,13 +997,38 @@ class JiraConnector(Connector):
                 self.pending_issue_links.append((issue_id, link))
                 self.logger.info("Queued issue link for %s until target issue exists", target_key)
                 continue
+
+            # Determine relation name and direction (outward means current -> target)
+            relation_name = link.get("relation") or (link.get("type_raw", {}).get("name") if isinstance(link.get("type_raw"), dict) else "Relates")
+            direction = link.get("direction") or "outward"
+
+            # Normalize a directionless key to avoid creating duplicate reciprocal links
             try:
+                current_key = str(issue_id)
+                pair_key = tuple(sorted([current_key, str(resolved_target_key)])) + (relation_name or "Relates",)
+            except Exception:
+                pair_key = None
+
+            if pair_key and pair_key in self._created_links:
+                self.logger.debug("Skipping duplicate link creation for %s -> %s (%s)", current_key, resolved_target_key, relation_name)
+                continue
+
+            try:
+                if direction == "inward":
+                    inward = str(resolved_target_key)
+                    outward = str(issue_id)
+                else:
+                    inward = str(issue_id)
+                    outward = str(resolved_target_key)
+
                 payload = {
-                    "type": {"name": link.get("relation") or "Relates"},
-                    "inwardIssue": {"key": str(issue_id)},
-                    "outwardIssue": {"key": str(resolved_target_key)},
+                    "type": {"name": relation_name},
+                    "inwardIssue": {"key": inward},
+                    "outwardIssue": {"key": outward},
                 }
                 self._request("POST", "/issueLink", payload)
+                if pair_key:
+                    self._created_links.add(pair_key)
             except Exception as exc:
                 self.logger.warning("Issue link skipped for %s: %s", target_key, exc)
 
@@ -1007,15 +1064,8 @@ class JiraConnector(Connector):
             if not resolved_target_key:
                 self.pending_issue_links.append((issue_id, link))
                 continue
-            try:
-                payload = {
-                    "type": {"name": link.get("relation") or "Relates"},
-                    "inwardIssue": {"key": str(issue_id)},
-                    "outwardIssue": {"key": str(resolved_target_key)},
-                }
-                self._request("POST", "/issueLink", payload)
-            except Exception as exc:
-                self.logger.warning("Issue link skipped for %s: %s", target_key, exc)
+            # reuse the same logic as in _create_issue_links to ensure de-duplication and direction
+            self._create_issue_links(issue_id, [link])
 
     def _resolve_link_target_key(self, target_key: Any) -> str | None:
         if target_key is None:
