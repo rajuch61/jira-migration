@@ -1042,8 +1042,59 @@ class JiraConnector(Connector):
             return set()
         return {str(field_name) for field_name in errors.keys() if isinstance(field_name, (str, int))}
 
+    def _infer_rejected_fields_from_messages(self, error_text: str, payload: dict[str, Any]) -> set[str]:
+        # Infer problematic field names from free-text errorMessages when errors map is absent
+        inferred: set[str] = set()
+        if not isinstance(error_text, str):
+            return inferred
+        try:
+            json_start = error_text.index("{")
+            error_json = json.loads(error_text[json_start:])
+        except Exception:
+            error_json = {}
+
+        messages = error_json.get("errorMessages") if isinstance(error_json, dict) else None
+        if not isinstance(messages, (list, tuple)):
+            messages = []
+
+        joined = " ".join([str(m) for m in messages if m])
+        lower = joined.lower()
+
+        # If messages indicate Sprint id issues, drop any sprint-like fields
+        if "sprint" in lower or "sprint id" in lower or "sprint id." in lower:
+            for key in list(payload.get("fields", {}).keys()):
+                if "sprint" in str(key).lower():
+                    inferred.add(key)
+
+        # If messages indicate invalid version id, drop fixVersions / versions fields
+        if "version id" in lower or "fixversion" in lower or "fix versions" in lower:
+            for key in list(payload.get("fields", {}).keys()):
+                if str(key).lower() in {"fixversions", "versions", "fixversion"} or "fixversion" in str(key).lower():
+                    inferred.add(key)
+
+        # Generic fallback: if message mentions a field name in single-quotes, try to extract it
+        try:
+            for match in re.finditer(r"'([a-zA-Z0-9_\-]+)'", joined):
+                name = match.group(1)
+                # map some human-readable names to likely payload keys
+                if name.lower() in {"fixversion", "fixversions", "sprint"}:
+                    for key in list(payload.get("fields", {}).keys()):
+                        if name.lower() in str(key).lower():
+                            inferred.add(key)
+                else:
+                    # if the exact key exists, add it
+                    if name in payload.get("fields", {}):
+                        inferred.add(name)
+        except Exception:
+            pass
+
+        return inferred
+
     def _filter_payload_fields_for_rejected_errors(self, payload: dict[str, Any], error_text: str) -> bool:
         rejected_fields = self._extract_rejected_field_names(error_text)
+        # Also try to infer rejected fields from errorMessages when errors map is missing
+        inferred = self._infer_rejected_fields_from_messages(error_text, payload)
+        rejected_fields.update(inferred)
         if not rejected_fields:
             return False
         fields = payload.get("fields")
