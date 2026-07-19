@@ -944,6 +944,7 @@ class JiraConnector(Connector):
             self._adf_supported = False
             payload["fields"]["description"] = self._extract_description(issue.get("description", ""))
             try:
+                self._prepare_payload_for_retry(payload)
                 return self._request("POST", "/issue", payload)
             except Exception as second_exc:
                 exc = second_exc
@@ -954,6 +955,7 @@ class JiraConnector(Connector):
                 "Issue creation rejected due to unsupported fields; retrying without unsupported fields."
             )
             try:
+                self._prepare_payload_for_retry(payload)
                 return self._request("POST", "/issue", payload)
             except Exception as second_exc:
                 exc = second_exc
@@ -969,6 +971,7 @@ class JiraConnector(Connector):
             )
             payload["fields"]["issuetype"] = {"name": fallback_issue_type}
             payload["fields"].pop("parent", None)
+            self._prepare_payload_for_retry(payload)
             return self._request("POST", "/issue", payload)
         if self._is_subtask_issue_type(resolved_issue_type) or self._is_subtask_issue_type(issue_type):
             self.logger.warning(
@@ -980,6 +983,7 @@ class JiraConnector(Connector):
             payload["fields"]["issuetype"] = {"name": fallback_issue_type}
             if self._should_drop_parent_for_fallback(issue_type, fallback_issue_type):
                 payload["fields"].pop("parent", None)
+            self._prepare_payload_for_retry(payload)
             return self._request("POST", "/issue", payload)
         if fallback_issue_type != payload["fields"]["issuetype"]["name"]:
             self.logger.warning(
@@ -989,6 +993,7 @@ class JiraConnector(Connector):
                 exc,
             )
             payload["fields"]["issuetype"] = {"name": fallback_issue_type}
+            self._prepare_payload_for_retry(payload)
             return self._request("POST", "/issue", payload)
         return None
 
@@ -1052,6 +1057,25 @@ class JiraConnector(Connector):
                 fields.pop(field_name, None)
                 removed = True
         return removed
+
+    def _prepare_payload_for_retry(self, payload: dict[str, Any]) -> None:
+        # Remove fields that are only valid for certain issue types (e.g. Epic)
+        if not isinstance(payload, dict):
+            return
+        fields = payload.get("fields")
+        if not isinstance(fields, dict):
+            return
+        issuetype = fields.get("issuetype")
+        issuetype_name = None
+        if isinstance(issuetype, dict):
+            issuetype_name = issuetype.get("name")
+
+        # If we're creating a non-Epic, remove the configured epic name field
+        if issuetype_name != "Epic":
+            try:
+                fields.pop(self.epic_name_field, None)
+            except Exception:
+                pass
 
     def _resolve_parent_key(self, parent_reference: Any) -> str | None:
         if parent_reference is None:
