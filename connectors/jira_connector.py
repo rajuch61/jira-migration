@@ -274,7 +274,16 @@ class JiraConnector(Connector):
             return []
 
         configured_fields = self.config.get("search_fields") or self.config.get("fields")
-        fields = configured_fields or ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks"]
+        if isinstance(configured_fields, str):
+            configured_fields = [field.strip() for field in configured_fields.split(",") if field.strip()]
+        elif isinstance(configured_fields, (list, tuple)):
+            configured_fields = [str(field) for field in configured_fields if field is not None]
+        else:
+            configured_fields = None
+
+        use_all_fields = bool(self._resolve_config_value(self.config, "use_all_fields", default=True))
+        default_fields = ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks"]
+        fields = configured_fields or (["*all"] if use_all_fields else default_fields)
         query = self._build_search_jql(issue_keys)
         self.logger.info(f"Fetching issues with JQL query: {query}")
 
@@ -488,6 +497,24 @@ class JiraConnector(Connector):
                 "linked_issues": linked_issues,
                 "history": history,
             }
+            raw_fields = {
+                key: value
+                for key, value in fields_data.items()
+                if key not in (
+                    "project",
+                    "summary",
+                    "description",
+                    "issuetype",
+                    "status",
+                    "parent",
+                    "comment",
+                    "attachment",
+                    "issuelinks",
+                    "changelog",
+                )
+            }
+            if raw_fields:
+                issue["fields"] = raw_fields
             self.logger.info(
                 "Fetched source issue %s (%s): summary=%r description=%r issueType=%r status=%r parent=%r",
                 issue.get("id"),
@@ -721,11 +748,59 @@ class JiraConnector(Connector):
         payload = {
             "fields": {
                 "project": {"key": target_project_key},
-                "summary": issue.get("summary", ""),
+                "summary": issue.get("summary", "") or (issue.get("fields") or {}).get("summary", ""),
                 "description": self._to_adf(issue.get("description", "")) if self._adf_supported else self._extract_description(issue.get("description", "")),
                 "issuetype": {"name": resolved_issue_type},
             }
         }
+
+        raw_fields = issue.get("fields")
+        if isinstance(raw_fields, dict):
+            for field_name, field_value in raw_fields.items():
+                if field_name in (
+                    "project",
+                    "summary",
+                    "description",
+                    "issuetype",
+                    "status",
+                    "parent",
+                    "comment",
+                    "attachment",
+                    "issuelinks",
+                    "changelog",
+                ):
+                    continue
+                payload["fields"][field_name] = field_value
+
+        reserved_top_level_fields = {
+            "id",
+            "key",
+            "summary",
+            "description",
+            "issueType",
+            "sourceIssueType",
+            "source_issue_type",
+            "parent",
+            "parent_id",
+            "comments",
+            "attachments",
+            "linked_issues",
+            "history",
+            "deferred",
+            "fields",
+            "sourceType",
+            "targetType",
+            "project",
+            "epic_name",
+            "epicName",
+        }
+        for field_name, field_value in issue.items():
+            if field_name in reserved_top_level_fields:
+                continue
+            if field_name in payload["fields"]:
+                continue
+            payload["fields"][field_name] = field_value
+
         if resolved_issue_type == "Epic":
             epic_name = issue.get("epic_name") or issue.get("epicName") or issue.get("summary", "")
             if isinstance(epic_name, str) and epic_name.strip():
@@ -999,18 +1074,44 @@ class JiraConnector(Connector):
                 continue
 
             # Determine relation name and direction (outward means current -> target)
-            relation_name = link.get("relation") or (link.get("type_raw", {}).get("name") if isinstance(link.get("type_raw"), dict) else "Relates")
+            type_raw = link.get("type_raw") if isinstance(link.get("type_raw"), dict) else {}
+            relation_name = link.get("relation") or (type_raw.get("name") if isinstance(type_raw, dict) else "Relates")
             direction = link.get("direction") or "outward"
+
+            # Canonicalize type identifiers for duplicate suppression and creation
+            canonical_type_name = None
+            if isinstance(type_raw, dict):
+                canonical_type_name = type_raw.get("name")
+            if not isinstance(canonical_type_name, str) or not canonical_type_name.strip():
+                normalized_relation = str(relation_name).strip() if relation_name is not None else ""
+                relation_map = {
+                    "blocks": "Blocks",
+                    "blocked by": "Blocks",
+                    "is blocked by": "Blocks",
+                    "implements": "Implements",
+                    "implements by": "Implements",
+                    "implemented by": "Implements",
+                    "is implemented by": "Implements",
+                    "relates": "Relates",
+                    "relates to": "Relates",
+                    "is related to": "Relates",
+                }
+                canonical_type_name = relation_map.get(normalized_relation.lower(), normalized_relation or "Relates")
+
+            type_id = type_raw.get("id") if isinstance(type_raw, dict) else None
+            if not type_id:
+                type_id = None
+            pair_type = str(type_id) if type_id is not None else canonical_type_name or "Relates"
 
             # Normalize a directionless key to avoid creating duplicate reciprocal links
             try:
                 current_key = str(issue_id)
-                pair_key = tuple(sorted([current_key, str(resolved_target_key)])) + (relation_name or "Relates",)
+                pair_key = tuple(sorted([current_key, str(resolved_target_key)])) + (pair_type,)
             except Exception:
                 pair_key = None
 
             if pair_key and pair_key in self._created_links:
-                self.logger.debug("Skipping duplicate link creation for %s -> %s (%s)", current_key, resolved_target_key, relation_name)
+                self.logger.debug("Skipping duplicate link creation for %s -> %s (%s)", current_key, resolved_target_key, pair_type)
                 continue
 
             try:
@@ -1022,7 +1123,7 @@ class JiraConnector(Connector):
                     outward = str(resolved_target_key)
 
                 payload = {
-                    "type": {"name": relation_name},
+                    "type": {"id": str(type_id)} if type_id is not None else {"name": canonical_type_name},
                     "inwardIssue": {"key": inward},
                     "outwardIssue": {"key": outward},
                 }

@@ -42,6 +42,14 @@ class MigrationEngine:
             if isinstance(target_project, dict) and "target_project" not in effective_config:
                 effective_config["target_project"] = target_project
 
+            shared_search_fields = shared_config.get("search_fields")
+            if shared_search_fields is not None and "search_fields" not in effective_config and "fields" not in effective_config:
+                effective_config["search_fields"] = shared_search_fields
+
+            shared_use_all_fields = shared_config.get("use_all_fields")
+            if shared_use_all_fields is not None and "use_all_fields" not in effective_config:
+                effective_config["use_all_fields"] = shared_use_all_fields
+
         if module_name and class_name:
             module = importlib.import_module(module_name)
             connector_class = getattr(module, class_name)

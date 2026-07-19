@@ -25,6 +25,25 @@
       "Open": "Open"
     }
   },
+  "search_fields": [
+    "summary",
+    "description",
+    "issuetype",
+    "status",
+    "parent",
+    "comment",
+    "attachment",
+    "issuelinks",
+    "assignee",
+    "reporter",
+    "labels",
+    "components",
+    "fixVersions",
+    "priority",
+    "sprint",
+    "customfield_10104"
+  ],
+  "use_all_fields": false,
   "validation": {
     "require_summary": true,
     "require_issue_type": true,

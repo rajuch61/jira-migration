@@ -483,3 +483,5 @@
 2026-07-18 16:23:39,039 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
 2026-07-18 16:23:39,039 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
 2026-07-18 16:23:39,045 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments
+2026-07-19 11:51:07,064 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (Implements)
+2026-07-19 11:51:07,071 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (10000)

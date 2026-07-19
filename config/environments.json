@@ -3,7 +3,6 @@
     "source": {
       "type": "jira",
       "server": "${JIRA_SERVER}",
-      "project": "${JIRA_PROJECT}",
       "auth_type": "${JIRA_AUTH_TYPE}",
       "bearer_token": "${JIRA_BEARER_TOKEN}",
       "verify_ssl": false,
@@ -15,7 +14,6 @@
     "target": {
       "type": "jira",
       "server": "${JIRA_SERVER}",
-      "project": "${JIRA_PROJECT}",
       "auth_type": "${JIRA_AUTH_TYPE}",
       "bearer_token": "${JIRA_BEARER_TOKEN}",
       "verify_ssl": false,

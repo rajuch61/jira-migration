@@ -80,6 +80,26 @@ class JiraConnectorTests(unittest.TestCase):
         with patch.object(connector, "_request", return_value={"issues": []}) as request_mock:
             connector.read_issues()
 
+        expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall"
+        request_mock.assert_called_once_with("GET", expected_path)
+
+    def test_read_issues_supports_use_all_fields_toggle(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+                "use_all_fields": False,
+            }
+        )
+
+        with patch.object(connector, "_request", return_value={"issues": []}) as request_mock:
+            connector.read_issues()
+
         expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks"
         request_mock.assert_called_once_with("GET", expected_path)
 
@@ -129,8 +149,8 @@ class JiraConnectorTests(unittest.TestCase):
 
             self.assertEqual(len(issues), 2)
             self.assertEqual(request_mock.call_count, 2)
-            self.assertEqual(request_mock.call_args_list[0].args[1], "/issue/CSTEST-721?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
-            self.assertEqual(request_mock.call_args_list[1].args[1], "/issue/CSTEST-720?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
+            self.assertEqual(request_mock.call_args_list[0].args[1], "/issue/CSTEST-721?fields=%2Aall")
+            self.assertEqual(request_mock.call_args_list[1].args[1], "/issue/CSTEST-720?fields=%2Aall")
         finally:
             os.unlink(csv_path)
 
@@ -195,8 +215,72 @@ class JiraConnectorTests(unittest.TestCase):
         with patch.object(connector, "_request", return_value={"issues": []}) as request_mock:
             connector.read_issues()
 
-        expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks"
+        expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall"
         request_mock.assert_called_once_with("GET", expected_path)
+
+    def test_read_issues_preserves_custom_fields_in_issue_payload(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        payload = {
+            "issues": [
+                {
+                    "id": "10037",
+                    "key": "ABC-1",
+                    "fields": {
+                        "summary": "Added summary",
+                        "description": "Detail",
+                        "issuetype": {"name": "Task"},
+                        "status": {"name": "Open"},
+                        "customfield_12345": "Custom Value",
+                        "customfield_54321": {"value": "Option"},
+                    },
+                }
+            ]
+        }
+
+        with patch.object(connector, "_request", return_value=payload):
+            issues = connector.read_issues()
+
+        self.assertEqual(issues[0]["fields"]["customfield_12345"], "Custom Value")
+        self.assertEqual(issues[0]["fields"]["customfield_54321"], {"value": "Option"})
+
+    def test_create_issue_forwards_unknown_fields_to_jira(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        with patch.object(connector, "_request", return_value={"id": "456", "key": "ABC-456"}) as request_mock:
+            connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Story",
+                    "customfield_12345": "Custom Value",
+                    "customfield_54321": {"value": "Option"},
+                }
+            )
+
+        request_payload = request_mock.call_args.args[2]["fields"]
+        self.assertEqual(request_payload["customfield_12345"], "Custom Value")
+        self.assertEqual(request_payload["customfield_54321"], {"value": "Option"})
 
     def test_read_issues_falls_back_to_key_search_when_search_returns_no_items(self):
         connector_module = importlib.import_module("connectors.jira_connector")
@@ -228,9 +312,9 @@ class JiraConnectorTests(unittest.TestCase):
 
         self.assertEqual(len(issues), 1)
         self.assertEqual(issues[0]["summary"], "Added summary")
-        self.assertEqual(request_mock.call_args_list[0].args[1], "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
+        self.assertEqual(request_mock.call_args_list[0].args[1], "/search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall")
         self.assertEqual(request_mock.call_args_list[1].args[1], "/search?jql=project%3D%22ABC%22")
-        self.assertEqual(request_mock.call_args_list[2].args[1], "/issue/ABC-1?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
+        self.assertEqual(request_mock.call_args_list[2].args[1], "/issue/ABC-1?fields=%2Aall")
 
     def test_read_issues_paginates_search_results(self):
         connector_module = importlib.import_module("connectors.jira_connector")
@@ -893,6 +977,126 @@ class JiraConnectorTests(unittest.TestCase):
         self.assertEqual(request_mock.call_count, 2)
         self.assertEqual(request_mock.call_args_list[1].args[1], "/issueLink")
         self.assertEqual(request_mock.call_args_list[1].args[2]["outwardIssue"], {"key": "ABC-2"})
+
+    def test_create_issue_links_skips_duplicate_reciprocal_directional_relations(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        with patch.object(connector, "_request", return_value={}) as request_mock:
+            connector._create_issue_links(
+                "ABC-1",
+                [
+                    {
+                        "target_key": "ABC-2",
+                        "relation": "Blocks",
+                        "direction": "outward",
+                        "type_raw": {"id": "10000", "name": "Blocks"},
+                    }
+                ],
+            )
+            connector._create_issue_links(
+                "ABC-2",
+                [
+                    {
+                        "target_key": "ABC-1",
+                        "relation": "Blocked by",
+                        "direction": "inward",
+                        "type_raw": {"id": "10000", "name": "Blocks"},
+                    }
+                ],
+            )
+
+        self.assertEqual(request_mock.call_count, 1)
+        self.assertEqual(request_mock.call_args.args[2]["type"], {"id": "10000"})
+
+    def test_create_issue_links_canonicalizes_relation_names_without_type_id(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        with patch.object(connector, "_request", return_value={}) as request_mock:
+            connector._create_issue_links(
+                "ABC-1",
+                [
+                    {
+                        "target_key": "ABC-2",
+                        "relation": "Implemented by",
+                        "direction": "inward",
+                        "type_raw": {"name": "Implements"},
+                    }
+                ],
+            )
+            connector._create_issue_links(
+                "ABC-2",
+                [
+                    {
+                        "target_key": "ABC-1",
+                        "relation": "Implements",
+                        "direction": "outward",
+                        "type_raw": {"name": "Implements"},
+                    }
+                ],
+            )
+
+        self.assertEqual(request_mock.call_count, 1)
+        self.assertEqual(request_mock.call_args.args[2]["type"], {"name": "Implements"})
+
+    def test_create_issue_links_skips_duplicate_relates_name_variants(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        with patch.object(connector, "_request", return_value={}) as request_mock:
+            connector._create_issue_links(
+                "ABC-1",
+                [
+                    {
+                        "target_key": "ABC-2",
+                        "relation": "Relates",
+                        "direction": "outward",
+                        "type_raw": {"name": "Relates"},
+                    }
+                ],
+            )
+            connector._create_issue_links(
+                "ABC-2",
+                [
+                    {
+                        "target_key": "ABC-1",
+                        "relation": "Is related to",
+                        "direction": "inward",
+                        "type_raw": {"name": "Relates"},
+                    }
+                ],
+            )
+
+        self.assertEqual(request_mock.call_count, 1)
+        self.assertEqual(request_mock.call_args.args[2]["type"], {"name": "Relates"})
 
     def test_create_project_uses_current_account_id_when_email_is_configured(self):
         connector_module = importlib.import_module("connectors.jira_connector")

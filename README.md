@@ -74,6 +74,24 @@ Example structure:
       "To Do": "Open"
     }
   },
+  "use_all_fields": true,
+  "search_fields": [
+    "summary",
+    "description",
+    "issuetype",
+    "status",
+    "parent",
+    "comment",
+    "attachment",
+    "issuelinks",
+    "assignee",
+    "reporter",
+    "labels",
+    "components",
+    "fixVersions",
+    "priority",
+    "sprint"
+  ],
   "validation": {
     "require_summary": true,
     "require_issue_type": true,
@@ -136,6 +154,13 @@ Optional:
 - verify_ssl: true/false
 - timeout: request timeout in seconds
 - api_path: Jira REST API base path
+- use_all_fields: true/false to use Jira `*all` field expansion by default when no explicit search fields are configured
+- search_fields: Jira field names to fetch instead of using `*all` or the connector default list
+
+Shared migration config also supports `use_all_fields` and `search_fields` at the top level so they can be defined once in `config/migration.json` instead of per-environment.
+
+### Shared search field configuration
+You can define `search_fields` in `config/migration.json` to have the Jira source connector use the same field set across environments. When `search_fields` is configured in `migration.json`, it is copied into the connector config unless the connector already defines its own `search_fields` or `fields`.
 
 ## Transformations and validation
 
