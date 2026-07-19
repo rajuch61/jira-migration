@@ -949,6 +949,16 @@ class JiraConnector(Connector):
                 exc = second_exc
                 error_text = str(second_exc)
 
+        if self._filter_payload_fields_for_rejected_errors(payload, error_text):
+            self.logger.warning(
+                "Issue creation rejected due to unsupported fields; retrying without unsupported fields."
+            )
+            try:
+                return self._request("POST", "/issue", payload)
+            except Exception as second_exc:
+                exc = second_exc
+                error_text = str(second_exc)
+
         fallback_issue_type = self._resolve_issue_type("Task")
         issue_type = issue.get("issueType") or "Task"
         if is_source_subtask and parent_reference:
@@ -1012,6 +1022,36 @@ class JiraConnector(Connector):
         if fallback_issue_type != "Task":
             return False
         return self._is_subtask_issue_type(issue_type)
+
+    def _extract_rejected_field_names(self, error_text: str) -> set[str]:
+        if not isinstance(error_text, str):
+            return set()
+        try:
+            json_start = error_text.index("{")
+            error_json = json.loads(error_text[json_start:])
+        except Exception:
+            return set()
+
+        errors = error_json.get("errors") if isinstance(error_json, dict) else None
+        if not isinstance(errors, dict):
+            return set()
+        return {str(field_name) for field_name in errors.keys() if isinstance(field_name, (str, int))}
+
+    def _filter_payload_fields_for_rejected_errors(self, payload: dict[str, Any], error_text: str) -> bool:
+        rejected_fields = self._extract_rejected_field_names(error_text)
+        if not rejected_fields:
+            return False
+        fields = payload.get("fields")
+        if not isinstance(fields, dict):
+            return False
+
+        removed = False
+        for field_name in list(fields.keys()):
+            if field_name in rejected_fields:
+                self.logger.debug("Dropping rejected field %r from create payload", field_name)
+                fields.pop(field_name, None)
+                removed = True
+        return removed
 
     def _resolve_parent_key(self, parent_reference: Any) -> str | None:
         if parent_reference is None:

@@ -524,6 +524,42 @@ class JiraConnectorTests(unittest.TestCase):
         self.assertEqual(request_mock.call_count, 2)
         self.assertEqual(request_mock.call_args_list[1].args[2]["fields"]["description"], "hello")
 
+    def test_create_issue_retries_when_fields_are_not_on_appropriate_screen(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        def side_effect(method, path, payload=None):
+            if method == "POST" and path == "/issue":
+                if "customfield_11720" in payload["fields"]:
+                    raise RuntimeError(
+                        "Jira request failed (400): {\"errorMessages\":[],\"errors\":{\"customfield_11720\":\"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown.\"}}"
+                    )
+                return {"id": "456", "key": "ABC-456"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            response = connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Story",
+                    "customfield_11720": "Bad field",
+                }
+            )
+
+        self.assertEqual(response["key"], "ABC-456")
+        self.assertEqual(request_mock.call_count, 2)
+        self.assertNotIn("customfield_11720", request_mock.call_args_list[1].args[2]["fields"])
+
     def test_create_issue_returns_metadata_fields_for_export(self):
         connector_module = importlib.import_module("connectors.jira_connector")
         JiraConnector = connector_module.JiraConnector
