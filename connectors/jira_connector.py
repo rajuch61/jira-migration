@@ -914,6 +914,17 @@ class JiraConnector(Connector):
         normalized = str(issue_type or "").strip().lower()
         return normalized in {"sub-task", "subtask"}
 
+    def _submit_issue_create_request(self, payload: dict[str, Any], error_text: str | None = None) -> dict[str, Any]:
+        payload_copy = dict(payload)
+        fields = payload_copy.get("fields")
+        if isinstance(fields, dict):
+            payload_copy["fields"] = dict(fields)
+        self._prepare_payload_for_retry(payload_copy)
+        if error_text is not None:
+            self._filter_payload_fields_for_rejected_errors(payload_copy, error_text)
+        self._prepare_payload_for_retry(payload_copy)
+        return self._request("POST", "/issue", payload_copy)
+
     def _create_issue_with_fallbacks(
         self,
         issue: dict,
@@ -925,76 +936,87 @@ class JiraConnector(Connector):
         parent_key: str | None,
         use_parent_field: bool,
     ) -> dict[str, Any] | None:
-        error_text = str(exc)
-        description_field = payload["fields"].get("description")
-        if (
-            isinstance(description_field, dict)
-            and "description" in error_text.lower()
-            and (
-                "operation value must be a string" in error_text.lower()
-                or "expected string" in error_text.lower()
-                or "must be a string" in error_text.lower()
-            )
-        ):
-            self.logger.warning(
-                "Issue description ADF rejected by Jira; retrying with plain string description: %s",
-                exc,
-            )
-            # Remember that this server doesn't accept ADF descriptions to avoid repeated retries
-            self._adf_supported = False
-            payload["fields"]["description"] = self._extract_description(issue.get("description", ""))
-            try:
-                self._prepare_payload_for_retry(payload)
-                return self._request("POST", "/issue", payload)
-            except Exception as second_exc:
-                exc = second_exc
-                error_text = str(second_exc)
+        current_payload = dict(payload)
+        current_fields = current_payload.get("fields")
+        if isinstance(current_fields, dict):
+            current_payload["fields"] = dict(current_fields)
 
-        if self._filter_payload_fields_for_rejected_errors(payload, error_text):
-            self.logger.warning(
-                "Issue creation rejected due to unsupported fields; retrying without unsupported fields."
-            )
-            try:
-                self._prepare_payload_for_retry(payload)
-                return self._request("POST", "/issue", payload)
-            except Exception as second_exc:
-                exc = second_exc
-                error_text = str(second_exc)
-
+        current_error_text = str(exc)
         fallback_issue_type = self._resolve_issue_type("Task")
         issue_type = issue.get("issueType") or "Task"
-        if is_source_subtask and parent_reference:
-            self.logger.warning(
-                "Sub-task issue %r was rejected by Jira; creating it as a task and linking to the parent instead: %s",
-                issue.get("summary") or issue.get("key"),
-                exc,
-            )
-            payload["fields"]["issuetype"] = {"name": fallback_issue_type}
-            payload["fields"].pop("parent", None)
-            self._prepare_payload_for_retry(payload)
-            return self._request("POST", "/issue", payload)
-        if self._is_subtask_issue_type(resolved_issue_type) or self._is_subtask_issue_type(issue_type):
-            self.logger.warning(
-                "Sub-task issue %r was rejected by Jira; retrying as %r: %s",
-                issue.get("summary") or issue.get("key"),
-                fallback_issue_type,
-                exc,
-            )
-            payload["fields"]["issuetype"] = {"name": fallback_issue_type}
-            if self._should_drop_parent_for_fallback(issue_type, fallback_issue_type):
-                payload["fields"].pop("parent", None)
-            self._prepare_payload_for_retry(payload)
-            return self._request("POST", "/issue", payload)
-        if fallback_issue_type != payload["fields"]["issuetype"]["name"]:
-            self.logger.warning(
-                "Issue type %r rejected, retrying with %r: %s",
-                issue_type,
-                fallback_issue_type,
-                exc,
-            )
-            payload["fields"]["issuetype"] = {"name": fallback_issue_type}
-            self._prepare_payload_for_retry(payload)
-            return self._request("POST", "/issue", payload)
+
+        for _ in range(6):
+            description_field = current_payload["fields"].get("description")
+            if (
+                isinstance(description_field, dict)
+                and "description" in current_error_text.lower()
+                and (
+                    "operation value must be a string" in current_error_text.lower()
+                    or "expected string" in current_error_text.lower()
+                    or "must be a string" in current_error_text.lower()
+                )
+            ):
+                self.logger.warning(
+                    "Issue description ADF rejected by Jira; retrying with plain string description: %s",
+                    exc,
+                )
+                self._adf_supported = False
+                current_payload["fields"]["description"] = self._extract_description(issue.get("description", ""))
+                try:
+                    return self._submit_issue_create_request(current_payload, None)
+                except Exception as second_exc:
+                    current_error_text = str(second_exc)
+                    exc = second_exc
+                    continue
+
+            changed = False
+            if self._filter_payload_fields_for_rejected_errors(current_payload, current_error_text):
+                self.logger.warning(
+                    "Issue creation rejected due to unsupported fields; retrying without unsupported fields."
+                )
+                changed = True
+
+            if is_source_subtask and parent_reference:
+                self.logger.warning(
+                    "Sub-task issue %r was rejected by Jira; creating it as a task and linking to the parent instead: %s",
+                    issue.get("summary") or issue.get("key"),
+                    exc,
+                )
+                current_payload["fields"]["issuetype"] = {"name": fallback_issue_type}
+                current_payload["fields"].pop("parent", None)
+                changed = True
+            elif self._is_subtask_issue_type(resolved_issue_type) or self._is_subtask_issue_type(issue_type):
+                self.logger.warning(
+                    "Sub-task issue %r was rejected by Jira; retrying as %r: %s",
+                    issue.get("summary") or issue.get("key"),
+                    fallback_issue_type,
+                    exc,
+                )
+                current_payload["fields"]["issuetype"] = {"name": fallback_issue_type}
+                if self._should_drop_parent_for_fallback(issue_type, fallback_issue_type):
+                    current_payload["fields"].pop("parent", None)
+                changed = True
+            elif fallback_issue_type != current_payload["fields"]["issuetype"]["name"]:
+                self.logger.warning(
+                    "Issue type %r rejected, retrying with %r: %s",
+                    issue_type,
+                    fallback_issue_type,
+                    exc,
+                )
+                current_payload["fields"]["issuetype"] = {"name": fallback_issue_type}
+                changed = True
+
+            if not changed:
+                break
+
+            try:
+                if self._filter_payload_fields_for_rejected_errors(current_payload, current_error_text):
+                    self.logger.debug("Retrying create request with cleaned payload after fallback")
+                return self._submit_issue_create_request(current_payload, current_error_text)
+            except Exception as second_exc:
+                current_error_text = str(second_exc)
+                exc = second_exc
+
         return None
 
     def _resolve_target_subtask_issue_type(self, target_project_key: str) -> str | None:
@@ -1103,6 +1125,26 @@ class JiraConnector(Connector):
         # Also try to infer rejected fields from errorMessages when errors map is missing
         inferred = self._infer_rejected_fields_from_messages(error_text, payload)
         rejected_fields.update(inferred)
+
+        if isinstance(error_text, str):
+            lower_error = error_text.lower()
+            for field_name in list(payload.get("fields", {}).keys()) if isinstance(payload, dict) else []:
+                field_key = str(field_name).lower()
+                if field_key in {"fixversions", "fixversion", "sprint", "description", "resolution"} and field_key in lower_error:
+                    rejected_fields.add(field_name)
+                if field_key.startswith("customfield_") and ("customfield" in lower_error or field_key in lower_error):
+                    rejected_fields.add(field_name)
+            for match in re.findall(r"'([a-zA-Z0-9_\-]+)'", error_text):
+                normalized = match.lower()
+                if normalized in {"fixversions", "fixversion", "sprint", "description", "resolution"}:
+                    for field_name in list(payload.get("fields", {}).keys()) if isinstance(payload, dict) else []:
+                        if str(field_name).lower() == normalized:
+                            rejected_fields.add(field_name)
+                elif normalized.startswith("customfield_"):
+                    for field_name in list(payload.get("fields", {}).keys()) if isinstance(payload, dict) else []:
+                        if str(field_name).lower() == normalized:
+                            rejected_fields.add(field_name)
+
         if not rejected_fields:
             return False
         fields = payload.get("fields")
