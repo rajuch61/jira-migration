@@ -485,3 +485,383 @@
 2026-07-18 16:23:39,045 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments
 2026-07-19 11:51:07,064 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (Implements)
 2026-07-19 11:51:07,071 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (10000)
+2026-07-19 12:21:11,341 - DEBUG - Dropping rejected field 'customfield_11720' from create payload
+2026-07-19 12:21:11,342 - WARNING - Issue creation rejected due to unsupported fields; retrying without unsupported fields.
+2026-07-19 12:21:11,347 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":[],"errors":{"description":"Operation value must be a string"}}
+2026-07-19 12:27:18,063 - DEBUG - Dropping rejected field 'customfield_11720' from create payload
+2026-07-19 12:27:18,063 - WARNING - Issue creation rejected due to unsupported fields; retrying without unsupported fields.
+2026-07-19 12:27:18,067 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":[],"errors":{"description":"Operation value must be a string"}}
+2026-07-19 12:39:24,738 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":["Number value expected as the Sprint id."],"errors":{"description":"Operation value must be a string","fixVersions":"Version id '12604' is not valid"}}
+2026-07-19 12:39:24,740 - DEBUG - Dropping rejected field 'description' from create payload
+2026-07-19 12:39:24,740 - DEBUG - Dropping rejected field 'fixVersions' from create payload
+2026-07-19 12:39:24,740 - DEBUG - Dropping rejected field 'sprint' from create payload
+2026-07-19 12:39:24,740 - WARNING - Issue creation rejected due to unsupported fields; retrying without unsupported fields.
+2026-07-19 12:39:56,792 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":["Number value expected as the Sprint id."],"errors":{"description":"Operation value must be a string","fixVersions":"Version id '12604' is not valid"}}
+2026-07-19 12:39:56,792 - DEBUG - Dropping rejected field 'description' from create payload
+2026-07-19 12:39:56,793 - DEBUG - Dropping rejected field 'fixVersions' from create payload
+2026-07-19 12:39:56,793 - DEBUG - Dropping rejected field 'sprint' from create payload
+2026-07-19 12:39:56,793 - WARNING - Issue creation rejected due to unsupported fields; retrying without unsupported fields.
+2026-07-19 12:48:31,893 - WARNING - Issue type 'Epic' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown."}}
+2026-07-19 12:48:46,759 - WARNING - Issue type 'Epic' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown."}}
+2026-07-19 12:49:03,331 - WARNING - Issue type 'Epic' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown."}}
+2026-07-19 12:50:12,665 - WARNING - Issue type 'Epic' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown."}}
+2026-07-19 12:57:53,501 - WARNING - Issue type 'Epic' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown."}}
+2026-07-19 12:57:53,502 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":[],"errors":{"description":"Operation value must be a string","fixVersions":"Version id '12604' is not valid"}}
+2026-07-19 12:57:53,503 - DEBUG - Dropping rejected field 'description' from create payload
+2026-07-19 12:57:53,503 - DEBUG - Dropping rejected field 'fixVersions' from create payload
+2026-07-19 12:58:13,890 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":["Number value expected as the Sprint id."],"errors":{"description":"Operation value must be a string","fixVersions":"Version id '12604' is not valid"}}
+2026-07-19 12:58:13,891 - DEBUG - Dropping rejected field 'description' from create payload
+2026-07-19 12:58:13,891 - DEBUG - Dropping rejected field 'fixVersions' from create payload
+2026-07-19 12:58:13,892 - DEBUG - Dropping rejected field 'sprint' from create payload
+2026-07-19 12:58:13,894 - WARNING - Issue type 'Epic' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown."}}
+2026-07-19 12:58:13,894 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":[],"errors":{"description":"Operation value must be a string","fixVersions":"Version id '12604' is not valid"}}
+2026-07-19 12:58:13,894 - DEBUG - Dropping rejected field 'description' from create payload
+2026-07-19 12:58:13,895 - DEBUG - Dropping rejected field 'fixVersions' from create payload
+2026-07-19 12:58:13,901 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (Implements)
+2026-07-19 12:58:13,903 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (10000)
+2026-07-19 12:58:13,905 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (Relates)
+2026-07-19 12:58:13,915 - INFO - Deferring subtask 10051 until parent exists
+2026-07-19 12:58:13,917 - DEBUG - Dropping rejected field 'customfield_11720' from create payload
+2026-07-19 12:58:13,917 - WARNING - Issue creation rejected due to unsupported fields; retrying without unsupported fields.
+2026-07-19 12:58:13,917 - WARNING - Issue type 'Story' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown."}}
+2026-07-19 12:58:13,919 - WARNING - Issue type 'Story' rejected, retrying with 'Task': invalid issue type
+2026-07-19 12:58:13,921 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":[],"errors":{"description":"Operation value must be a string"}}
+2026-07-19 12:58:13,922 - DEBUG - Dropping rejected field 'description' from create payload
+2026-07-19 12:58:13,922 - WARNING - Issue type 'Story' rejected, retrying with 'Task': 'description'
+2026-07-19 12:58:13,937 - DEBUG - Setting project lead to: account-456
+2026-07-19 12:58:13,937 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-456'}
+2026-07-19 12:58:13,939 - DEBUG - Setting project lead to: account-123
+2026-07-19 12:58:13,939 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-123'}
+2026-07-19 12:58:13,946 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:13,947 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:13,947 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:13,947 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 12:58:13,948 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}, 'comment': {'comments': []}, 'attachment': [{'id': 'att-1', 'filename': 'file.txt', 'content': 'abc'}], 'issuelinks': [{'type': {'name': 'Relates'}, 'outwardIssue': {'key': 'ABC-2'}}]}, 'changelog': {'histories': [{'created': '2024-01-01', 'items': [{'field': 'status', 'fromString': 'Open', 'toString': 'Done'}]}]}}]}
+2026-07-19 12:58:13,948 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent='ABC-0'
+2026-07-19 12:58:13,950 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:13,951 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:13,951 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:13,951 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 12:58:13,952 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'comment': {'comments': [{'id': 'c-1', 'body': {'type': 'doc', 'version': 1, 'content': [{'type': 'paragraph', 'content': [{'type': 'text', 'text': 'Hello'}]}]}, 'created': '2024-01-02T03:04:05.000Z', 'updated': '2024-01-02T03:05:06.000Z'}]}}}]}
+2026-07-19 12:58:13,952 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:13,954 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:13,954 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:13,954 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:13,955 - DEBUG - Search response: total=1, issues_count=0, maxResults=100, startAt=0
+2026-07-19 12:58:13,955 - WARNING - Search returned 0 issues but total=1. Full response: {'total': 1, 'startAt': 0, 'maxResults': 100, 'issues': []}
+2026-07-19 12:58:13,955 - WARNING - Initial Jira search returned 1 total issues but no issue items; retrying with bare search endpoint.
+2026-07-19 12:58:13,955 - DEBUG - Retrying search with bare query path: /search?jql=project%3D%22ABC%22
+2026-07-19 12:58:13,956 - INFO - Bare search endpoint returned 1 issues; using fallback issue data.
+2026-07-19 12:58:13,956 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:13,983 - INFO - Fetching issues with JQL query: issuekey in ("CSTEST-721","CSTEST-720")
+2026-07-19 12:58:13,983 - INFO - Fetched source issue 10037 (CSTEST-721): summary='Test 1' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:13,984 - INFO - Fetched source issue 10038 (CSTEST-720): summary='Test 2' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:13,987 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:13,987 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:13,987 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 12:58:13,988 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}}}]}
+2026-07-19 12:58:13,990 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:13,991 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:13,991 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:13,991 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=0
+2026-07-19 12:58:13,992 - DEBUG - Pagination step computed: step=100 maxResults=100 len_issues=1 page_size_before=100
+2026-07-19 12:58:13,992 - DEBUG - Fetching search page at startAt=100
+2026-07-19 12:58:13,992 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=100
+2026-07-19 12:58:13,992 - DEBUG - Pagination step computed: step=100 maxResults=100 len_issues=1 page_size_before=100
+2026-07-19 12:58:13,993 - DEBUG - Fetching search page at startAt=200
+2026-07-19 12:58:13,993 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=200
+2026-07-19 12:58:13,993 - DEBUG - Pagination step computed: step=100 maxResults=100 len_issues=1 page_size_before=100
+2026-07-19 12:58:13,994 - DEBUG - Fetching search page at startAt=300
+2026-07-19 12:58:13,994 - DEBUG - Search response: total=250, issues_count=0, maxResults=100, startAt=300
+2026-07-19 12:58:13,994 - WARNING - Search returned 0 issues but total=250. Full response: {'total': 250, 'startAt': 300, 'maxResults': 100, 'issues': []}
+2026-07-19 12:58:13,994 - INFO - Fetched source issue None (ABC-1): summary='One' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:13,995 - INFO - Fetched source issue None (ABC-2): summary='Two' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:13,995 - INFO - Fetched source issue None (ABC-3): summary='Three' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:13,998 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:13,998 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:13,999 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:13,999 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 12:58:14,000 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': 'Detail', 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'customfield_12345': 'Custom Value', 'customfield_54321': {'value': 'Option'}}}]}
+2026-07-19 12:58:14,000 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:14,002 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:14,003 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:14,003 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:14,003 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-19 12:58:14,004 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-19 12:58:14,005 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:14,006 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-19 12:58:14,006 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:14,006 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-19 12:58:14,006 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-19 12:58:14,009 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:14,009 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:14,010 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:14,010 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-19 12:58:14,010 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-19 12:58:14,016 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments
+2026-07-19 12:58:49,097 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":["Number value expected as the Sprint id."],"errors":{"description":"Operation value must be a string","fixVersions":"Version id '12604' is not valid"}}
+2026-07-19 12:58:49,098 - DEBUG - Dropping rejected field 'description' from create payload
+2026-07-19 12:58:49,099 - DEBUG - Dropping rejected field 'fixVersions' from create payload
+2026-07-19 12:58:49,099 - DEBUG - Dropping rejected field 'sprint' from create payload
+2026-07-19 12:58:49,099 - WARNING - Issue creation rejected due to unsupported fields; retrying without unsupported fields.
+2026-07-19 12:58:49,099 - WARNING - Issue type 'Story' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":["Number value expected as the Sprint id."],"errors":{"description":"Operation value must be a string","fixVersions":"Version id '12604' is not valid"}}
+2026-07-19 12:58:49,101 - WARNING - Issue type 'Epic' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown."}}
+2026-07-19 12:58:49,102 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":[],"errors":{"description":"Operation value must be a string","fixVersions":"Version id '12604' is not valid"}}
+2026-07-19 12:58:49,108 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (Implements)
+2026-07-19 12:58:49,110 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (10000)
+2026-07-19 12:58:49,112 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (Relates)
+2026-07-19 12:58:49,122 - INFO - Deferring subtask 10051 until parent exists
+2026-07-19 12:58:49,123 - DEBUG - Dropping rejected field 'customfield_11720' from create payload
+2026-07-19 12:58:49,124 - WARNING - Issue creation rejected due to unsupported fields; retrying without unsupported fields.
+2026-07-19 12:58:49,124 - WARNING - Issue type 'Story' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown."}}
+2026-07-19 12:58:49,126 - WARNING - Issue type 'Story' rejected, retrying with 'Task': invalid issue type
+2026-07-19 12:58:49,129 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":[],"errors":{"description":"Operation value must be a string"}}
+2026-07-19 12:58:49,140 - DEBUG - Setting project lead to: account-456
+2026-07-19 12:58:49,140 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-456'}
+2026-07-19 12:58:49,142 - DEBUG - Setting project lead to: account-123
+2026-07-19 12:58:49,143 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-123'}
+2026-07-19 12:58:49,149 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:49,149 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:49,149 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:49,150 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 12:58:49,150 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}, 'comment': {'comments': []}, 'attachment': [{'id': 'att-1', 'filename': 'file.txt', 'content': 'abc'}], 'issuelinks': [{'type': {'name': 'Relates'}, 'outwardIssue': {'key': 'ABC-2'}}]}, 'changelog': {'histories': [{'created': '2024-01-01', 'items': [{'field': 'status', 'fromString': 'Open', 'toString': 'Done'}]}]}}]}
+2026-07-19 12:58:49,151 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent='ABC-0'
+2026-07-19 12:58:49,152 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:49,153 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:49,153 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:49,153 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 12:58:49,153 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'comment': {'comments': [{'id': 'c-1', 'body': {'type': 'doc', 'version': 1, 'content': [{'type': 'paragraph', 'content': [{'type': 'text', 'text': 'Hello'}]}]}, 'created': '2024-01-02T03:04:05.000Z', 'updated': '2024-01-02T03:05:06.000Z'}]}}}]}
+2026-07-19 12:58:49,154 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:49,155 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:49,156 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:49,156 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:49,156 - DEBUG - Search response: total=1, issues_count=0, maxResults=100, startAt=0
+2026-07-19 12:58:49,156 - WARNING - Search returned 0 issues but total=1. Full response: {'total': 1, 'startAt': 0, 'maxResults': 100, 'issues': []}
+2026-07-19 12:58:49,157 - WARNING - Initial Jira search returned 1 total issues but no issue items; retrying with bare search endpoint.
+2026-07-19 12:58:49,157 - DEBUG - Retrying search with bare query path: /search?jql=project%3D%22ABC%22
+2026-07-19 12:58:49,157 - INFO - Bare search endpoint returned 1 issues; using fallback issue data.
+2026-07-19 12:58:49,158 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:49,167 - INFO - Fetching issues with JQL query: issuekey in ("CSTEST-721","CSTEST-720")
+2026-07-19 12:58:49,168 - INFO - Fetched source issue 10037 (CSTEST-721): summary='Test 1' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:49,168 - INFO - Fetched source issue 10038 (CSTEST-720): summary='Test 2' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:49,172 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:49,172 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:49,172 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 12:58:49,173 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}}}]}
+2026-07-19 12:58:49,175 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:49,176 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:49,177 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:49,177 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=0
+2026-07-19 12:58:49,177 - DEBUG - Pagination step computed: step=100 maxResults=100 len_issues=1 page_size_before=100
+2026-07-19 12:58:49,177 - DEBUG - Fetching search page at startAt=100
+2026-07-19 12:58:49,178 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=100
+2026-07-19 12:58:49,178 - DEBUG - Pagination step computed: step=100 maxResults=100 len_issues=1 page_size_before=100
+2026-07-19 12:58:49,178 - DEBUG - Fetching search page at startAt=200
+2026-07-19 12:58:49,179 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=200
+2026-07-19 12:58:49,179 - DEBUG - Pagination step computed: step=100 maxResults=100 len_issues=1 page_size_before=100
+2026-07-19 12:58:49,180 - DEBUG - Fetching search page at startAt=300
+2026-07-19 12:58:49,180 - DEBUG - Search response: total=250, issues_count=0, maxResults=100, startAt=300
+2026-07-19 12:58:49,181 - WARNING - Search returned 0 issues but total=250. Full response: {'total': 250, 'startAt': 300, 'maxResults': 100, 'issues': []}
+2026-07-19 12:58:49,181 - INFO - Fetched source issue None (ABC-1): summary='One' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:49,181 - INFO - Fetched source issue None (ABC-2): summary='Two' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:49,182 - INFO - Fetched source issue None (ABC-3): summary='Three' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:49,184 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:49,184 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:49,185 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:49,185 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 12:58:49,185 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': 'Detail', 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'customfield_12345': 'Custom Value', 'customfield_54321': {'value': 'Option'}}}]}
+2026-07-19 12:58:49,186 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-19 12:58:49,187 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:49,188 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:49,188 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:49,189 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-19 12:58:49,189 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-19 12:58:49,190 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:49,191 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-19 12:58:49,191 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:49,191 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-19 12:58:49,192 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-19 12:58:49,193 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:58:49,194 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:58:49,194 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:58:49,194 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-19 12:58:49,195 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-19 12:58:49,198 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments
+2026-07-19 12:59:31,894 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":["Number value expected as the Sprint id."],"errors":{"description":"Operation value must be a string","fixVersions":"Version id '12604' is not valid"}}
+2026-07-19 12:59:31,895 - DEBUG - Dropping rejected field 'description' from create payload
+2026-07-19 12:59:31,895 - DEBUG - Dropping rejected field 'fixVersions' from create payload
+2026-07-19 12:59:31,896 - DEBUG - Dropping rejected field 'sprint' from create payload
+2026-07-19 12:59:31,897 - WARNING - Issue type 'Epic' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown."}}
+2026-07-19 12:59:31,898 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":[],"errors":{"description":"Operation value must be a string","fixVersions":"Version id '12604' is not valid"}}
+2026-07-19 12:59:31,898 - DEBUG - Dropping rejected field 'description' from create payload
+2026-07-19 12:59:31,898 - DEBUG - Dropping rejected field 'fixVersions' from create payload
+2026-07-19 12:59:31,903 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (Implements)
+2026-07-19 12:59:31,905 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (10000)
+2026-07-19 12:59:31,907 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (Relates)
+2026-07-19 12:59:31,916 - INFO - Deferring subtask 10051 until parent exists
+2026-07-19 12:59:31,918 - DEBUG - Dropping rejected field 'customfield_11720' from create payload
+2026-07-19 12:59:31,919 - WARNING - Issue creation rejected due to unsupported fields; retrying without unsupported fields.
+2026-07-19 12:59:31,919 - WARNING - Issue type 'Story' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown."}}
+2026-07-19 12:59:31,921 - WARNING - Issue type 'Story' rejected, retrying with 'Task': invalid issue type
+2026-07-19 12:59:31,923 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":[],"errors":{"description":"Operation value must be a string"}}
+2026-07-19 12:59:31,924 - DEBUG - Dropping rejected field 'description' from create payload
+2026-07-19 12:59:31,924 - WARNING - Issue type 'Story' rejected, retrying with 'Task': 'description'
+2026-07-19 12:59:31,939 - DEBUG - Setting project lead to: account-456
+2026-07-19 12:59:31,940 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-456'}
+2026-07-19 12:59:31,942 - DEBUG - Setting project lead to: account-123
+2026-07-19 12:59:31,943 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-123'}
+2026-07-19 12:59:31,948 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:59:31,949 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:59:31,949 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:59:31,949 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 12:59:31,949 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}, 'comment': {'comments': []}, 'attachment': [{'id': 'att-1', 'filename': 'file.txt', 'content': 'abc'}], 'issuelinks': [{'type': {'name': 'Relates'}, 'outwardIssue': {'key': 'ABC-2'}}]}, 'changelog': {'histories': [{'created': '2024-01-01', 'items': [{'field': 'status', 'fromString': 'Open', 'toString': 'Done'}]}]}}]}
+2026-07-19 12:59:31,950 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent='ABC-0'
+2026-07-19 12:59:31,951 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:59:31,952 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:59:31,952 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:59:31,952 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 12:59:31,953 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'comment': {'comments': [{'id': 'c-1', 'body': {'type': 'doc', 'version': 1, 'content': [{'type': 'paragraph', 'content': [{'type': 'text', 'text': 'Hello'}]}]}, 'created': '2024-01-02T03:04:05.000Z', 'updated': '2024-01-02T03:05:06.000Z'}]}}}]}
+2026-07-19 12:59:31,953 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-19 12:59:31,955 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:59:31,955 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:59:31,956 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:59:31,956 - DEBUG - Search response: total=1, issues_count=0, maxResults=100, startAt=0
+2026-07-19 12:59:31,956 - WARNING - Search returned 0 issues but total=1. Full response: {'total': 1, 'startAt': 0, 'maxResults': 100, 'issues': []}
+2026-07-19 12:59:31,957 - WARNING - Initial Jira search returned 1 total issues but no issue items; retrying with bare search endpoint.
+2026-07-19 12:59:31,957 - DEBUG - Retrying search with bare query path: /search?jql=project%3D%22ABC%22
+2026-07-19 12:59:31,957 - INFO - Bare search endpoint returned 1 issues; using fallback issue data.
+2026-07-19 12:59:31,958 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-19 12:59:31,967 - INFO - Fetching issues with JQL query: issuekey in ("CSTEST-721","CSTEST-720")
+2026-07-19 12:59:31,968 - INFO - Fetched source issue 10037 (CSTEST-721): summary='Test 1' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:59:31,968 - INFO - Fetched source issue 10038 (CSTEST-720): summary='Test 2' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:59:31,972 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:59:31,972 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:59:31,973 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 12:59:31,973 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}}}]}
+2026-07-19 12:59:31,976 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:59:31,976 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:59:31,976 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:59:31,977 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=0
+2026-07-19 12:59:31,977 - DEBUG - Pagination step computed: step=100 maxResults=100 len_issues=1 page_size_before=100
+2026-07-19 12:59:31,977 - DEBUG - Fetching search page at startAt=100
+2026-07-19 12:59:31,978 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=100
+2026-07-19 12:59:31,978 - DEBUG - Pagination step computed: step=100 maxResults=100 len_issues=1 page_size_before=100
+2026-07-19 12:59:31,978 - DEBUG - Fetching search page at startAt=200
+2026-07-19 12:59:31,979 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=200
+2026-07-19 12:59:31,979 - DEBUG - Pagination step computed: step=100 maxResults=100 len_issues=1 page_size_before=100
+2026-07-19 12:59:31,979 - DEBUG - Fetching search page at startAt=300
+2026-07-19 12:59:31,980 - DEBUG - Search response: total=250, issues_count=0, maxResults=100, startAt=300
+2026-07-19 12:59:31,980 - WARNING - Search returned 0 issues but total=250. Full response: {'total': 250, 'startAt': 300, 'maxResults': 100, 'issues': []}
+2026-07-19 12:59:31,980 - INFO - Fetched source issue None (ABC-1): summary='One' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:59:31,981 - INFO - Fetched source issue None (ABC-2): summary='Two' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:59:31,981 - INFO - Fetched source issue None (ABC-3): summary='Three' description='' issueType='Task' status='Open' parent=None
+2026-07-19 12:59:31,983 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:59:31,983 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:59:31,983 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:59:31,984 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 12:59:31,984 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': 'Detail', 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'customfield_12345': 'Custom Value', 'customfield_54321': {'value': 'Option'}}}]}
+2026-07-19 12:59:31,984 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-19 12:59:31,986 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:59:31,986 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:59:31,986 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:59:31,987 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-19 12:59:31,987 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-19 12:59:31,989 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:59:31,990 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-19 12:59:31,990 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:59:31,990 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-19 12:59:31,991 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-19 12:59:31,992 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 12:59:31,993 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 12:59:31,993 - DEBUG - Fetching search page at startAt=0
+2026-07-19 12:59:31,993 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-19 12:59:31,994 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-19 12:59:31,997 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments
+2026-07-19 13:00:05,950 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":["Number value expected as the Sprint id."],"errors":{"description":"Operation value must be a string","fixVersions":"Version id '12604' is not valid"}}
+2026-07-19 13:00:05,952 - DEBUG - Dropping rejected field 'description' from create payload
+2026-07-19 13:00:05,953 - DEBUG - Dropping rejected field 'fixVersions' from create payload
+2026-07-19 13:00:05,953 - DEBUG - Dropping rejected field 'sprint' from create payload
+2026-07-19 13:00:05,954 - WARNING - Issue creation rejected due to unsupported fields; retrying without unsupported fields.
+2026-07-19 13:00:05,954 - WARNING - Issue type 'Story' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":["Number value expected as the Sprint id."],"errors":{"description":"Operation value must be a string","fixVersions":"Version id '12604' is not valid"}}
+2026-07-19 13:00:05,957 - WARNING - Issue type 'Epic' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown."}}
+2026-07-19 13:00:05,958 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":[],"errors":{"description":"Operation value must be a string","fixVersions":"Version id '12604' is not valid"}}
+2026-07-19 13:00:05,964 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (Implements)
+2026-07-19 13:00:05,966 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (10000)
+2026-07-19 13:00:05,968 - DEBUG - Skipping duplicate link creation for ABC-2 -> ABC-1 (Relates)
+2026-07-19 13:00:05,977 - INFO - Deferring subtask 10051 until parent exists
+2026-07-19 13:00:05,979 - DEBUG - Dropping rejected field 'customfield_11720' from create payload
+2026-07-19 13:00:05,979 - WARNING - Issue creation rejected due to unsupported fields; retrying without unsupported fields.
+2026-07-19 13:00:05,980 - WARNING - Issue type 'Story' rejected, retrying with 'Task': Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field 'customfield_11720' cannot be set. It is not on the appropriate screen, or unknown."}}
+2026-07-19 13:00:05,982 - WARNING - Issue type 'Story' rejected, retrying with 'Task': invalid issue type
+2026-07-19 13:00:05,983 - WARNING - Issue description ADF rejected by Jira; retrying with plain string description: Jira request failed (400): {"errorMessages":[],"errors":{"description":"Operation value must be a string"}}
+2026-07-19 13:00:05,994 - DEBUG - Setting project lead to: account-456
+2026-07-19 13:00:05,995 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-456'}
+2026-07-19 13:00:05,997 - DEBUG - Setting project lead to: account-123
+2026-07-19 13:00:05,997 - DEBUG - Project creation payload: {'key': 'TARGET', 'name': 'Target Project', 'description': 'Target description', 'projectTypeKey': 'software', 'leadAccountId': 'account-123'}
+2026-07-19 13:00:06,003 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 13:00:06,004 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 13:00:06,004 - DEBUG - Fetching search page at startAt=0
+2026-07-19 13:00:06,004 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 13:00:06,005 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}, 'comment': {'comments': []}, 'attachment': [{'id': 'att-1', 'filename': 'file.txt', 'content': 'abc'}], 'issuelinks': [{'type': {'name': 'Relates'}, 'outwardIssue': {'key': 'ABC-2'}}]}, 'changelog': {'histories': [{'created': '2024-01-01', 'items': [{'field': 'status', 'fromString': 'Open', 'toString': 'Done'}]}]}}]}
+2026-07-19 13:00:06,005 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent='ABC-0'
+2026-07-19 13:00:06,032 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 13:00:06,032 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 13:00:06,032 - DEBUG - Fetching search page at startAt=0
+2026-07-19 13:00:06,032 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 13:00:06,033 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'comment': {'comments': [{'id': 'c-1', 'body': {'type': 'doc', 'version': 1, 'content': [{'type': 'paragraph', 'content': [{'type': 'text', 'text': 'Hello'}]}]}, 'created': '2024-01-02T03:04:05.000Z', 'updated': '2024-01-02T03:05:06.000Z'}]}}}]}
+2026-07-19 13:00:06,033 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-19 13:00:06,036 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 13:00:06,036 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 13:00:06,037 - DEBUG - Fetching search page at startAt=0
+2026-07-19 13:00:06,037 - DEBUG - Search response: total=1, issues_count=0, maxResults=100, startAt=0
+2026-07-19 13:00:06,037 - WARNING - Search returned 0 issues but total=1. Full response: {'total': 1, 'startAt': 0, 'maxResults': 100, 'issues': []}
+2026-07-19 13:00:06,038 - WARNING - Initial Jira search returned 1 total issues but no issue items; retrying with bare search endpoint.
+2026-07-19 13:00:06,038 - DEBUG - Retrying search with bare query path: /search?jql=project%3D%22ABC%22
+2026-07-19 13:00:06,038 - INFO - Bare search endpoint returned 1 issues; using fallback issue data.
+2026-07-19 13:00:06,039 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-19 13:00:06,047 - INFO - Fetching issues with JQL query: issuekey in ("CSTEST-721","CSTEST-720")
+2026-07-19 13:00:06,047 - INFO - Fetched source issue 10037 (CSTEST-721): summary='Test 1' description='' issueType='Task' status='Open' parent=None
+2026-07-19 13:00:06,048 - INFO - Fetched source issue 10038 (CSTEST-720): summary='Test 2' description='' issueType='Task' status='Open' parent=None
+2026-07-19 13:00:06,052 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 13:00:06,052 - DEBUG - Fetching search page at startAt=0
+2026-07-19 13:00:06,053 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 13:00:06,053 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': {'content': [{'content': [{'text': 'Detail'}]}]}, 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'parent': {'key': 'ABC-0'}}}]}
+2026-07-19 13:00:06,056 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 13:00:06,056 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 13:00:06,056 - DEBUG - Fetching search page at startAt=0
+2026-07-19 13:00:06,057 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=0
+2026-07-19 13:00:06,057 - DEBUG - Pagination step computed: step=100 maxResults=100 len_issues=1 page_size_before=100
+2026-07-19 13:00:06,057 - DEBUG - Fetching search page at startAt=100
+2026-07-19 13:00:06,058 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=100
+2026-07-19 13:00:06,058 - DEBUG - Pagination step computed: step=100 maxResults=100 len_issues=1 page_size_before=100
+2026-07-19 13:00:06,058 - DEBUG - Fetching search page at startAt=200
+2026-07-19 13:00:06,058 - DEBUG - Search response: total=250, issues_count=1, maxResults=100, startAt=200
+2026-07-19 13:00:06,059 - DEBUG - Pagination step computed: step=100 maxResults=100 len_issues=1 page_size_before=100
+2026-07-19 13:00:06,059 - DEBUG - Fetching search page at startAt=300
+2026-07-19 13:00:06,059 - DEBUG - Search response: total=250, issues_count=0, maxResults=100, startAt=300
+2026-07-19 13:00:06,059 - WARNING - Search returned 0 issues but total=250. Full response: {'total': 250, 'startAt': 300, 'maxResults': 100, 'issues': []}
+2026-07-19 13:00:06,060 - INFO - Fetched source issue None (ABC-1): summary='One' description='' issueType='Task' status='Open' parent=None
+2026-07-19 13:00:06,060 - INFO - Fetched source issue None (ABC-2): summary='Two' description='' issueType='Task' status='Open' parent=None
+2026-07-19 13:00:06,060 - INFO - Fetched source issue None (ABC-3): summary='Three' description='' issueType='Task' status='Open' parent=None
+2026-07-19 13:00:06,062 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 13:00:06,062 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 13:00:06,063 - DEBUG - Fetching search page at startAt=0
+2026-07-19 13:00:06,063 - DEBUG - Search response: total=None, issues_count=1, maxResults=None, startAt=None
+2026-07-19 13:00:06,063 - WARNING - Search returned 0 total issues. Full response: {'issues': [{'id': '10037', 'key': 'ABC-1', 'fields': {'summary': 'Added summary', 'description': 'Detail', 'issuetype': {'name': 'Task'}, 'status': {'name': 'Open'}, 'customfield_12345': 'Custom Value', 'customfield_54321': {'value': 'Option'}}}]}
+2026-07-19 13:00:06,063 - INFO - Fetched source issue 10037 (ABC-1): summary='Added summary' description='Detail' issueType='Task' status='Open' parent=None
+2026-07-19 13:00:06,065 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 13:00:06,065 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 13:00:06,066 - DEBUG - Fetching search page at startAt=0
+2026-07-19 13:00:06,066 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-19 13:00:06,066 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-19 13:00:06,068 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 13:00:06,069 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks
+2026-07-19 13:00:06,069 - DEBUG - Fetching search page at startAt=0
+2026-07-19 13:00:06,069 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-19 13:00:06,070 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-19 13:00:06,072 - INFO - Fetching issues with JQL query: project="ABC"
+2026-07-19 13:00:06,072 - DEBUG - Search request path: /search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall
+2026-07-19 13:00:06,072 - DEBUG - Fetching search page at startAt=0
+2026-07-19 13:00:06,073 - DEBUG - Search response: total=None, issues_count=0, maxResults=None, startAt=None
+2026-07-19 13:00:06,073 - WARNING - Search returned 0 total issues. Full response: {'issues': []}
+2026-07-19 13:00:06,076 - DEBUG - Making POST request to https://example.atlassian.net/rest/api/2/issue/123/attachments

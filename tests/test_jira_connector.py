@@ -560,6 +560,92 @@ class JiraConnectorTests(unittest.TestCase):
         self.assertEqual(request_mock.call_count, 2)
         self.assertNotIn("customfield_11720", request_mock.call_args_list[1].args[2]["fields"])
 
+    def test_create_issue_drops_sprint_and_fix_versions_when_jira_rejects_them(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        def side_effect(method, path, payload=None):
+            if method == "POST" and path == "/issue":
+                if "fixVersions" in payload["fields"] or "sprint" in payload["fields"]:
+                    raise RuntimeError(
+                        'Jira request failed (400): {"errorMessages":["Number value expected as the Sprint id."],"errors":{"description":"Operation value must be a string","fixVersions":"Version id \'12604\' is not valid"}}'
+                    )
+                return {"id": "456", "key": "ABC-456"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            response = connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Story",
+                    "fixVersions": [{"id": "12604"}],
+                    "sprint": {"id": "1111"},
+                }
+            )
+
+        self.assertEqual(response["key"], "ABC-456")
+        self.assertGreaterEqual(request_mock.call_count, 2)
+        final_payload = request_mock.call_args_list[-1].args[2]
+        self.assertNotIn("fixVersions", final_payload["fields"])
+        self.assertNotIn("sprint", final_payload["fields"])
+
+    def test_create_issue_falls_back_to_task_and_strips_rejected_fields(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        attempts = {"count": 0}
+
+        def side_effect(method, path, payload=None):
+            if method == "POST" and path == "/issue":
+                attempts["count"] += 1
+                if attempts["count"] == 1:
+                    raise RuntimeError(
+                        'Jira request failed (400): {"errorMessages":[],"errors":{"customfield_11720":"Field \'customfield_11720\' cannot be set. It is not on the appropriate screen, or unknown."}}'
+                    )
+                if attempts["count"] == 2:
+                    if "fixVersions" in payload["fields"] or "customfield_11720" in payload["fields"]:
+                        raise RuntimeError(
+                            'Jira request failed (400): {"errorMessages":[],"errors":{"description":"Operation value must be a string","fixVersions":"Version id \'12604\' is not valid"}}'
+                        )
+                return {"id": "456", "key": "ABC-456"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            response = connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Epic",
+                    "epic_name": "Epic summary",
+                    "fixVersions": [{"id": "12604"}],
+                }
+            )
+
+        self.assertEqual(response["key"], "ABC-456")
+        self.assertEqual(request_mock.call_count, 3)
+        final_payload = request_mock.call_args_list[-1].args[2]
+        self.assertEqual(final_payload["fields"]["issuetype"]["name"], "Task")
+        self.assertNotIn("fixVersions", final_payload["fields"])
+
     def test_create_issue_returns_metadata_fields_for_export(self):
         connector_module = importlib.import_module("connectors.jira_connector")
         JiraConnector = connector_module.JiraConnector
