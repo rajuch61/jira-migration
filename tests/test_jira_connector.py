@@ -218,6 +218,46 @@ class JiraConnectorTests(unittest.TestCase):
         expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=%2Aall"
         request_mock.assert_called_once_with("GET", expected_path)
 
+    def test_read_issues_requests_all_fields_when_human_readable_names_are_configured(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+                "search_fields": [
+                    "Epic Name",
+                    "Summary",
+                    "Description",
+                    "Component/s",
+                    "Issue Type",
+                    "Priority",
+                    "Security Level",
+                    "Fix Version/s",
+                    "Attachment",
+                    "Reporter",
+                    "Linked Issues",
+                    "Assignee",
+                    "Labels",
+                    "Sprint",
+                    "Parent",
+                    "Risk Analysis",
+                ],
+            }
+        )
+
+        with patch.object(connector, "_request", return_value={"issues": []}) as request_mock:
+            connector.read_issues()
+
+        request_path = request_mock.call_args.args[1]
+        self.assertIn("fields=%2Aall", request_path)
+        self.assertIn("summary", request_path)
+        self.assertIn("components", request_path)
+        self.assertIn("fixVersions", request_path)
+
     def test_read_issues_preserves_custom_fields_in_issue_payload(self):
         connector_module = importlib.import_module("connectors.jira_connector")
         JiraConnector = connector_module.JiraConnector

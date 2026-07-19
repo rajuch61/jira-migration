@@ -274,16 +274,7 @@ class JiraConnector(Connector):
             return []
 
         configured_fields = self.config.get("search_fields") or self.config.get("fields")
-        if isinstance(configured_fields, str):
-            configured_fields = [field.strip() for field in configured_fields.split(",") if field.strip()]
-        elif isinstance(configured_fields, (list, tuple)):
-            configured_fields = [str(field) for field in configured_fields if field is not None]
-        else:
-            configured_fields = None
-
-        use_all_fields = bool(self._resolve_config_value(self.config, "use_all_fields", default=True))
-        default_fields = ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks"]
-        fields = configured_fields or (["*all"] if use_all_fields else default_fields)
+        fields = self._resolve_search_fields(configured_fields)
         query = self._build_search_jql(issue_keys)
         self.logger.info(f"Fetching issues with JQL query: {query}")
 
@@ -427,6 +418,105 @@ class JiraConnector(Connector):
                 "project_key": self.project,
             },
         }
+
+    def _resolve_search_fields(self, configured_fields: Any) -> list[str]:
+        if isinstance(configured_fields, str):
+            configured_fields = [field.strip() for field in configured_fields.split(",") if field.strip()]
+        elif isinstance(configured_fields, (list, tuple)):
+            configured_fields = [str(field) for field in configured_fields if field is not None]
+        else:
+            configured_fields = []
+
+        use_all_fields = bool(self._resolve_config_value(self.config, "use_all_fields", default=False))
+        default_fields = ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks"]
+
+        if not configured_fields:
+            return ["*all"] if use_all_fields else default_fields
+
+        resolved_fields: list[str] = []
+        includes_unknown_labels = False
+        for field_name in configured_fields:
+            resolved_name = self._resolve_field_name(field_name)
+            if resolved_name is None:
+                includes_unknown_labels = True
+                continue
+            if resolved_name not in resolved_fields:
+                resolved_fields.append(resolved_name)
+
+        if includes_unknown_labels or use_all_fields:
+            if "*all" not in resolved_fields:
+                resolved_fields.insert(0, "*all")
+
+        return resolved_fields or (default_fields if not use_all_fields else ["*all"])
+
+    def _resolve_field_name(self, field_name: Any) -> str | None:
+        if not isinstance(field_name, str):
+            return None
+
+        raw_name = field_name.strip()
+        if not raw_name:
+            return None
+        normalized = raw_name.lower()
+        if normalized in {"*all", "all"}:
+            return "*all"
+
+        alias_map = {
+            "summary": "summary",
+            "description": "description",
+            "issuetype": "issuetype",
+            "issue type": "issuetype",
+            "status": "status",
+            "parent": "parent",
+            "comment": "comment",
+            "attachment": "attachment",
+            "issuelinks": "issuelinks",
+            "linked issues": "issuelinks",
+            "assignee": "assignee",
+            "reporter": "reporter",
+            "labels": "labels",
+            "components": "components",
+            "component/s": "components",
+            "component": "components",
+            "priority": "priority",
+            "security level": "security",
+            "security": "security",
+            "fix version/s": "fixVersions",
+            "fixversions": "fixVersions",
+            "fix version": "fixVersions",
+            "sprint": "sprint",
+            "epic name": self.epic_name_field,
+            "epic_name": self.epic_name_field,
+            "epic link": None,
+            "epiclink": None,
+            "external issue id": None,
+            "risk analysis": None,
+            "regulatory analysis": None,
+            "benefit hypothesis": None,
+            "business case": None,
+            "roi": None,
+            "wsjf": None,
+            "moscow": None,
+            "high-level t-shirt size estimate": None,
+            "strategic theming": None,
+            "technical review": None,
+            "mvp definition": None,
+            "ip concerns": None,
+            "field feedback": None,
+            "agile work-stream": None,
+            "backlog category": None,
+            "test passed": None,
+            "parent id": "parent",
+            "story points": None,
+        }
+
+        if normalized in alias_map:
+            return alias_map[normalized]
+
+        if raw_name.startswith("customfield_"):
+            return raw_name
+        if raw_name.startswith("cf") and "_" in raw_name:
+            return raw_name
+        return None
 
     def _normalize_issue_payloads(self, issue_payloads: list[dict[str, Any]]) -> list[dict]:
         issues = []
