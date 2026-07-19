@@ -1043,10 +1043,16 @@ class JiraConnector(Connector):
         return {str(field_name) for field_name in errors.keys() if isinstance(field_name, (str, int))}
 
     def _infer_rejected_fields_from_messages(self, error_text: str, payload: dict[str, Any]) -> set[str]:
-        # Infer problematic field names from free-text errorMessages when errors map is absent
         inferred: set[str] = set()
         if not isinstance(error_text, str):
             return inferred
+
+        def _payload_field_candidates() -> list[str]:
+            fields = payload.get("fields") if isinstance(payload, dict) else None
+            if not isinstance(fields, dict):
+                return []
+            return [str(key) for key in fields.keys() if isinstance(key, (str, int))]
+
         try:
             json_start = error_text.index("{")
             error_json = json.loads(error_text[json_start:])
@@ -1060,31 +1066,33 @@ class JiraConnector(Connector):
         joined = " ".join([str(m) for m in messages if m])
         lower = joined.lower()
 
-        # If messages indicate Sprint id issues, drop any sprint-like fields
+        field_names = _payload_field_candidates()
+
         if "sprint" in lower or "sprint id" in lower or "sprint id." in lower:
-            for key in list(payload.get("fields", {}).keys()):
-                if "sprint" in str(key).lower():
+            for key in field_names:
+                if "sprint" in key.lower():
                     inferred.add(key)
 
-        # If messages indicate invalid version id, drop fixVersions / versions fields
         if "version id" in lower or "fixversion" in lower or "fix versions" in lower:
-            for key in list(payload.get("fields", {}).keys()):
-                if str(key).lower() in {"fixversions", "versions", "fixversion"} or "fixversion" in str(key).lower():
+            for key in field_names:
+                if key.lower() in {"fixversions", "versions", "fixversion"} or "fixversion" in key.lower():
                     inferred.add(key)
 
-        # Generic fallback: if message mentions a field name in single-quotes, try to extract it
+        if "resolution" in lower:
+            for key in field_names:
+                if key.lower() == "resolution":
+                    inferred.add(key)
+
         try:
             for match in re.finditer(r"'([a-zA-Z0-9_\-]+)'", joined):
                 name = match.group(1)
-                # map some human-readable names to likely payload keys
-                if name.lower() in {"fixversion", "fixversions", "sprint"}:
-                    for key in list(payload.get("fields", {}).keys()):
-                        if name.lower() in str(key).lower():
+                normalized_name = name.lower()
+                for key in field_names:
+                    if normalized_name in {"fixversion", "fixversions", "sprint", "resolution"}:
+                        if normalized_name in key.lower():
                             inferred.add(key)
-                else:
-                    # if the exact key exists, add it
-                    if name in payload.get("fields", {}):
-                        inferred.add(name)
+                    elif key.lower() == normalized_name:
+                        inferred.add(key)
         except Exception:
             pass
 
