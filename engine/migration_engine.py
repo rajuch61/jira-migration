@@ -101,11 +101,15 @@ class MigrationEngine:
                 self.logger.info("Deferred issue %s until parent exists", issue.get("id"))
                 continue
             target_key = str(target_issue.get("key") or target_issue.get("id") or issue.get("id"))
-            self.mapper.add_mapping(str(issue.get("id")), target_key)
-            self.mapper.add_metadata(str(issue.get("id")), target_key, issue_type=issue.get("issueType"), status=issue.get("status"))
-            if issue.get("key"):
-                self.mapper.add_mapping(str(issue.get("key")), target_key)
-                self.mapper.add_metadata(str(issue.get("key")), target_key, issue_type=issue.get("issueType"), status=issue.get("status"))
+            target_id = str(target_issue.get("id") or "")
+            self.mapper.add_issue_mapping(
+                str(issue.get("id")),
+                issue.get("key"),
+                target_key,
+                target_id=target_id,
+                issue_type=issue.get("issueType"),
+                status=issue.get("status"),
+            )
             created_target_issues.append(target_issue)
             migrated += 1
             self.logger.info("Migrated issue %s", issue.get("id"))
@@ -150,11 +154,15 @@ class MigrationEngine:
                 continue
 
             target_key = str(target_issue.get("key") or target_issue.get("id") or source_issue.get("id"))
-            self.mapper.add_mapping(str(source_issue.get("id")), target_key)
-            self.mapper.add_metadata(str(source_issue.get("id")), target_key, issue_type=source_issue.get("issueType"), status=source_issue.get("status"))
-            if source_issue.get("key"):
-                self.mapper.add_mapping(str(source_issue.get("key")), target_key)
-                self.mapper.add_metadata(str(source_issue.get("key")), target_key, issue_type=source_issue.get("issueType"), status=source_issue.get("status"))
+            target_id = str(target_issue.get("id") or "")
+            self.mapper.add_issue_mapping(
+                str(source_issue.get("id")),
+                source_issue.get("key"),
+                target_key,
+                target_id=target_id,
+                issue_type=source_issue.get("issueType"),
+                status=source_issue.get("status"),
+            )
             self.logger.info("Retried issue %s -> %s", source_issue.get("id"), target_key)
 
         self._write_failed_issues(remaining)

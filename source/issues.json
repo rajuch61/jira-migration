@@ -22,32 +22,6 @@
           "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/api/2/issueLinkType/10500"
         },
         "source_key": "CSTEST-723"
-      },
-      {
-        "target_key": "NTP-5696",
-        "relation": "1 Implements",
-        "direction": "outward",
-        "type_raw": {
-          "id": "10500",
-          "name": "1 Implements",
-          "inward": "Implemented by",
-          "outward": "Implements",
-          "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/api/2/issueLinkType/10500"
-        },
-        "source_key": "CSTEST-723"
-      },
-      {
-        "target_key": "NTP-6112",
-        "relation": "1 Implements",
-        "direction": "outward",
-        "type_raw": {
-          "id": "10500",
-          "name": "1 Implements",
-          "inward": "Implemented by",
-          "outward": "Implements",
-          "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/api/2/issueLinkType/10500"
-        },
-        "source_key": "CSTEST-723"
       }
     ],
     "history": []
@@ -118,32 +92,6 @@
     "linked_issues": [
       {
         "target_key": "CSTEST-722",
-        "relation": "1 Implements",
-        "direction": "inward",
-        "type_raw": {
-          "id": "10500",
-          "name": "1 Implements",
-          "inward": "Implemented by",
-          "outward": "Implements",
-          "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/api/2/issueLinkType/10500"
-        },
-        "source_key": "CSTEST-720"
-      },
-      {
-        "target_key": "NTP-5696",
-        "relation": "1 Implements",
-        "direction": "inward",
-        "type_raw": {
-          "id": "10500",
-          "name": "1 Implements",
-          "inward": "Implemented by",
-          "outward": "Implements",
-          "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/api/2/issueLinkType/10500"
-        },
-        "source_key": "CSTEST-720"
-      },
-      {
-        "target_key": "NTP-6112",
         "relation": "1 Implements",
         "direction": "inward",
         "type_raw": {
@@ -497,32 +445,6 @@
     "linked_issues": [
       {
         "target_key": "CSTEST-696",
-        "relation": "Blocks",
-        "direction": "outward",
-        "type_raw": {
-          "id": "10000",
-          "name": "Blocks",
-          "inward": "is blocked by",
-          "outward": "blocks",
-          "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/api/2/issueLinkType/10000"
-        },
-        "source_key": "CSTEST-695"
-      },
-      {
-        "target_key": "NTP-5699",
-        "relation": "Blocks",
-        "direction": "outward",
-        "type_raw": {
-          "id": "10000",
-          "name": "Blocks",
-          "inward": "is blocked by",
-          "outward": "blocks",
-          "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/api/2/issueLinkType/10000"
-        },
-        "source_key": "CSTEST-695"
-      },
-      {
-        "target_key": "NTP-6115",
         "relation": "Blocks",
         "direction": "outward",
         "type_raw": {
@@ -5516,32 +5438,6 @@
     "linked_issues": [
       {
         "target_key": "CSTEST-696",
-        "relation": "1 Implements",
-        "direction": "inward",
-        "type_raw": {
-          "id": "10500",
-          "name": "1 Implements",
-          "inward": "Implemented by",
-          "outward": "Implements",
-          "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/api/2/issueLinkType/10500"
-        },
-        "source_key": "CSTEST-139"
-      },
-      {
-        "target_key": "NTP-5699",
-        "relation": "1 Implements",
-        "direction": "inward",
-        "type_raw": {
-          "id": "10500",
-          "name": "1 Implements",
-          "inward": "Implemented by",
-          "outward": "Implements",
-          "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/api/2/issueLinkType/10500"
-        },
-        "source_key": "CSTEST-139"
-      },
-      {
-        "target_key": "NTP-6115",
         "relation": "1 Implements",
         "direction": "inward",
         "type_raw": {

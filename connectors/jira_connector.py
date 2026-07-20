@@ -288,7 +288,11 @@ class JiraConnector(Connector):
         if not self.project and not issue_keys:
             return []
 
-        configured_fields = self.config.get("search_fields") or self.config.get("fields")
+        configured_fields = (
+            self.config.get("search_fields")
+            or self.config.get("fields")
+            or self.config.get("allowed_fields")
+        )
         fields = configured_fields or ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks"]
         query = self._build_search_jql(issue_keys)
         self.logger.info(f"Fetching issues with JQL query: {query}")
@@ -745,6 +749,16 @@ class JiraConnector(Connector):
             epic_name = issue.get("epic_name") or issue.get("epicName") or issue.get("summary", "")
             if isinstance(epic_name, str) and epic_name.strip():
                 payload["fields"][self.epic_name_field] = epic_name.strip()
+        assignee = issue.get("assignee")
+        if assignee is not None:
+            assignee_field = self._normalize_user_reference(assignee)
+            if assignee_field is not None:
+                payload["fields"]["assignee"] = assignee_field
+        reporter = issue.get("reporter")
+        if reporter is not None:
+            reporter_field = self._normalize_user_reference(reporter)
+            if reporter_field is not None:
+                payload["fields"]["reporter"] = reporter_field
         if is_source_subtask and parent_reference and parent_key:
             if use_parent_field:
                 payload["fields"]["parent"] = {"key": str(parent_key)}
@@ -970,10 +984,26 @@ class JiraConnector(Connector):
             direct_id = self.created_issue_ids.get(str(value))
             if direct_id:
                 return str(direct_id)
-            if self._looks_like_issue_key(str(value)):
-                return str(value)
-            if str(value).isdigit():
-                return None
+            # Only allow explicit mappings for parent resolution. Raw source keys should not
+            # be used as target issue keys unless they were already migrated. Otherwise, we
+            # risk linking to source project keys in the target Jira system.
+            continue
+        return None
+
+    def _normalize_user_reference(self, user_value: Any) -> dict[str, str] | None:
+        if user_value is None:
+            return None
+        if isinstance(user_value, str) and user_value.strip():
+            value = user_value.strip()
+            if self._looks_like_email(value):
+                return {"accountId": value}
+            if self._looks_like_issue_key(value):
+                return {"name": value}
+            return {"accountId": value}
+        if isinstance(user_value, dict):
+            account_id = self._extract_account_id(user_value)
+            if account_id:
+                return {"accountId": account_id}
         return None
 
     def _create_comments(self, issue_id: Any, comments: list[dict[str, Any]]) -> None:
@@ -1111,14 +1141,15 @@ class JiraConnector(Connector):
     def _resolve_link_target_key(self, target_key: Any) -> str | None:
         if target_key is None:
             return None
-        value = str(target_key)
+        value = str(target_key).strip()
         if not value:
             return None
         mapped_key = self.created_issue_keys.get(value)
         if mapped_key:
             return str(mapped_key)
-        if self._looks_like_issue_key(value):
-            return value
+        # Only use explicitly mapped target keys for link resolution. Raw source keys
+        # look like Jira issue keys but should not be used in the target system unless
+        # they were explicitly resolved by the migration to a target issue.
         return None
 
     def _looks_like_issue_key(self, value: Any) -> bool:
