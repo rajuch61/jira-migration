@@ -10,6 +10,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Run a generic migration workflow")
     parser.add_argument("--config", default="config/migration.json", help="Path to the migration configuration file")
     parser.add_argument("--env", choices=["local", "prod"], default=None, help="Select a predefined environment profile")
+    parser.add_argument("--retry-failed", action="store_true", help="Retry issues captured in the target failed_issues.json export")
     args = parser.parse_args()
 
     config_path = Path(args.config)
@@ -32,8 +33,15 @@ def main() -> int:
         config["source"] = selected["source"]
         config["target"] = selected["target"]
 
-    engine = MigrationEngine(config)
-    engine.run()
+    try:
+        engine = MigrationEngine(config)
+        if args.retry_failed:
+            engine.retry_failed_issues()
+        else:
+            engine.run()
+    except Exception as exc:
+        print(f"Migration failed: {exc}")
+        return 1
     return 0
 
 

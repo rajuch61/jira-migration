@@ -37,6 +37,8 @@ class JiraConnector(Connector):
         self.project = self._resolve_project_key(config)
         self.verify_ssl = bool(self._resolve_config_value(config, "verify_ssl", default=True, env_names=("JIRA_VERIFY_SSL",)))
         self.timeout = int(self._resolve_config_value(config, "timeout", default=30, env_names=("JIRA_TIMEOUT",)))
+        self.retry_count = int(self._resolve_config_value(config, "retry_count", default=3, env_names=("JIRA_RETRY_COUNT",)))
+        self.retry_delay = float(self._resolve_config_value(config, "retry_delay", default=1.0, env_names=("JIRA_RETRY_DELAY",)))
         self.api_path = self._resolve_config_value(config, "api_path", default="/rest/api/2", env_names=("JIRA_API_PATH",))
         self.auth_type = self._resolve_auth_type(config)
         self.basic_auth = self._parse_basic_auth(config)
@@ -187,60 +189,73 @@ class JiraConnector(Connector):
         if "/attachments" in path:
             headers["X-Atlassian-Token"] = "no-check"
 
-        req = JiraRequest(url, data=data, headers=headers, method=method)
-        if self.bearer_token:
-            req.add_header("Authorization", f"Bearer {self.bearer_token}")
-        elif self.basic_auth:
-            username, password = self.basic_auth
-            token = base64.b64encode(f"{username}:{password}".encode("utf-8")).decode("ascii")
-            req.add_header("Authorization", f"Basic {token}")
-
         context = None if self.verify_ssl else ssl._create_unverified_context()
-        try:
-            with request.urlopen(req, timeout=self.timeout, context=context) as response:
-                body = response.read().decode("utf-8")
-                if not body:
-                    return None
-                try:
-                    return json.loads(body)
-                except json.JSONDecodeError:
-                    return {"raw_body": body}
-        except error.HTTPError as exc:
-            body = exc.read().decode("utf-8", errors="ignore")
-            if exc.code == 404:
-                for fallback_path in self._fallback_api_paths(path):
-                    if fallback_path == path.lstrip("/"):
-                        continue
+        last_error: Exception | None = None
+        for attempt in range(self.retry_count + 1):
+            req = JiraRequest(url, data=data, headers=headers, method=method)
+            if self.bearer_token:
+                req.add_header("Authorization", f"Bearer {self.bearer_token}")
+            elif self.basic_auth:
+                username, password = self.basic_auth
+                token = base64.b64encode(f"{username}:{password}".encode("utf-8")).decode("ascii")
+                req.add_header("Authorization", f"Basic {token}")
+
+            try:
+                with request.urlopen(req, timeout=self.timeout, context=context) as response:
+                    body = response.read().decode("utf-8")
+                    if not body:
+                        return None
                     try:
-                        fallback_req = request.Request(
-                            self._build_url(f"/{fallback_path}"),
-                            data=data,
-                            headers=dict(headers),
-                            method=method,
-                        )
-                        if self.bearer_token:
-                            fallback_req.add_header("Authorization", f"Bearer {self.bearer_token}")
-                        elif self.basic_auth:
-                            username, password = self.basic_auth
-                            token = base64.b64encode(f"{username}:{password}".encode("utf-8")).decode("ascii")
-                            fallback_req.add_header("Authorization", f"Basic {token}")
-                        with request.urlopen(fallback_req, timeout=self.timeout, context=context) as fallback_response:
-                            fallback_body = fallback_response.read().decode("utf-8")
-                            if not fallback_body:
-                                return None
-                            try:
-                                return json.loads(fallback_body)
-                            except json.JSONDecodeError:
-                                return {"raw_body": fallback_body}
-                    except error.HTTPError as fallback_exc:
-                        if fallback_exc.code != 404:
-                            raise RuntimeError(f"Jira request failed ({fallback_exc.code}): {fallback_exc.read().decode('utf-8', errors='ignore')}") from fallback_exc
-                        continue
-                    except error.URLError as fallback_exc:
-                        raise RuntimeError(f"Unable to reach Jira server: {fallback_exc}") from fallback_exc
-            raise RuntimeError(f"Jira request failed ({exc.code}): {body}") from exc
-        except error.URLError as exc:
-            raise RuntimeError(f"Unable to reach Jira server: {exc}") from exc
+                        return json.loads(body)
+                    except json.JSONDecodeError:
+                        return {"raw_body": body}
+            except error.HTTPError as exc:
+                body = exc.read().decode("utf-8", errors="ignore")
+                if exc.code == 404:
+                    for fallback_path in self._fallback_api_paths(path):
+                        if fallback_path == path.lstrip("/"):
+                            continue
+                        try:
+                            fallback_req = request.Request(
+                                self._build_url(f"/{fallback_path}"),
+                                data=data,
+                                headers=dict(headers),
+                                method=method,
+                            )
+                            if self.bearer_token:
+                                fallback_req.add_header("Authorization", f"Bearer {self.bearer_token}")
+                            elif self.basic_auth:
+                                username, password = self.basic_auth
+                                token = base64.b64encode(f"{username}:{password}".encode("utf-8")).decode("ascii")
+                                fallback_req.add_header("Authorization", f"Basic {token}")
+                            with request.urlopen(fallback_req, timeout=self.timeout, context=context) as fallback_response:
+                                fallback_body = fallback_response.read().decode("utf-8")
+                                if not fallback_body:
+                                    return None
+                                try:
+                                    return json.loads(fallback_body)
+                                except json.JSONDecodeError:
+                                    return {"raw_body": fallback_body}
+                        except error.HTTPError as fallback_exc:
+                            if fallback_exc.code != 404:
+                                raise RuntimeError(f"Jira request failed ({fallback_exc.code}): {fallback_exc.read().decode('utf-8', errors='ignore')}") from fallback_exc
+                            continue
+                        except error.URLError as fallback_exc:
+                            raise RuntimeError(f"Unable to reach Jira server: {fallback_exc}") from fallback_exc
+                raise RuntimeError(f"Jira request failed ({exc.code}): {body}") from exc
+            except error.URLError as exc:
+                last_error = exc
+                if attempt < self.retry_count:
+                    self.logger.warning("Transient Jira connection error on attempt %s/%s for %s: %s", attempt + 1, self.retry_count + 1, path, exc)
+                    if self.retry_delay > 0:
+                        import time
+                        time.sleep(self.retry_delay)
+                    continue
+                raise RuntimeError(f"Unable to reach Jira server: {exc}") from exc
+
+        if last_error is not None:
+            raise RuntimeError(f"Unable to reach Jira server: {last_error}") from last_error
+        raise RuntimeError("Jira request failed without response")
 
     def connect(self) -> None:
         if not self.server:
@@ -1002,10 +1017,9 @@ class JiraConnector(Connector):
             relation_name = link.get("relation") or (link.get("type_raw", {}).get("name") if isinstance(link.get("type_raw"), dict) else "Relates")
             direction = link.get("direction") or "outward"
 
-            # Normalize a directionless key to avoid creating duplicate reciprocal links
             try:
                 current_key = str(issue_id)
-                pair_key = tuple(sorted([current_key, str(resolved_target_key)])) + (relation_name or "Relates",)
+                pair_key = self._build_link_dedupe_key(current_key, str(resolved_target_key), relation_name)
             except Exception:
                 pair_key = None
 
@@ -1031,6 +1045,33 @@ class JiraConnector(Connector):
                     self._created_links.add(pair_key)
             except Exception as exc:
                 self.logger.warning("Issue link skipped for %s: %s", target_key, exc)
+
+    def _build_link_dedupe_key(self, source_key: str, target_key: str, relation_name: Any) -> tuple[str, str, str]:
+        source = str(source_key)
+        target = str(target_key)
+        pair = tuple(sorted([source, target]))
+        canonical_relation = self._canonicalize_relation_name(relation_name)
+        return pair[0], pair[1], canonical_relation
+
+    def _canonicalize_relation_name(self, relation_name: Any) -> str:
+        if relation_name is None:
+            return "Relates"
+
+        text = str(relation_name).strip()
+        if not text:
+            return "Relates"
+
+        compact = re.sub(r"^\d+\s*", "", text).strip()
+        normalized = compact.lower()
+        if normalized in {"implements", "implemented by"}:
+            return "Implements"
+        if normalized in {"blocks", "blocked by"}:
+            return "Blocks"
+        if normalized in {"clones", "cloned by"}:
+            return "Clones"
+        if normalized in {"contains", "contained by"}:
+            return "Contains"
+        return compact
 
     def _process_pending_child_issues(self) -> None:
         if self._processing_pending_child_issues or not self.pending_child_issues:

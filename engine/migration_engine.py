@@ -18,6 +18,8 @@ class MigrationEngine:
         self.validator = Validator(config.get("validation", {}))
         self.transformer = Transformer(config.get("transformations", {}))
         self.mapper = Mapper(config.get("mapping_file"))
+        self.failed_issues_path = None
+        self.target_dir = None
         self.source_connector = self._create_connector(config.get("source", {}), config)
         self.target_connector = self._create_connector(config.get("target", {}), config)
 
@@ -73,6 +75,7 @@ class MigrationEngine:
 
         migrated = 0
         created_target_issues: list[dict] = []
+        failed_issues: list[dict] = []
         ordered_issues = self._order_issues_for_creation(source_issues)
 
         for issue in ordered_issues:
@@ -82,24 +85,91 @@ class MigrationEngine:
                 self.logger.warning("Skipping issue %s due to %s", transformed_issue.get("id"), validation_errors)
                 continue
 
-            target_issue = self.target_connector.create_issue(transformed_issue)
+            try:
+                target_issue = self.target_connector.create_issue(transformed_issue)
+            except Exception as exc:
+                self.logger.error("Failed to migrate issue %s (%s): %s", issue.get("id"), issue.get("key"), exc)
+                failed_issue = {
+                    "source_issue": issue,
+                    "transformed_issue": transformed_issue,
+                    "error": str(exc),
+                }
+                failed_issues.append(failed_issue)
+                continue
+
             if target_issue.get("deferred"):
                 self.logger.info("Deferred issue %s until parent exists", issue.get("id"))
                 continue
             target_key = str(target_issue.get("key") or target_issue.get("id") or issue.get("id"))
             self.mapper.add_mapping(str(issue.get("id")), target_key)
+            self.mapper.add_metadata(str(issue.get("id")), target_key, issue_type=issue.get("issueType"), status=issue.get("status"))
             if issue.get("key"):
                 self.mapper.add_mapping(str(issue.get("key")), target_key)
+                self.mapper.add_metadata(str(issue.get("key")), target_key, issue_type=issue.get("issueType"), status=issue.get("status"))
             created_target_issues.append(target_issue)
             migrated += 1
             self.logger.info("Migrated issue %s", issue.get("id"))
 
         self._write_issue_exports(source_issues, created_target_issues)
+        self._write_failed_issues(failed_issues)
         self.mapper.save()
-        self.logger.info("Migration completed. %s issues migrated", migrated)
+        self.logger.info("Migration completed. %s issues migrated, %s failed", migrated, len(failed_issues))
 
         self.source_connector.close()
         self.target_connector.close()
+
+    def retry_failed_issues(self) -> None:
+        if not self.target_dir:
+            self._write_issue_exports([], [])
+        failed_path = self.target_dir / "failed_issues.json" if self.target_dir else Path("target/failed_issues.json")
+        if not failed_path.exists():
+            self.logger.warning("No failed issues export found at %s", failed_path)
+            return
+
+        self.source_connector.connect()
+        self.target_connector.connect()
+        failed_payloads = json.loads(failed_path.read_text(encoding="utf-8"))
+        if not isinstance(failed_payloads, list):
+            failed_payloads = []
+
+        remaining: list[dict] = []
+        for item in failed_payloads:
+            if not isinstance(item, dict):
+                continue
+            transformed_issue = item.get("transformed_issue") or {}
+            source_issue = item.get("source_issue") or {}
+            try:
+                target_issue = self.target_connector.create_issue(transformed_issue)
+            except Exception as exc:
+                self.logger.error("Retry failed for issue %s (%s): %s", source_issue.get("id"), source_issue.get("key"), exc)
+                remaining.append({
+                    "source_issue": source_issue,
+                    "transformed_issue": transformed_issue,
+                    "error": str(exc),
+                })
+                continue
+
+            target_key = str(target_issue.get("key") or target_issue.get("id") or source_issue.get("id"))
+            self.mapper.add_mapping(str(source_issue.get("id")), target_key)
+            self.mapper.add_metadata(str(source_issue.get("id")), target_key, issue_type=source_issue.get("issueType"), status=source_issue.get("status"))
+            if source_issue.get("key"):
+                self.mapper.add_mapping(str(source_issue.get("key")), target_key)
+                self.mapper.add_metadata(str(source_issue.get("key")), target_key, issue_type=source_issue.get("issueType"), status=source_issue.get("status"))
+            self.logger.info("Retried issue %s -> %s", source_issue.get("id"), target_key)
+
+        self._write_failed_issues(remaining)
+        self.mapper.save()
+        self.logger.info("Retry completed. %s issues retried, %s still failed", len(failed_payloads) - len(remaining), len(remaining))
+
+        self.source_connector.close()
+        self.target_connector.close()
+
+    def _write_failed_issues(self, failed_issues: list[dict]) -> None:
+        if not self.target_dir:
+            return
+        failed_path = self.target_dir / "failed_issues.json"
+        failed_path.write_text(json.dumps(failed_issues, indent=2), encoding="utf-8")
+        self.logger.info("Wrote %s failed issues to %s", len(failed_issues), failed_path)
 
     def _write_issue_exports(self, source_issues: list[dict], target_issues: list[dict]) -> None:
         project_root = Path(__file__).resolve().parent.parent
@@ -117,6 +187,7 @@ class MigrationEngine:
         target_dir = resolve_dir(self.config.get("target", {}).get("location"), "target")
         source_dir.mkdir(parents=True, exist_ok=True)
         target_dir.mkdir(parents=True, exist_ok=True)
+        self.target_dir = target_dir
 
         source_path = source_dir / "issues.json"
         target_path = target_dir / "issues.json"

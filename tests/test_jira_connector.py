@@ -339,6 +339,32 @@ class JiraConnectorTests(unittest.TestCase):
         self.assertEqual(issues[0]["linked_issues"][0]["target_key"], "ABC-2")
         self.assertEqual(issues[0]["history"][0]["field"], "status")
 
+    def test_create_issue_skips_duplicate_issue_links_for_inverse_relation_names(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+        connector.created_issue_keys["ABC-2"] = "TGT-2"
+
+        with patch.object(connector, "_request", return_value={"id": "456", "key": "ABC-456"}) as request_mock:
+            connector._create_issue_links(
+                "ABC-1",
+                [
+                    {"target_key": "ABC-2", "relation": "Implements", "direction": "outward"},
+                    {"target_key": "ABC-2", "relation": "Implemented by", "direction": "inward"},
+                ],
+            )
+
+        self.assertEqual(request_mock.call_count, 1)
+        self.assertEqual(request_mock.call_args_list[0].args[2]["type"]["name"], "Implements")
+
     def test_create_issue_retries_with_default_task_type_when_requested_type_is_invalid(self):
         connector_module = importlib.import_module("connectors.jira_connector")
         JiraConnector = connector_module.JiraConnector
@@ -363,6 +389,40 @@ class JiraConnectorTests(unittest.TestCase):
         self.assertEqual(response["key"], "ABC-456")
         self.assertEqual(request_mock.call_count, 2)
         self.assertEqual(request_mock.call_args_list[1].args[2]["fields"]["issuetype"]["name"], "Task")
+
+    def test_request_retries_transient_url_errors(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+                "retry_count": 2,
+                "retry_delay": 0,
+            }
+        )
+
+        class FakeResponse:
+            def __init__(self, body):
+                self._body = body
+
+            def read(self):
+                return self._body.encode("utf-8")
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc_val, exc_tb):
+                return False
+
+        with patch.object(connector_module.request, "urlopen", side_effect=[connector_module.error.URLError("temporary"), FakeResponse('{"ok": true}')]) as request_mock:
+            response = connector._request("GET", "/myself")
+
+        self.assertEqual(response, {"ok": True})
+        self.assertEqual(request_mock.call_count, 2)
 
     def test_create_issue_sends_description_in_adf_format(self):
         connector_module = importlib.import_module("connectors.jira_connector")

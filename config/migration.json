@@ -1,14 +1,30 @@
 {
   "project_info": {
-    "id": "Test",
-    "name": "Test",
+    "id": "CSTEST",
+    "name": "Cori SaaS Test",
     "description": "test description"
   },
   "target_project": {
-    "id": "MT",
-    "name": "Migration Test",
+    "id": "NTP",
+    "name": "New test project1",
     "description": "ABC description",
-    "lead_account_id": "hemanthyadav887@gmail.com"
+    "lead_account_id": "Hemanth.Raghav@smith-nephew.com"
+  },
+  "source": {
+    "type": "jira",
+    "start": 10,
+    "end": 25,
+    "allowed_fields": [
+      "labels",
+      "priority",
+      "components",
+      "versions",
+      "fixVersions",
+      "assignee",
+      "reporter",
+      "duedate",
+      "environment"
+    ]
   },
   "transformations": {
     "issueType": {
