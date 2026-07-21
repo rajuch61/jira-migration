@@ -1,0 +1,125 @@
+{
+  "config.version" : "2.0",
+  "config.project.from.csv" : "false",
+  "config.encoding" : "UTF-8",
+  "config.email.suffix" : "@",
+  "config.field.mappings" : {
+    "Description" : {
+      "jira.field" : "description"
+    },
+    "Custom field (WSJF)" : {
+      "existing.custom.field" : "11303"
+    },
+    "Custom field (Strategic Theming)" : {
+      "existing.custom.field" : "11306"
+    },
+    "Custom field (Technical Review)" : {
+      "existing.custom.field" : "11307"
+    },
+    "Attachment" : {
+      "jira.field" : "attachment"
+    },
+    "Custom field (Test Passed)" : {
+      "existing.custom.field" : "11315"
+    },
+    "Affects Version/s" : {
+      "jira.field" : "versions"
+    },
+    "Custom field (Business Case)" : {
+      "existing.custom.field" : "11300"
+    },
+    "Created" : {
+      "jira.field" : "created"
+    },
+    "Custom field (Epic Link)" : {
+      "existing.custom.field" : "10108"
+    },
+    "Custom field (Agile Work-Stream)" : {
+      "existing.custom.field" : "11312"
+    },
+    "Custom field (High-Level T-Shirt Size Estimate)" : {
+      "existing.custom.field" : "11305"
+    },
+    "Fix Version/s" : {
+      "jira.field" : "fixVersions"
+    },
+    "Custom field (Field Feedback)" : {
+      "existing.custom.field" : "11310"
+    },
+    "Issue id" : {
+      "jira.field" : "issue-id"
+    },
+    "Assignee" : {
+      "existing.custom.field" : "12113"
+    },
+    "Comment" : {
+      "jira.field" : "comment"
+    },
+    "Component/s" : {
+      "jira.field" : "components"
+    },
+    "Parent id" : {
+      "jira.field" : "subtask-parent-id"
+    },
+    "Custom field (Benefit Hypothesis)" : {
+      "existing.custom.field" : "11301"
+    },
+    "Priority" : {
+      "jira.field" : "priority"
+    },
+    "Reporter" : {
+      "jira.field" : "reporter"
+    },
+    "Labels" : {
+      "jira.field" : "labels"
+    },
+    "Custom field (Backlog Category)" : {
+      "existing.custom.field" : "11314"
+    },
+    "Custom field (Risk Analysis)" : {
+      "existing.custom.field" : "10204"
+    },
+    "Custom field (IP Concerns)" : {
+      "existing.custom.field" : "11309"
+    },
+    "Issue Type" : {
+      "jira.field" : "issuetype"
+    },
+    "Custom field (MoSCoW)" : {
+      "existing.custom.field" : "11304"
+    },
+    "Custom field (Epic Name)" : {
+      "existing.custom.field" : "10104"
+    },
+    "Summary" : {
+      "jira.field" : "summary"
+    },
+    "Custom field (Regulatory Analysis)" : {
+      "existing.custom.field" : "10516"
+    },
+    "Sprint" : {
+      "existing.custom.field" : "10109"
+    },
+    "Custom field (Story Points)" : {
+      "existing.custom.field" : "10111"
+    },
+    "Custom field (MVP Definition)" : {
+      "existing.custom.field" : "11308"
+    },
+    "Custom field (ROI)" : {
+      "existing.custom.field" : "11302"
+    }
+  },
+  "config.value.mappings" : { },
+  "config.delimiter" : ",",
+  "config.project" : {
+    "project.type" : null,
+    "project.key" : "NTP",
+    "project.description" : null,
+    "project.url" : null,
+    "project.name" : "New test project1",
+    "project.lead" : null
+  },
+  "config.date.format" : "dd/MMM/yy h:mm a",
+  "config.create.and.assign.default.project.role" : "false"
+}

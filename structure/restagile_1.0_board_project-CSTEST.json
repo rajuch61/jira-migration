@@ -1,0 +1,308 @@
+{
+  "maxResults": 50,
+  "startAt": 0,
+  "total": 96,
+  "isLast": false,
+  "values": [
+    {
+      "id": 120,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/120",
+      "name": " CORI Global Backlog",
+      "type": "kanban"
+    },
+    {
+      "id": 119,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/119",
+      "name": " CORI-EpicKanban",
+      "type": "kanban"
+    },
+    {
+      "id": 88,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/88",
+      "name": "abra-demo-poc",
+      "type": "kanban"
+    },
+    {
+      "id": 145,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/145",
+      "name": "Active Sprint",
+      "type": "kanban"
+    },
+    {
+      "id": 95,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/95",
+      "name": "ADOM Board",
+      "type": "scrum"
+    },
+    {
+      "id": 147,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/147",
+      "name": "ANAKIN DV Defects",
+      "type": "scrum"
+    },
+    {
+      "id": 117,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/117",
+      "name": "ANAKIN SW Development",
+      "type": "scrum"
+    },
+    {
+      "id": 130,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/130",
+      "name": "AP board",
+      "type": "scrum"
+    },
+    {
+      "id": 86,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/86",
+      "name": "CDS - Core - Requirements",
+      "type": "scrum"
+    },
+    {
+      "id": 87,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/87",
+      "name": "CDS - Core - Tests",
+      "type": "scrum"
+    },
+    {
+      "id": 79,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/79",
+      "name": "CDS - Mobile - Requirements",
+      "type": "scrum"
+    },
+    {
+      "id": 83,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/83",
+      "name": "CDS - Mobile - Tests\t",
+      "type": "scrum"
+    },
+    {
+      "id": 84,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/84",
+      "name": "CDS - Web - Requirements",
+      "type": "scrum"
+    },
+    {
+      "id": 85,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/85",
+      "name": "CDS - Web - Tests\t",
+      "type": "scrum"
+    },
+    {
+      "id": 89,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/89",
+      "name": "CDS_Overall Project",
+      "type": "scrum"
+    },
+    {
+      "id": 136,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/136",
+      "name": "Copy of Prime cloud phase 2b",
+      "type": "scrum"
+    },
+    {
+      "id": 137,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/137",
+      "name": "Copy of Prime Tibia",
+      "type": "scrum"
+    },
+    {
+      "id": 118,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/118",
+      "name": "CORI ALL",
+      "type": "kanban"
+    },
+    {
+      "id": 115,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/115",
+      "name": "CORI Board",
+      "type": "scrum"
+    },
+    {
+      "id": 121,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/121",
+      "name": "CORI-Kanban-ALL",
+      "type": "kanban"
+    },
+    {
+      "id": 122,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/122",
+      "name": "CORI-Knee1",
+      "type": "kanban"
+    },
+    {
+      "id": 2,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/2",
+      "name": "CTP board",
+      "type": "kanban"
+    },
+    {
+      "id": 148,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/148",
+      "name": "CUMULUS SW board",
+      "type": "scrum"
+    },
+    {
+      "id": 149,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/149",
+      "name": "CUMULUS-DevOps",
+      "type": "scrum"
+    },
+    {
+      "id": 5,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/5",
+      "name": "Dashboard UAT",
+      "type": "kanban"
+    },
+    {
+      "id": 8,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/8",
+      "name": "Dashboard UAT - AC - 011123",
+      "type": "kanban"
+    },
+    {
+      "id": 7,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/7",
+      "name": "Dashboard UAT - DB - 02Jan2023",
+      "type": "kanban"
+    },
+    {
+      "id": 6,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/6",
+      "name": "Dashboard UAT - DB - 07Dec2022",
+      "type": "kanban"
+    },
+    {
+      "id": 155,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/155",
+      "name": "Dendron SW",
+      "type": "scrum"
+    },
+    {
+      "id": 156,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/156",
+      "name": "DEV board",
+      "type": "scrum"
+    },
+    {
+      "id": 157,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/157",
+      "name": "DevOps - Licensing",
+      "type": "scrum"
+    },
+    {
+      "id": 100,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/100",
+      "name": "Fractal Team",
+      "type": "kanban"
+    },
+    {
+      "id": 154,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/154",
+      "name": "HPOP Pending Work",
+      "type": "kanban"
+    },
+    {
+      "id": 150,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/150",
+      "name": "Insights SSO POC",
+      "type": "kanban"
+    },
+    {
+      "id": 4,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/4",
+      "name": "KANBAN board",
+      "type": "kanban"
+    },
+    {
+      "id": 123,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/123",
+      "name": "Knee 4.0 Board",
+      "type": "scrum"
+    },
+    {
+      "id": 114,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/114",
+      "name": "Knee4.0",
+      "type": "scrum"
+    },
+    {
+      "id": 82,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/82",
+      "name": "LEAF",
+      "type": "scrum"
+    },
+    {
+      "id": 80,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/80",
+      "name": "LEAF POC",
+      "type": "scrum"
+    },
+    {
+      "id": 73,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/73",
+      "name": "LEAF Sensor",
+      "type": "scrum"
+    },
+    {
+      "id": 90,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/90",
+      "name": "LEAF2-Fractal Team",
+      "type": "scrum"
+    },
+    {
+      "id": 91,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/91",
+      "name": "LEAF2-LEAF2.0 Sensor",
+      "type": "scrum"
+    },
+    {
+      "id": 92,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/92",
+      "name": "LEAF2-LEAF2.0 Team",
+      "type": "scrum"
+    },
+    {
+      "id": 93,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/93",
+      "name": "LEAF2-LRP Team",
+      "type": "scrum"
+    },
+    {
+      "id": 107,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/107",
+      "name": "LEAF2-TEST",
+      "type": "kanban"
+    },
+    {
+      "id": 104,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/104",
+      "name": "LEAF2.0",
+      "type": "scrum"
+    },
+    {
+      "id": 111,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/111",
+      "name": "Leaf2.0",
+      "type": "scrum"
+    },
+    {
+      "id": 99,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/99",
+      "name": "LEAF2.0 All",
+      "type": "scrum"
+    },
+    {
+      "id": 103,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/103",
+      "name": "LEAF2.0 Sensor",
+      "type": "kanban"
+    },
+    {
+      "id": 102,
+      "self": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443/rest/agile/1.0/board/102",
+      "name": "LEAF2.0 Team",
+      "type": "kanban"
+    }
+  ]
+}

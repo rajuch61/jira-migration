@@ -129,8 +129,8 @@ class JiraConnectorTests(unittest.TestCase):
 
             self.assertEqual(len(issues), 2)
             self.assertEqual(request_mock.call_count, 2)
-            self.assertEqual(request_mock.call_args_list[0].args[1], "/issue/CSTEST-721?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
-            self.assertEqual(request_mock.call_args_list[1].args[1], "/issue/CSTEST-720?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
+            self.assertEqual(request_mock.call_args_list[0].args[1], "/issue/CSTEST-721?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks&expand=changelog")
+            self.assertEqual(request_mock.call_args_list[1].args[1], "/issue/CSTEST-720?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks&expand=changelog")
         finally:
             os.unlink(csv_path)
 
@@ -163,7 +163,10 @@ class JiraConnectorTests(unittest.TestCase):
             ]
         }
 
-        with patch.object(connector, "_request", return_value=payload), patch.object(connector.logger, "info") as info_mock:
+        issue_detail_payload = payload["issues"][0]
+        search_payload = {"issues": [payload["issues"][0]]}
+
+        with patch.object(connector, "_request", side_effect=[search_payload, issue_detail_payload]), patch.object(connector.logger, "info") as info_mock:
             issues = connector.read_issues()
 
         self.assertEqual(len(issues), 1)
@@ -195,7 +198,7 @@ class JiraConnectorTests(unittest.TestCase):
         with patch.object(connector, "_request", return_value={"issues": []}) as request_mock:
             connector.read_issues()
 
-        expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks"
+        expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks&expand=changelog"
         request_mock.assert_called_once_with("GET", expected_path)
 
     def test_read_issues_falls_back_to_key_search_when_search_returns_no_items(self):
@@ -228,7 +231,7 @@ class JiraConnectorTests(unittest.TestCase):
 
         self.assertEqual(len(issues), 1)
         self.assertEqual(issues[0]["summary"], "Added summary")
-        self.assertEqual(request_mock.call_args_list[0].args[1], "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
+        self.assertEqual(request_mock.call_args_list[0].args[1], "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks&expand=changelog")
         self.assertEqual(request_mock.call_args_list[1].args[1], "/search?jql=project%3D%22ABC%22")
         self.assertEqual(request_mock.call_args_list[2].args[1], "/issue/ABC-1?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
 
@@ -646,7 +649,7 @@ class JiraConnectorTests(unittest.TestCase):
         self.assertEqual(issues[0]["comments"][0]["created"], "2024-01-02T03:04:05.000Z")
         self.assertEqual(issues[0]["comments"][0]["updated"], "2024-01-02T03:05:06.000Z")
 
-    def test_create_issue_posts_comment_body_as_plain_adf_text(self):
+    def test_create_issue_posts_comment_body_as_plain_text(self):
         connector_module = importlib.import_module("connectors.jira_connector")
         JiraConnector = connector_module.JiraConnector
 
@@ -684,16 +687,7 @@ class JiraConnectorTests(unittest.TestCase):
 
         self.assertEqual(
             request_mock.call_args_list[1].args[2]["body"],
-            {
-                "type": "doc",
-                "version": 1,
-                "content": [
-                    {
-                        "type": "paragraph",
-                        "content": [{"type": "text", "text": "Hello"}],
-                    }
-                ],
-            },
+            "Hello",
         )
 
     def test_create_issue_posts_comments_after_issue_creation(self):
@@ -771,6 +765,36 @@ class JiraConnectorTests(unittest.TestCase):
         self.assertTrue(request_obj.get_header("Content-type").startswith("multipart/form-data; boundary="))
         self.assertEqual(request_obj.get_header("X-Atlassian-Token"), "no-check")
         self.assertIsInstance(request_obj.data, bytes)
+
+    def test_download_attachment_from_url(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        class DummyResponse:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, tb):
+                return False
+
+            def read(self):
+                return b"hello-world"
+
+        with patch("connectors.jira_connector.request.urlopen", return_value=DummyResponse()) as urlopen_mock:
+            result = connector._download_attachment("https://example.atlassian.net/secure/attachment/1/file.txt")
+
+        self.assertEqual(result, b"hello-world")
+        request_obj = urlopen_mock.call_args.args[0]
+        self.assertEqual(request_obj.get_header("Authorization"), None)
 
     def test_create_issue_posts_attachments_after_issue_creation(self):
         connector_module = importlib.import_module("connectors.jira_connector")

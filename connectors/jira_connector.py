@@ -293,27 +293,35 @@ class JiraConnector(Connector):
             or self.config.get("fields")
             or self.config.get("allowed_fields")
         )
-        fields = configured_fields or ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks"]
+        if isinstance(configured_fields, str):
+            configured_fields = [field.strip() for field in configured_fields.split(",") if field.strip()]
+        fields = list(configured_fields) if isinstance(configured_fields, list) else []
+        if not fields:
+            fields = ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks"]
+        else:
+            for mandatory in ("comment", "attachment", "issuelinks"):
+                if mandatory not in fields:
+                    fields.append(mandatory)
         query = self._build_search_jql(issue_keys)
         self.logger.info(f"Fetching issues with JQL query: {query}")
 
         issue_payloads: list[dict[str, Any]] = []
         if issue_keys:
             for issue_key in issue_keys:
-                payload = self._request("GET", self._build_issue_path(issue_key, fields))
+                payload = self._request("GET", self._build_issue_path(issue_key, fields, expand="changelog"))
                 if isinstance(payload, dict):
                     issue_payloads.append(payload)
             return self._normalize_issue_payloads(issue_payloads)
 
         page_size = int(self._resolve_config_value(self.config, "page_size", default=100, env_names=("JIRA_PAGE_SIZE",))) or 100
-        search_path = self._build_search_path(query, fields, page_size)
+        search_path = self._build_search_path(query, fields, page_size, expand="changelog")
         self.logger.debug(f"Search request path: {search_path}")
 
         if self.prefer_key_search:
             self.logger.info("Using key-only search discovery for issue keys because prefer_key_search is enabled.")
             issue_keys = self._search_issue_keys(query, page_size)
             for issue_key in issue_keys:
-                payload = self._request("GET", self._build_issue_path(issue_key, fields))
+                payload = self._request("GET", self._build_issue_path(issue_key, fields, expand="changelog"))
                 if isinstance(payload, dict):
                     issue_payloads.append(payload)
             return self._normalize_issue_payloads(issue_payloads)
@@ -381,13 +389,14 @@ class JiraConnector(Connector):
                 for item in search_issues:
                     if not isinstance(item, dict):
                         continue
-                    if item.get("fields") is not None:
+                    fields_data = item.get("fields")
+                    if isinstance(fields_data, dict) and all(key in fields_data for key in ("comment", "attachment", "issuelinks")):
                         issue_payloads.append(item)
                         continue
                     issue_key = item.get("key")
                     if not issue_key:
                         continue
-                    payload = self._request("GET", self._build_issue_path(issue_key, fields))
+                    payload = self._request("GET", self._build_issue_path(issue_key, fields, expand="changelog"))
                     if isinstance(payload, dict):
                         issue_payloads.append(payload)
             elif isinstance(search_data, dict) and ("fields" in search_data or "key" in search_data or "id" in search_data):
@@ -532,7 +541,7 @@ class JiraConnector(Connector):
             return f'project="{self.project}"'
         return ""
 
-    def _build_search_path(self, query: str, fields: list[str] | None, max_results: int | None = 100) -> str:
+    def _build_search_path(self, query: str, fields: list[str] | None, max_results: int | None = 100, expand: str | None = None) -> str:
         encoded_query = quote(query, safe="") if query else ""
         path = "/search"
         params = []
@@ -543,9 +552,18 @@ class JiraConnector(Connector):
         if fields:
             encoded_fields = quote(",".join(fields), safe="")
             params.append(f"fields={encoded_fields}")
+        if expand:
+            params.append(f"expand={quote(expand, safe='')}")
         if not params:
             return path
         return f"{path}?{'&'.join(params)}"
+
+    def _build_issue_path(self, issue_key: str, fields: list[str], expand: str | None = None) -> str:
+        encoded_fields = quote(",".join(fields), safe="")
+        path = f"/issue/{issue_key}?fields={encoded_fields}"
+        if expand:
+            path = f"{path}&expand={quote(expand, safe='')}"
+        return path
 
     def _search_issue_keys(self, query: str, page_size: int = 100, try_no_fields_if_empty: bool = True) -> list[str]:
         issue_keys: list[str] = []
@@ -584,10 +602,6 @@ class JiraConnector(Connector):
                 break
 
         return list(dict.fromkeys(issue_keys))
-
-    def _build_issue_path(self, issue_key: str, fields: list[str]) -> str:
-        encoded_fields = quote(",".join(fields), safe="")
-        return f"/issue/{issue_key}?fields={encoded_fields}"
 
     def _extract_issue_keys_from_csv(self) -> list[str]:
         csv_path = self._resolve_config_value(self.config, "csv_file", "source_csv_file", "input_csv", default=None, env_names=("JIRA_CSV_FILE",))
@@ -1012,10 +1026,34 @@ class JiraConnector(Connector):
             if not body:
                 continue
             if isinstance(body, (dict, list)):
-                adf_body = body
+                text_body = self._extract_comment_text(body)
             else:
-                adf_body = self._to_adf(str(body))
-            self._request("POST", f"/issue/{issue_id}/comment", {"body": adf_body})
+                text_body = str(body)
+
+            if not text_body:
+                continue
+
+            payload = {"body": text_body}
+            if isinstance(comment.get("created"), str):
+                payload["created"] = comment.get("created")
+            if isinstance(comment.get("updated"), str):
+                payload["updated"] = comment.get("updated")
+
+            try:
+                self._request("POST", f"/issue/{issue_id}/comment", payload)
+            except Exception as exc:
+                if "created" in payload or "updated" in payload:
+                    fallback_payload = {"body": text_body}
+                    try:
+                        self._request("POST", f"/issue/{issue_id}/comment", fallback_payload)
+                        self.logger.debug(
+                            "Created comment without preserved timestamps because target rejected metadata: %s",
+                            exc,
+                        )
+                        continue
+                    except Exception:
+                        pass
+                raise
 
     def _create_attachments(self, issue_id: Any, attachments: list[dict[str, Any]]) -> None:
         for attachment in attachments or []:
@@ -1025,10 +1063,48 @@ class JiraConnector(Connector):
             content = attachment.get("content") or attachment.get("data") or attachment.get("bytes")
             if content is None:
                 continue
+            if isinstance(content, str) and self._looks_like_attachment_url(content):
+                downloaded = self._download_attachment(content)
+                if downloaded is None:
+                    self.logger.warning("Skipping attachment %s because it could not be downloaded", name)
+                    continue
+                content = downloaded
             payload = {
                 "file": (name, content if isinstance(content, (bytes, bytearray)) else str(content).encode("utf-8")),
             }
             self._request("POST", f"/issue/{issue_id}/attachments", payload)
+
+    def _download_attachment(self, url: str) -> bytes | None:
+        if not isinstance(url, str) or not url.strip():
+            return None
+        attachment_url = url.strip()
+        if attachment_url.startswith("/"):
+            attachment_url = f"{self.server.rstrip('/')}{attachment_url}"
+        elif not attachment_url.lower().startswith(("http://", "https://")):
+            attachment_url = self._build_url(attachment_url)
+
+        self.logger.debug("Downloading attachment from %s", attachment_url)
+        req = JiraRequest(attachment_url, method="GET")
+        if self.bearer_token:
+            req.add_header("Authorization", f"Bearer {self.bearer_token}")
+        elif self.basic_auth:
+            username, password = self.basic_auth
+            token = base64.b64encode(f"{username}:{password}".encode("utf-8")).decode("ascii")
+            req.add_header("Authorization", f"Basic {token}")
+
+        context = None if self.verify_ssl else ssl._create_unverified_context()
+        try:
+            with request.urlopen(req, timeout=self.timeout, context=context) as response:
+                return response.read()
+        except Exception as exc:
+            self.logger.warning("Failed to download attachment %s: %s", url, exc)
+            return None
+
+    def _looks_like_attachment_url(self, value: Any) -> bool:
+        if not isinstance(value, str):
+            return False
+        stripped = value.strip()
+        return stripped.lower().startswith(("http://", "https://")) or stripped.startswith("/")
 
     def _create_issue_links(self, issue_id: Any, linked_issues: list[dict[str, Any]]) -> None:
         for link in linked_issues or []:

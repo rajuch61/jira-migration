@@ -1,4781 +1,4781 @@
 {
   "93639": {
-    "target_key": "NTP-7180",
+    "target_key": "NTP-11662",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-722": {
-    "target_key": "NTP-7180",
+    "target_key": "NTP-11662",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "93640": {
-    "target_key": "NTP-7181",
+    "target_key": "NTP-11663",
     "issue_type": "Sub-task",
     "status": "Triage"
   },
   "CSTEST-723": {
-    "target_key": "NTP-7181",
+    "target_key": "NTP-11663",
     "issue_type": "Sub-task",
     "status": "Triage"
   },
   "93012": {
-    "target_key": "NTP-7182",
+    "target_key": "NTP-11664",
     "issue_type": "Story",
     "status": "Funnel"
   },
   "CSTEST-721": {
-    "target_key": "NTP-7182",
+    "target_key": "NTP-11664",
     "issue_type": "Story",
     "status": "Funnel"
   },
   "48450": {
-    "target_key": "NTP-7183",
+    "target_key": "NTP-11665",
     "issue_type": "Task",
     "status": "Triage"
   },
   "CSTEST-696": {
-    "target_key": "NTP-7183",
+    "target_key": "NTP-11665",
     "issue_type": "Task",
     "status": "Triage"
   },
   "93011": {
-    "target_key": "NTP-7184",
+    "target_key": "NTP-11666",
     "issue_type": "Sub-task",
     "status": "Triage"
   },
   "CSTEST-720": {
-    "target_key": "NTP-7184",
+    "target_key": "NTP-11666",
     "issue_type": "Sub-task",
     "status": "Triage"
   },
   "93010": {
-    "target_key": "NTP-7185",
+    "target_key": "NTP-11667",
     "issue_type": "Sub-task",
     "status": "Triage"
   },
   "CSTEST-719": {
-    "target_key": "NTP-7185",
+    "target_key": "NTP-11667",
     "issue_type": "Sub-task",
     "status": "Triage"
   },
   "48128": {
-    "target_key": "NTP-7186",
+    "target_key": "NTP-11668",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-718": {
-    "target_key": "NTP-7186",
+    "target_key": "NTP-11668",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48129": {
-    "target_key": "NTP-7187",
+    "target_key": "NTP-11669",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-717": {
-    "target_key": "NTP-7187",
+    "target_key": "NTP-11669",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48130": {
-    "target_key": "NTP-7188",
+    "target_key": "NTP-11670",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-716": {
-    "target_key": "NTP-7188",
+    "target_key": "NTP-11670",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48131": {
-    "target_key": "NTP-7189",
+    "target_key": "NTP-11671",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-715": {
-    "target_key": "NTP-7189",
+    "target_key": "NTP-11671",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48132": {
-    "target_key": "NTP-7190",
+    "target_key": "NTP-11672",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-714": {
-    "target_key": "NTP-7190",
+    "target_key": "NTP-11672",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48133": {
-    "target_key": "NTP-7191",
+    "target_key": "NTP-11673",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-713": {
-    "target_key": "NTP-7191",
+    "target_key": "NTP-11673",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48134": {
-    "target_key": "NTP-7192",
+    "target_key": "NTP-11674",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-712": {
-    "target_key": "NTP-7192",
+    "target_key": "NTP-11674",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48135": {
-    "target_key": "NTP-7193",
+    "target_key": "NTP-11675",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-711": {
-    "target_key": "NTP-7193",
+    "target_key": "NTP-11675",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48136": {
-    "target_key": "NTP-7194",
+    "target_key": "NTP-11676",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-710": {
-    "target_key": "NTP-7194",
+    "target_key": "NTP-11676",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48137": {
-    "target_key": "NTP-7195",
+    "target_key": "NTP-11677",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-709": {
-    "target_key": "NTP-7195",
+    "target_key": "NTP-11677",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48138": {
-    "target_key": "NTP-7196",
+    "target_key": "NTP-11678",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-708": {
-    "target_key": "NTP-7196",
+    "target_key": "NTP-11678",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48139": {
-    "target_key": "NTP-7197",
+    "target_key": "NTP-11679",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-707": {
-    "target_key": "NTP-7197",
+    "target_key": "NTP-11679",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48140": {
-    "target_key": "NTP-7198",
+    "target_key": "NTP-11680",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "CSTEST-706": {
-    "target_key": "NTP-7198",
+    "target_key": "NTP-11680",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "48141": {
-    "target_key": "NTP-7199",
+    "target_key": "NTP-11681",
     "issue_type": "Epic",
     "status": "Review"
   },
   "CSTEST-705": {
-    "target_key": "NTP-7199",
+    "target_key": "NTP-11681",
     "issue_type": "Epic",
     "status": "Review"
   },
   "48142": {
-    "target_key": "NTP-7200",
+    "target_key": "NTP-11682",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-704": {
-    "target_key": "NTP-7200",
+    "target_key": "NTP-11682",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48143": {
-    "target_key": "NTP-7201",
+    "target_key": "NTP-11683",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "CSTEST-703": {
-    "target_key": "NTP-7201",
+    "target_key": "NTP-11683",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "48144": {
-    "target_key": "NTP-7202",
+    "target_key": "NTP-11684",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-702": {
-    "target_key": "NTP-7202",
+    "target_key": "NTP-11684",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48145": {
-    "target_key": "NTP-7203",
+    "target_key": "NTP-11685",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-701": {
-    "target_key": "NTP-7203",
+    "target_key": "NTP-11685",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48146": {
-    "target_key": "NTP-7204",
+    "target_key": "NTP-11686",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-700": {
-    "target_key": "NTP-7204",
+    "target_key": "NTP-11686",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48147": {
-    "target_key": "NTP-7205",
+    "target_key": "NTP-11687",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-699": {
-    "target_key": "NTP-7205",
+    "target_key": "NTP-11687",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48148": {
-    "target_key": "NTP-7206",
+    "target_key": "NTP-11688",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-698": {
-    "target_key": "NTP-7206",
+    "target_key": "NTP-11688",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48451": {
-    "target_key": "NTP-7207",
+    "target_key": "NTP-11689",
     "issue_type": "Task",
     "status": "Triage"
   },
   "CSTEST-695": {
-    "target_key": "NTP-7207",
+    "target_key": "NTP-11689",
     "issue_type": "Task",
     "status": "Triage"
   },
   "48149": {
-    "target_key": "NTP-7208",
+    "target_key": "NTP-11690",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-694": {
-    "target_key": "NTP-7208",
+    "target_key": "NTP-11690",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48452": {
-    "target_key": "NTP-7209",
+    "target_key": "NTP-11691",
     "issue_type": "Task",
     "status": "Triage"
   },
   "CSTEST-693": {
-    "target_key": "NTP-7209",
+    "target_key": "NTP-11691",
     "issue_type": "Task",
     "status": "Triage"
   },
   "48150": {
-    "target_key": "NTP-7210",
+    "target_key": "NTP-11692",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-692": {
-    "target_key": "NTP-7210",
+    "target_key": "NTP-11692",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48151": {
-    "target_key": "NTP-7211",
+    "target_key": "NTP-11693",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-691": {
-    "target_key": "NTP-7211",
+    "target_key": "NTP-11693",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48152": {
-    "target_key": "NTP-7212",
+    "target_key": "NTP-11694",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-690": {
-    "target_key": "NTP-7212",
+    "target_key": "NTP-11694",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48153": {
-    "target_key": "NTP-7213",
+    "target_key": "NTP-11695",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-689": {
-    "target_key": "NTP-7213",
+    "target_key": "NTP-11695",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48154": {
-    "target_key": "NTP-7214",
+    "target_key": "NTP-11696",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-688": {
-    "target_key": "NTP-7214",
+    "target_key": "NTP-11696",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48453": {
-    "target_key": "NTP-7215",
+    "target_key": "NTP-11697",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-687": {
-    "target_key": "NTP-7215",
+    "target_key": "NTP-11697",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48155": {
-    "target_key": "NTP-7216",
+    "target_key": "NTP-11698",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-686": {
-    "target_key": "NTP-7216",
+    "target_key": "NTP-11698",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48156": {
-    "target_key": "NTP-7217",
+    "target_key": "NTP-11699",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-685": {
-    "target_key": "NTP-7217",
+    "target_key": "NTP-11699",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48157": {
-    "target_key": "NTP-7218",
+    "target_key": "NTP-11700",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-684": {
-    "target_key": "NTP-7218",
+    "target_key": "NTP-11700",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48158": {
-    "target_key": "NTP-7219",
+    "target_key": "NTP-11701",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-683": {
-    "target_key": "NTP-7219",
+    "target_key": "NTP-11701",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48159": {
-    "target_key": "NTP-7220",
+    "target_key": "NTP-11702",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-682": {
-    "target_key": "NTP-7220",
+    "target_key": "NTP-11702",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48160": {
-    "target_key": "NTP-7221",
+    "target_key": "NTP-11703",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-681": {
-    "target_key": "NTP-7221",
+    "target_key": "NTP-11703",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48161": {
-    "target_key": "NTP-7222",
+    "target_key": "NTP-11704",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-680": {
-    "target_key": "NTP-7222",
+    "target_key": "NTP-11704",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48162": {
-    "target_key": "NTP-7223",
+    "target_key": "NTP-11705",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-679": {
-    "target_key": "NTP-7223",
+    "target_key": "NTP-11705",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48163": {
-    "target_key": "NTP-7224",
+    "target_key": "NTP-11706",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-678": {
-    "target_key": "NTP-7224",
+    "target_key": "NTP-11706",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48164": {
-    "target_key": "NTP-7225",
+    "target_key": "NTP-11707",
     "issue_type": "Epic",
     "status": "Review"
   },
   "CSTEST-677": {
-    "target_key": "NTP-7225",
+    "target_key": "NTP-11707",
     "issue_type": "Epic",
     "status": "Review"
   },
   "48165": {
-    "target_key": "NTP-7226",
+    "target_key": "NTP-11708",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-676": {
-    "target_key": "NTP-7226",
+    "target_key": "NTP-11708",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48166": {
-    "target_key": "NTP-7227",
+    "target_key": "NTP-11709",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-675": {
-    "target_key": "NTP-7227",
+    "target_key": "NTP-11709",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48167": {
-    "target_key": "NTP-7228",
+    "target_key": "NTP-11710",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-674": {
-    "target_key": "NTP-7228",
+    "target_key": "NTP-11710",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48168": {
-    "target_key": "NTP-7229",
+    "target_key": "NTP-11711",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-673": {
-    "target_key": "NTP-7229",
+    "target_key": "NTP-11711",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48454": {
-    "target_key": "NTP-7230",
+    "target_key": "NTP-11712",
     "issue_type": "Task",
     "status": "Triage"
   },
   "CSTEST-672": {
-    "target_key": "NTP-7230",
+    "target_key": "NTP-11712",
     "issue_type": "Task",
     "status": "Triage"
   },
   "48455": {
-    "target_key": "NTP-7231",
+    "target_key": "NTP-11713",
     "issue_type": "Task",
     "status": "Triage"
   },
   "CSTEST-671": {
-    "target_key": "NTP-7231",
+    "target_key": "NTP-11713",
     "issue_type": "Task",
     "status": "Triage"
   },
   "48456": {
-    "target_key": "NTP-7232",
+    "target_key": "NTP-11714",
     "issue_type": "Task",
     "status": "Triage"
   },
   "CSTEST-670": {
-    "target_key": "NTP-7232",
+    "target_key": "NTP-11714",
     "issue_type": "Task",
     "status": "Triage"
   },
   "48457": {
-    "target_key": "NTP-7233",
+    "target_key": "NTP-11715",
     "issue_type": "Task",
     "status": "Triage"
   },
   "CSTEST-669": {
-    "target_key": "NTP-7233",
+    "target_key": "NTP-11715",
     "issue_type": "Task",
     "status": "Triage"
   },
   "48458": {
-    "target_key": "NTP-7234",
+    "target_key": "NTP-11716",
     "issue_type": "Task",
     "status": "Triage"
   },
   "CSTEST-668": {
-    "target_key": "NTP-7234",
+    "target_key": "NTP-11716",
     "issue_type": "Task",
     "status": "Triage"
   },
   "48459": {
-    "target_key": "NTP-7235",
+    "target_key": "NTP-11717",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-667": {
-    "target_key": "NTP-7235",
+    "target_key": "NTP-11717",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48460": {
-    "target_key": "NTP-7236",
+    "target_key": "NTP-11718",
     "issue_type": "Task",
     "status": "Triage"
   },
   "CSTEST-666": {
-    "target_key": "NTP-7236",
+    "target_key": "NTP-11718",
     "issue_type": "Task",
     "status": "Triage"
   },
   "48461": {
-    "target_key": "NTP-7237",
+    "target_key": "NTP-11719",
     "issue_type": "Task",
     "status": "Triage"
   },
   "CSTEST-665": {
-    "target_key": "NTP-7237",
+    "target_key": "NTP-11719",
     "issue_type": "Task",
     "status": "Triage"
   },
   "48169": {
-    "target_key": "NTP-7238",
+    "target_key": "NTP-11720",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-664": {
-    "target_key": "NTP-7238",
+    "target_key": "NTP-11720",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48462": {
-    "target_key": "NTP-7239",
+    "target_key": "NTP-11721",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-663": {
-    "target_key": "NTP-7239",
+    "target_key": "NTP-11721",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48463": {
-    "target_key": "NTP-7240",
+    "target_key": "NTP-11722",
     "issue_type": "Story",
     "status": "Funnel"
   },
   "CSTEST-662": {
-    "target_key": "NTP-7240",
+    "target_key": "NTP-11722",
     "issue_type": "Story",
     "status": "Funnel"
   },
   "48464": {
-    "target_key": "NTP-7241",
+    "target_key": "NTP-11723",
     "issue_type": "Story",
     "status": "Define"
   },
   "CSTEST-661": {
-    "target_key": "NTP-7241",
+    "target_key": "NTP-11723",
     "issue_type": "Story",
     "status": "Define"
   },
   "48465": {
-    "target_key": "NTP-7242",
+    "target_key": "NTP-11724",
     "issue_type": "Story",
     "status": "Funnel"
   },
   "CSTEST-659": {
-    "target_key": "NTP-7242",
+    "target_key": "NTP-11724",
     "issue_type": "Story",
     "status": "Funnel"
   },
   "48466": {
-    "target_key": "NTP-7243",
+    "target_key": "NTP-11725",
     "issue_type": "Story",
     "status": "Funnel"
   },
   "CSTEST-658": {
-    "target_key": "NTP-7243",
+    "target_key": "NTP-11725",
     "issue_type": "Story",
     "status": "Funnel"
   },
   "48170": {
-    "target_key": "NTP-7244",
+    "target_key": "NTP-11726",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-657": {
-    "target_key": "NTP-7244",
+    "target_key": "NTP-11726",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48467": {
-    "target_key": "NTP-7245",
+    "target_key": "NTP-11727",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-656": {
-    "target_key": "NTP-7245",
+    "target_key": "NTP-11727",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48468": {
-    "target_key": "NTP-7246",
+    "target_key": "NTP-11728",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-655": {
-    "target_key": "NTP-7246",
+    "target_key": "NTP-11728",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48171": {
-    "target_key": "NTP-7247",
+    "target_key": "NTP-11729",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-654": {
-    "target_key": "NTP-7247",
+    "target_key": "NTP-11729",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48172": {
-    "target_key": "NTP-7248",
+    "target_key": "NTP-11730",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-653": {
-    "target_key": "NTP-7248",
+    "target_key": "NTP-11730",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48469": {
-    "target_key": "NTP-7249",
+    "target_key": "NTP-11731",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-652": {
-    "target_key": "NTP-7249",
+    "target_key": "NTP-11731",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48470": {
-    "target_key": "NTP-7250",
+    "target_key": "NTP-11732",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-651": {
-    "target_key": "NTP-7250",
+    "target_key": "NTP-11732",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48471": {
-    "target_key": "NTP-7251",
+    "target_key": "NTP-11733",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-650": {
-    "target_key": "NTP-7251",
+    "target_key": "NTP-11733",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48472": {
-    "target_key": "NTP-7252",
+    "target_key": "NTP-11734",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-649": {
-    "target_key": "NTP-7252",
+    "target_key": "NTP-11734",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48473": {
-    "target_key": "NTP-7253",
+    "target_key": "NTP-11735",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-648": {
-    "target_key": "NTP-7253",
+    "target_key": "NTP-11735",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48474": {
-    "target_key": "NTP-7254",
+    "target_key": "NTP-11736",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-647": {
-    "target_key": "NTP-7254",
+    "target_key": "NTP-11736",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48475": {
-    "target_key": "NTP-7255",
+    "target_key": "NTP-11737",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-646": {
-    "target_key": "NTP-7255",
+    "target_key": "NTP-11737",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48476": {
-    "target_key": "NTP-7256",
+    "target_key": "NTP-11738",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-645": {
-    "target_key": "NTP-7256",
+    "target_key": "NTP-11738",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48477": {
-    "target_key": "NTP-7257",
+    "target_key": "NTP-11739",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-644": {
-    "target_key": "NTP-7257",
+    "target_key": "NTP-11739",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48478": {
-    "target_key": "NTP-7258",
+    "target_key": "NTP-11740",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-643": {
-    "target_key": "NTP-7258",
+    "target_key": "NTP-11740",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48479": {
-    "target_key": "NTP-7259",
+    "target_key": "NTP-11741",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-642": {
-    "target_key": "NTP-7259",
+    "target_key": "NTP-11741",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48480": {
-    "target_key": "NTP-7260",
+    "target_key": "NTP-11742",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-641": {
-    "target_key": "NTP-7260",
+    "target_key": "NTP-11742",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48481": {
-    "target_key": "NTP-7261",
+    "target_key": "NTP-11743",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-640": {
-    "target_key": "NTP-7261",
+    "target_key": "NTP-11743",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48482": {
-    "target_key": "NTP-7262",
+    "target_key": "NTP-11744",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-639": {
-    "target_key": "NTP-7262",
+    "target_key": "NTP-11744",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48483": {
-    "target_key": "NTP-7263",
+    "target_key": "NTP-11745",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-638": {
-    "target_key": "NTP-7263",
+    "target_key": "NTP-11745",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48484": {
-    "target_key": "NTP-7264",
+    "target_key": "NTP-11746",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-637": {
-    "target_key": "NTP-7264",
+    "target_key": "NTP-11746",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48485": {
-    "target_key": "NTP-7265",
+    "target_key": "NTP-11747",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-636": {
-    "target_key": "NTP-7265",
+    "target_key": "NTP-11747",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48486": {
-    "target_key": "NTP-7266",
+    "target_key": "NTP-11748",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-635": {
-    "target_key": "NTP-7266",
+    "target_key": "NTP-11748",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48487": {
-    "target_key": "NTP-7267",
+    "target_key": "NTP-11749",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-634": {
-    "target_key": "NTP-7267",
+    "target_key": "NTP-11749",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48173": {
-    "target_key": "NTP-7268",
+    "target_key": "NTP-11750",
     "issue_type": "Epic",
     "status": "Won't Do"
   },
   "CSTEST-633": {
-    "target_key": "NTP-7268",
+    "target_key": "NTP-11750",
     "issue_type": "Epic",
     "status": "Won't Do"
   },
   "48488": {
-    "target_key": "NTP-7269",
+    "target_key": "NTP-11751",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-632": {
-    "target_key": "NTP-7269",
+    "target_key": "NTP-11751",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48174": {
-    "target_key": "NTP-7270",
+    "target_key": "NTP-11752",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-631": {
-    "target_key": "NTP-7270",
+    "target_key": "NTP-11752",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48489": {
-    "target_key": "NTP-7271",
+    "target_key": "NTP-11753",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-630": {
-    "target_key": "NTP-7271",
+    "target_key": "NTP-11753",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48490": {
-    "target_key": "NTP-7272",
+    "target_key": "NTP-11754",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-629": {
-    "target_key": "NTP-7272",
+    "target_key": "NTP-11754",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48491": {
-    "target_key": "NTP-7273",
+    "target_key": "NTP-11755",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-628": {
-    "target_key": "NTP-7273",
+    "target_key": "NTP-11755",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48492": {
-    "target_key": "NTP-7274",
+    "target_key": "NTP-11756",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-627": {
-    "target_key": "NTP-7274",
+    "target_key": "NTP-11756",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48493": {
-    "target_key": "NTP-7275",
+    "target_key": "NTP-11757",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-626": {
-    "target_key": "NTP-7275",
+    "target_key": "NTP-11757",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48175": {
-    "target_key": "NTP-7276",
+    "target_key": "NTP-11758",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-624": {
-    "target_key": "NTP-7276",
+    "target_key": "NTP-11758",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48176": {
-    "target_key": "NTP-7277",
+    "target_key": "NTP-11759",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-623": {
-    "target_key": "NTP-7277",
+    "target_key": "NTP-11759",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48177": {
-    "target_key": "NTP-7278",
+    "target_key": "NTP-11760",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-622": {
-    "target_key": "NTP-7278",
+    "target_key": "NTP-11760",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48178": {
-    "target_key": "NTP-7279",
+    "target_key": "NTP-11761",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-621": {
-    "target_key": "NTP-7279",
+    "target_key": "NTP-11761",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48494": {
-    "target_key": "NTP-7280",
+    "target_key": "NTP-11762",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-620": {
-    "target_key": "NTP-7280",
+    "target_key": "NTP-11762",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48495": {
-    "target_key": "NTP-7281",
+    "target_key": "NTP-11763",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-619": {
-    "target_key": "NTP-7281",
+    "target_key": "NTP-11763",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48496": {
-    "target_key": "NTP-7282",
+    "target_key": "NTP-11764",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-618": {
-    "target_key": "NTP-7282",
+    "target_key": "NTP-11764",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48497": {
-    "target_key": "NTP-7283",
+    "target_key": "NTP-11765",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-617": {
-    "target_key": "NTP-7283",
+    "target_key": "NTP-11765",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48498": {
-    "target_key": "NTP-7284",
+    "target_key": "NTP-11766",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-616": {
-    "target_key": "NTP-7284",
+    "target_key": "NTP-11766",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48499": {
-    "target_key": "NTP-7285",
+    "target_key": "NTP-11767",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-615": {
-    "target_key": "NTP-7285",
+    "target_key": "NTP-11767",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48500": {
-    "target_key": "NTP-7286",
+    "target_key": "NTP-11768",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-614": {
-    "target_key": "NTP-7286",
+    "target_key": "NTP-11768",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48501": {
-    "target_key": "NTP-7287",
+    "target_key": "NTP-11769",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-613": {
-    "target_key": "NTP-7287",
+    "target_key": "NTP-11769",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48179": {
-    "target_key": "NTP-7288",
+    "target_key": "NTP-11770",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-612": {
-    "target_key": "NTP-7288",
+    "target_key": "NTP-11770",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48180": {
-    "target_key": "NTP-7289",
+    "target_key": "NTP-11771",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-611": {
-    "target_key": "NTP-7289",
+    "target_key": "NTP-11771",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48502": {
-    "target_key": "NTP-7290",
+    "target_key": "NTP-11772",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-610": {
-    "target_key": "NTP-7290",
+    "target_key": "NTP-11772",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48503": {
-    "target_key": "NTP-7291",
+    "target_key": "NTP-11773",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-609": {
-    "target_key": "NTP-7291",
+    "target_key": "NTP-11773",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48504": {
-    "target_key": "NTP-7292",
+    "target_key": "NTP-11774",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-608": {
-    "target_key": "NTP-7292",
+    "target_key": "NTP-11774",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48505": {
-    "target_key": "NTP-7293",
+    "target_key": "NTP-11775",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-607": {
-    "target_key": "NTP-7293",
+    "target_key": "NTP-11775",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48506": {
-    "target_key": "NTP-7294",
+    "target_key": "NTP-11776",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-606": {
-    "target_key": "NTP-7294",
+    "target_key": "NTP-11776",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48507": {
-    "target_key": "NTP-7295",
+    "target_key": "NTP-11777",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-605": {
-    "target_key": "NTP-7295",
+    "target_key": "NTP-11777",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48508": {
-    "target_key": "NTP-7296",
+    "target_key": "NTP-11778",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-604": {
-    "target_key": "NTP-7296",
+    "target_key": "NTP-11778",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48509": {
-    "target_key": "NTP-7297",
+    "target_key": "NTP-11779",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-603": {
-    "target_key": "NTP-7297",
+    "target_key": "NTP-11779",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48510": {
-    "target_key": "NTP-7298",
+    "target_key": "NTP-11780",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-602": {
-    "target_key": "NTP-7298",
+    "target_key": "NTP-11780",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48181": {
-    "target_key": "NTP-7299",
+    "target_key": "NTP-11781",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-601": {
-    "target_key": "NTP-7299",
+    "target_key": "NTP-11781",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48182": {
-    "target_key": "NTP-7300",
+    "target_key": "NTP-11782",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-600": {
-    "target_key": "NTP-7300",
+    "target_key": "NTP-11782",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48183": {
-    "target_key": "NTP-7301",
+    "target_key": "NTP-11783",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-599": {
-    "target_key": "NTP-7301",
+    "target_key": "NTP-11783",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48184": {
-    "target_key": "NTP-7302",
+    "target_key": "NTP-11784",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-597": {
-    "target_key": "NTP-7302",
+    "target_key": "NTP-11784",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48185": {
-    "target_key": "NTP-7303",
+    "target_key": "NTP-11785",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-596": {
-    "target_key": "NTP-7303",
+    "target_key": "NTP-11785",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48186": {
-    "target_key": "NTP-7304",
+    "target_key": "NTP-11786",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-595": {
-    "target_key": "NTP-7304",
+    "target_key": "NTP-11786",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48187": {
-    "target_key": "NTP-7305",
+    "target_key": "NTP-11787",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-594": {
-    "target_key": "NTP-7305",
+    "target_key": "NTP-11787",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48511": {
-    "target_key": "NTP-7306",
+    "target_key": "NTP-11788",
     "issue_type": "Story",
     "status": "Backlog."
   },
   "CSTEST-593": {
-    "target_key": "NTP-7306",
+    "target_key": "NTP-11788",
     "issue_type": "Story",
     "status": "Backlog."
   },
   "48512": {
-    "target_key": "NTP-7307",
+    "target_key": "NTP-11789",
     "issue_type": "Feature",
     "status": "Won't Do"
   },
   "CSTEST-592": {
-    "target_key": "NTP-7307",
+    "target_key": "NTP-11789",
     "issue_type": "Feature",
     "status": "Won't Do"
   },
   "48188": {
-    "target_key": "NTP-7308",
+    "target_key": "NTP-11790",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-591": {
-    "target_key": "NTP-7308",
+    "target_key": "NTP-11790",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48189": {
-    "target_key": "NTP-7309",
+    "target_key": "NTP-11791",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-590": {
-    "target_key": "NTP-7309",
+    "target_key": "NTP-11791",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48190": {
-    "target_key": "NTP-7310",
+    "target_key": "NTP-11792",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-587": {
-    "target_key": "NTP-7310",
+    "target_key": "NTP-11792",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48191": {
-    "target_key": "NTP-7311",
+    "target_key": "NTP-11793",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-586": {
-    "target_key": "NTP-7311",
+    "target_key": "NTP-11793",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48192": {
-    "target_key": "NTP-7312",
+    "target_key": "NTP-11794",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-585": {
-    "target_key": "NTP-7312",
+    "target_key": "NTP-11794",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48193": {
-    "target_key": "NTP-7313",
+    "target_key": "NTP-11795",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-584": {
-    "target_key": "NTP-7313",
+    "target_key": "NTP-11795",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48194": {
-    "target_key": "NTP-7314",
+    "target_key": "NTP-11796",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-583": {
-    "target_key": "NTP-7314",
+    "target_key": "NTP-11796",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48195": {
-    "target_key": "NTP-7315",
+    "target_key": "NTP-11797",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-582": {
-    "target_key": "NTP-7315",
+    "target_key": "NTP-11797",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48196": {
-    "target_key": "NTP-7316",
+    "target_key": "NTP-11798",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-581": {
-    "target_key": "NTP-7316",
+    "target_key": "NTP-11798",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48197": {
-    "target_key": "NTP-7317",
+    "target_key": "NTP-11799",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-580": {
-    "target_key": "NTP-7317",
+    "target_key": "NTP-11799",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48198": {
-    "target_key": "NTP-7318",
+    "target_key": "NTP-11800",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-579": {
-    "target_key": "NTP-7318",
+    "target_key": "NTP-11800",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48199": {
-    "target_key": "NTP-7319",
+    "target_key": "NTP-11801",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-578": {
-    "target_key": "NTP-7319",
+    "target_key": "NTP-11801",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48200": {
-    "target_key": "NTP-7320",
+    "target_key": "NTP-11802",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-577": {
-    "target_key": "NTP-7320",
+    "target_key": "NTP-11802",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48201": {
-    "target_key": "NTP-7321",
+    "target_key": "NTP-11803",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-576": {
-    "target_key": "NTP-7321",
+    "target_key": "NTP-11803",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48202": {
-    "target_key": "NTP-7322",
+    "target_key": "NTP-11804",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-575": {
-    "target_key": "NTP-7322",
+    "target_key": "NTP-11804",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48203": {
-    "target_key": "NTP-7323",
+    "target_key": "NTP-11805",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-574": {
-    "target_key": "NTP-7323",
+    "target_key": "NTP-11805",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48204": {
-    "target_key": "NTP-7324",
+    "target_key": "NTP-11806",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-573": {
-    "target_key": "NTP-7324",
+    "target_key": "NTP-11806",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48205": {
-    "target_key": "NTP-7325",
+    "target_key": "NTP-11807",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-572": {
-    "target_key": "NTP-7325",
+    "target_key": "NTP-11807",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48206": {
-    "target_key": "NTP-7326",
+    "target_key": "NTP-11808",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-571": {
-    "target_key": "NTP-7326",
+    "target_key": "NTP-11808",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48207": {
-    "target_key": "NTP-7327",
+    "target_key": "NTP-11809",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-570": {
-    "target_key": "NTP-7327",
+    "target_key": "NTP-11809",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48208": {
-    "target_key": "NTP-7328",
+    "target_key": "NTP-11810",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-569": {
-    "target_key": "NTP-7328",
+    "target_key": "NTP-11810",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48209": {
-    "target_key": "NTP-7329",
+    "target_key": "NTP-11811",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-568": {
-    "target_key": "NTP-7329",
+    "target_key": "NTP-11811",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48210": {
-    "target_key": "NTP-7330",
+    "target_key": "NTP-11812",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-567": {
-    "target_key": "NTP-7330",
+    "target_key": "NTP-11812",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48211": {
-    "target_key": "NTP-7331",
+    "target_key": "NTP-11813",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-566": {
-    "target_key": "NTP-7331",
+    "target_key": "NTP-11813",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48513": {
-    "target_key": "NTP-7332",
+    "target_key": "NTP-11814",
     "issue_type": "Story",
     "status": "Funnel"
   },
   "CSTEST-565": {
-    "target_key": "NTP-7332",
+    "target_key": "NTP-11814",
     "issue_type": "Story",
     "status": "Funnel"
   },
   "48514": {
-    "target_key": "NTP-7333",
+    "target_key": "NTP-11815",
     "issue_type": "Story",
     "status": "Funnel"
   },
   "CSTEST-564": {
-    "target_key": "NTP-7333",
+    "target_key": "NTP-11815",
     "issue_type": "Story",
     "status": "Funnel"
   },
   "48212": {
-    "target_key": "NTP-7334",
+    "target_key": "NTP-11816",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-563": {
-    "target_key": "NTP-7334",
+    "target_key": "NTP-11816",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48213": {
-    "target_key": "NTP-7335",
+    "target_key": "NTP-11817",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-562": {
-    "target_key": "NTP-7335",
+    "target_key": "NTP-11817",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48214": {
-    "target_key": "NTP-7336",
+    "target_key": "NTP-11818",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-561": {
-    "target_key": "NTP-7336",
+    "target_key": "NTP-11818",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48215": {
-    "target_key": "NTP-7337",
+    "target_key": "NTP-11819",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-560": {
-    "target_key": "NTP-7337",
+    "target_key": "NTP-11819",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48216": {
-    "target_key": "NTP-7338",
+    "target_key": "NTP-11820",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-559": {
-    "target_key": "NTP-7338",
+    "target_key": "NTP-11820",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48217": {
-    "target_key": "NTP-7339",
+    "target_key": "NTP-11821",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-558": {
-    "target_key": "NTP-7339",
+    "target_key": "NTP-11821",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48218": {
-    "target_key": "NTP-7340",
+    "target_key": "NTP-11822",
     "issue_type": "Epic",
     "status": "Review"
   },
   "CSTEST-557": {
-    "target_key": "NTP-7340",
+    "target_key": "NTP-11822",
     "issue_type": "Epic",
     "status": "Review"
   },
   "48219": {
-    "target_key": "NTP-7341",
+    "target_key": "NTP-11823",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-556": {
-    "target_key": "NTP-7341",
+    "target_key": "NTP-11823",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48220": {
-    "target_key": "NTP-7342",
+    "target_key": "NTP-11824",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-555": {
-    "target_key": "NTP-7342",
+    "target_key": "NTP-11824",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48221": {
-    "target_key": "NTP-7343",
+    "target_key": "NTP-11825",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-554": {
-    "target_key": "NTP-7343",
+    "target_key": "NTP-11825",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48222": {
-    "target_key": "NTP-7344",
+    "target_key": "NTP-11826",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-553": {
-    "target_key": "NTP-7344",
+    "target_key": "NTP-11826",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48223": {
-    "target_key": "NTP-7345",
+    "target_key": "NTP-11827",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-552": {
-    "target_key": "NTP-7345",
+    "target_key": "NTP-11827",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48224": {
-    "target_key": "NTP-7346",
+    "target_key": "NTP-11828",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-551": {
-    "target_key": "NTP-7346",
+    "target_key": "NTP-11828",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48225": {
-    "target_key": "NTP-7347",
+    "target_key": "NTP-11829",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-550": {
-    "target_key": "NTP-7347",
+    "target_key": "NTP-11829",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48264": {
-    "target_key": "NTP-7348",
+    "target_key": "NTP-11830",
     "issue_type": "Epic",
     "status": "Triage"
   },
   "CSTEST-549": {
-    "target_key": "NTP-7348",
+    "target_key": "NTP-11830",
     "issue_type": "Epic",
     "status": "Triage"
   },
   "48226": {
-    "target_key": "NTP-7349",
+    "target_key": "NTP-11831",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-548": {
-    "target_key": "NTP-7349",
+    "target_key": "NTP-11831",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48227": {
-    "target_key": "NTP-7350",
+    "target_key": "NTP-11832",
     "issue_type": "Epic",
     "status": "Review"
   },
   "CSTEST-547": {
-    "target_key": "NTP-7350",
+    "target_key": "NTP-11832",
     "issue_type": "Epic",
     "status": "Review"
   },
   "48228": {
-    "target_key": "NTP-7351",
+    "target_key": "NTP-11833",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-546": {
-    "target_key": "NTP-7351",
+    "target_key": "NTP-11833",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48229": {
-    "target_key": "NTP-7352",
+    "target_key": "NTP-11834",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-545": {
-    "target_key": "NTP-7352",
+    "target_key": "NTP-11834",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48230": {
-    "target_key": "NTP-7353",
+    "target_key": "NTP-11835",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-544": {
-    "target_key": "NTP-7353",
+    "target_key": "NTP-11835",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48231": {
-    "target_key": "NTP-7354",
+    "target_key": "NTP-11836",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "CSTEST-543": {
-    "target_key": "NTP-7354",
+    "target_key": "NTP-11836",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "48232": {
-    "target_key": "NTP-7355",
+    "target_key": "NTP-11837",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-542": {
-    "target_key": "NTP-7355",
+    "target_key": "NTP-11837",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48233": {
-    "target_key": "NTP-7356",
+    "target_key": "NTP-11838",
     "issue_type": "Epic",
     "status": "Review"
   },
   "CSTEST-541": {
-    "target_key": "NTP-7356",
+    "target_key": "NTP-11838",
     "issue_type": "Epic",
     "status": "Review"
   },
   "48234": {
-    "target_key": "NTP-7357",
+    "target_key": "NTP-11839",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-540": {
-    "target_key": "NTP-7357",
+    "target_key": "NTP-11839",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48235": {
-    "target_key": "NTP-7358",
+    "target_key": "NTP-11840",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-539": {
-    "target_key": "NTP-7358",
+    "target_key": "NTP-11840",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48236": {
-    "target_key": "NTP-7359",
+    "target_key": "NTP-11841",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "CSTEST-538": {
-    "target_key": "NTP-7359",
+    "target_key": "NTP-11841",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "48237": {
-    "target_key": "NTP-7360",
+    "target_key": "NTP-11842",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-537": {
-    "target_key": "NTP-7360",
+    "target_key": "NTP-11842",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48238": {
-    "target_key": "NTP-7361",
+    "target_key": "NTP-11843",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-536": {
-    "target_key": "NTP-7361",
+    "target_key": "NTP-11843",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48239": {
-    "target_key": "NTP-7362",
+    "target_key": "NTP-11844",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-535": {
-    "target_key": "NTP-7362",
+    "target_key": "NTP-11844",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48240": {
-    "target_key": "NTP-7363",
+    "target_key": "NTP-11845",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-533": {
-    "target_key": "NTP-7363",
+    "target_key": "NTP-11845",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48241": {
-    "target_key": "NTP-7364",
+    "target_key": "NTP-11846",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-532": {
-    "target_key": "NTP-7364",
+    "target_key": "NTP-11846",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48242": {
-    "target_key": "NTP-7365",
+    "target_key": "NTP-11847",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-531": {
-    "target_key": "NTP-7365",
+    "target_key": "NTP-11847",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48243": {
-    "target_key": "NTP-7366",
+    "target_key": "NTP-11848",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-530": {
-    "target_key": "NTP-7366",
+    "target_key": "NTP-11848",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48244": {
-    "target_key": "NTP-7367",
+    "target_key": "NTP-11849",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-529": {
-    "target_key": "NTP-7367",
+    "target_key": "NTP-11849",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48349": {
-    "target_key": "NTP-7368",
+    "target_key": "NTP-11850",
     "issue_type": "Epic",
     "status": "Triage"
   },
   "CSTEST-528": {
-    "target_key": "NTP-7368",
+    "target_key": "NTP-11850",
     "issue_type": "Epic",
     "status": "Triage"
   },
   "48245": {
-    "target_key": "NTP-7369",
+    "target_key": "NTP-11851",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-527": {
-    "target_key": "NTP-7369",
+    "target_key": "NTP-11851",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48246": {
-    "target_key": "NTP-7370",
+    "target_key": "NTP-11852",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-526": {
-    "target_key": "NTP-7370",
+    "target_key": "NTP-11852",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48247": {
-    "target_key": "NTP-7371",
+    "target_key": "NTP-11853",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-525": {
-    "target_key": "NTP-7371",
+    "target_key": "NTP-11853",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48248": {
-    "target_key": "NTP-7372",
+    "target_key": "NTP-11854",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-524": {
-    "target_key": "NTP-7372",
+    "target_key": "NTP-11854",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48249": {
-    "target_key": "NTP-7373",
+    "target_key": "NTP-11855",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-523": {
-    "target_key": "NTP-7373",
+    "target_key": "NTP-11855",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48250": {
-    "target_key": "NTP-7374",
+    "target_key": "NTP-11856",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-522": {
-    "target_key": "NTP-7374",
+    "target_key": "NTP-11856",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48515": {
-    "target_key": "NTP-7375",
+    "target_key": "NTP-11857",
     "issue_type": "Feature",
     "status": "Define"
   },
   "CSTEST-521": {
-    "target_key": "NTP-7375",
+    "target_key": "NTP-11857",
     "issue_type": "Feature",
     "status": "Define"
   },
   "48251": {
-    "target_key": "NTP-7376",
+    "target_key": "NTP-11858",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-519": {
-    "target_key": "NTP-7376",
+    "target_key": "NTP-11858",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48252": {
-    "target_key": "NTP-7377",
+    "target_key": "NTP-11859",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-518": {
-    "target_key": "NTP-7377",
+    "target_key": "NTP-11859",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48253": {
-    "target_key": "NTP-7378",
+    "target_key": "NTP-11860",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-510": {
-    "target_key": "NTP-7378",
+    "target_key": "NTP-11860",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48254": {
-    "target_key": "NTP-7379",
+    "target_key": "NTP-11861",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-509": {
-    "target_key": "NTP-7379",
+    "target_key": "NTP-11861",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48255": {
-    "target_key": "NTP-7380",
+    "target_key": "NTP-11862",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-508": {
-    "target_key": "NTP-7380",
+    "target_key": "NTP-11862",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48256": {
-    "target_key": "NTP-7381",
+    "target_key": "NTP-11863",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-506": {
-    "target_key": "NTP-7381",
+    "target_key": "NTP-11863",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48257": {
-    "target_key": "NTP-7382",
+    "target_key": "NTP-11864",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "CSTEST-505": {
-    "target_key": "NTP-7382",
+    "target_key": "NTP-11864",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "48258": {
-    "target_key": "NTP-7383",
+    "target_key": "NTP-11865",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-504": {
-    "target_key": "NTP-7383",
+    "target_key": "NTP-11865",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48259": {
-    "target_key": "NTP-7384",
+    "target_key": "NTP-11866",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-503": {
-    "target_key": "NTP-7384",
+    "target_key": "NTP-11866",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48260": {
-    "target_key": "NTP-7385",
+    "target_key": "NTP-11867",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-502": {
-    "target_key": "NTP-7385",
+    "target_key": "NTP-11867",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48261": {
-    "target_key": "NTP-7386",
+    "target_key": "NTP-11868",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-501": {
-    "target_key": "NTP-7386",
+    "target_key": "NTP-11868",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48262": {
-    "target_key": "NTP-7387",
+    "target_key": "NTP-11869",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-500": {
-    "target_key": "NTP-7387",
+    "target_key": "NTP-11869",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48263": {
-    "target_key": "NTP-7388",
+    "target_key": "NTP-11870",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-499": {
-    "target_key": "NTP-7388",
+    "target_key": "NTP-11870",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48516": {
-    "target_key": "NTP-7389",
+    "target_key": "NTP-11871",
     "issue_type": "Feature",
     "status": "Define"
   },
   "CSTEST-498": {
-    "target_key": "NTP-7389",
+    "target_key": "NTP-11871",
     "issue_type": "Feature",
     "status": "Define"
   },
   "48265": {
-    "target_key": "NTP-7390",
+    "target_key": "NTP-11872",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-496": {
-    "target_key": "NTP-7390",
+    "target_key": "NTP-11872",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48266": {
-    "target_key": "NTP-7391",
+    "target_key": "NTP-11873",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-495": {
-    "target_key": "NTP-7391",
+    "target_key": "NTP-11873",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48517": {
-    "target_key": "NTP-7392",
+    "target_key": "NTP-11874",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-492": {
-    "target_key": "NTP-7392",
+    "target_key": "NTP-11874",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48267": {
-    "target_key": "NTP-7393",
+    "target_key": "NTP-11875",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-486": {
-    "target_key": "NTP-7393",
+    "target_key": "NTP-11875",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48518": {
-    "target_key": "NTP-7394",
+    "target_key": "NTP-11876",
     "issue_type": "Feature",
     "status": "Define"
   },
   "CSTEST-485": {
-    "target_key": "NTP-7394",
+    "target_key": "NTP-11876",
     "issue_type": "Feature",
     "status": "Define"
   },
   "48268": {
-    "target_key": "NTP-7395",
+    "target_key": "NTP-11877",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-484": {
-    "target_key": "NTP-7395",
+    "target_key": "NTP-11877",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48269": {
-    "target_key": "NTP-7396",
+    "target_key": "NTP-11878",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-483": {
-    "target_key": "NTP-7396",
+    "target_key": "NTP-11878",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48270": {
-    "target_key": "NTP-7397",
+    "target_key": "NTP-11879",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-482": {
-    "target_key": "NTP-7397",
+    "target_key": "NTP-11879",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48271": {
-    "target_key": "NTP-7398",
+    "target_key": "NTP-11880",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-481": {
-    "target_key": "NTP-7398",
+    "target_key": "NTP-11880",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48272": {
-    "target_key": "NTP-7399",
+    "target_key": "NTP-11881",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-480": {
-    "target_key": "NTP-7399",
+    "target_key": "NTP-11881",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48273": {
-    "target_key": "NTP-7400",
+    "target_key": "NTP-11882",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-479": {
-    "target_key": "NTP-7400",
+    "target_key": "NTP-11882",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48274": {
-    "target_key": "NTP-7401",
+    "target_key": "NTP-11883",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-478": {
-    "target_key": "NTP-7401",
+    "target_key": "NTP-11883",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48275": {
-    "target_key": "NTP-7402",
+    "target_key": "NTP-11884",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-476": {
-    "target_key": "NTP-7402",
+    "target_key": "NTP-11884",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48519": {
-    "target_key": "NTP-7403",
+    "target_key": "NTP-11885",
     "issue_type": "Feature",
     "status": "Archive"
   },
   "CSTEST-475": {
-    "target_key": "NTP-7403",
+    "target_key": "NTP-11885",
     "issue_type": "Feature",
     "status": "Archive"
   },
   "48276": {
-    "target_key": "NTP-7404",
+    "target_key": "NTP-11886",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-474": {
-    "target_key": "NTP-7404",
+    "target_key": "NTP-11886",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48277": {
-    "target_key": "NTP-7405",
+    "target_key": "NTP-11887",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-472": {
-    "target_key": "NTP-7405",
+    "target_key": "NTP-11887",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48520": {
-    "target_key": "NTP-7406",
+    "target_key": "NTP-11888",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-471": {
-    "target_key": "NTP-7406",
+    "target_key": "NTP-11888",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48521": {
-    "target_key": "NTP-7407",
+    "target_key": "NTP-11889",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-468": {
-    "target_key": "NTP-7407",
+    "target_key": "NTP-11889",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48278": {
-    "target_key": "NTP-7408",
+    "target_key": "NTP-11890",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-467": {
-    "target_key": "NTP-7408",
+    "target_key": "NTP-11890",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48279": {
-    "target_key": "NTP-7409",
+    "target_key": "NTP-11891",
     "issue_type": "Epic",
     "status": "Review"
   },
   "CSTEST-466": {
-    "target_key": "NTP-7409",
+    "target_key": "NTP-11891",
     "issue_type": "Epic",
     "status": "Review"
   },
   "48522": {
-    "target_key": "NTP-7410",
+    "target_key": "NTP-11892",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-465": {
-    "target_key": "NTP-7410",
+    "target_key": "NTP-11892",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48523": {
-    "target_key": "NTP-7411",
+    "target_key": "NTP-11893",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-464": {
-    "target_key": "NTP-7411",
+    "target_key": "NTP-11893",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48280": {
-    "target_key": "NTP-7412",
+    "target_key": "NTP-11894",
     "issue_type": "Epic",
     "status": "Review"
   },
   "CSTEST-463": {
-    "target_key": "NTP-7412",
+    "target_key": "NTP-11894",
     "issue_type": "Epic",
     "status": "Review"
   },
   "48524": {
-    "target_key": "NTP-7413",
+    "target_key": "NTP-11895",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-462": {
-    "target_key": "NTP-7413",
+    "target_key": "NTP-11895",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48281": {
-    "target_key": "NTP-7414",
+    "target_key": "NTP-11896",
     "issue_type": "Epic",
     "status": "Won't Do"
   },
   "CSTEST-461": {
-    "target_key": "NTP-7414",
+    "target_key": "NTP-11896",
     "issue_type": "Epic",
     "status": "Won't Do"
   },
   "48525": {
-    "target_key": "NTP-7415",
+    "target_key": "NTP-11897",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-460": {
-    "target_key": "NTP-7415",
+    "target_key": "NTP-11897",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48526": {
-    "target_key": "NTP-7416",
+    "target_key": "NTP-11898",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-459": {
-    "target_key": "NTP-7416",
+    "target_key": "NTP-11898",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48527": {
-    "target_key": "NTP-7417",
+    "target_key": "NTP-11899",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-458": {
-    "target_key": "NTP-7417",
+    "target_key": "NTP-11899",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48528": {
-    "target_key": "NTP-7418",
+    "target_key": "NTP-11900",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-457": {
-    "target_key": "NTP-7418",
+    "target_key": "NTP-11900",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48529": {
-    "target_key": "NTP-7419",
+    "target_key": "NTP-11901",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-456": {
-    "target_key": "NTP-7419",
+    "target_key": "NTP-11901",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48282": {
-    "target_key": "NTP-7420",
+    "target_key": "NTP-11902",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-455": {
-    "target_key": "NTP-7420",
+    "target_key": "NTP-11902",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48283": {
-    "target_key": "NTP-7421",
+    "target_key": "NTP-11903",
     "issue_type": "Epic",
     "status": "Implementing"
   },
   "CSTEST-454": {
-    "target_key": "NTP-7421",
+    "target_key": "NTP-11903",
     "issue_type": "Epic",
     "status": "Implementing"
   },
   "48284": {
-    "target_key": "NTP-7422",
+    "target_key": "NTP-11904",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-453": {
-    "target_key": "NTP-7422",
+    "target_key": "NTP-11904",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48285": {
-    "target_key": "NTP-7423",
+    "target_key": "NTP-11905",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-452": {
-    "target_key": "NTP-7423",
+    "target_key": "NTP-11905",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48286": {
-    "target_key": "NTP-7424",
+    "target_key": "NTP-11906",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-451": {
-    "target_key": "NTP-7424",
+    "target_key": "NTP-11906",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48287": {
-    "target_key": "NTP-7425",
+    "target_key": "NTP-11907",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-450": {
-    "target_key": "NTP-7425",
+    "target_key": "NTP-11907",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48288": {
-    "target_key": "NTP-7426",
+    "target_key": "NTP-11908",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-449": {
-    "target_key": "NTP-7426",
+    "target_key": "NTP-11908",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48289": {
-    "target_key": "NTP-7427",
+    "target_key": "NTP-11909",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-448": {
-    "target_key": "NTP-7427",
+    "target_key": "NTP-11909",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48290": {
-    "target_key": "NTP-7428",
+    "target_key": "NTP-11910",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-447": {
-    "target_key": "NTP-7428",
+    "target_key": "NTP-11910",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48291": {
-    "target_key": "NTP-7429",
+    "target_key": "NTP-11911",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-446": {
-    "target_key": "NTP-7429",
+    "target_key": "NTP-11911",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48292": {
-    "target_key": "NTP-7430",
+    "target_key": "NTP-11912",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-445": {
-    "target_key": "NTP-7430",
+    "target_key": "NTP-11912",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48293": {
-    "target_key": "NTP-7431",
+    "target_key": "NTP-11913",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-444": {
-    "target_key": "NTP-7431",
+    "target_key": "NTP-11913",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48294": {
-    "target_key": "NTP-7432",
+    "target_key": "NTP-11914",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "CSTEST-443": {
-    "target_key": "NTP-7432",
+    "target_key": "NTP-11914",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "48550": {
-    "target_key": "NTP-7433",
+    "target_key": "NTP-11915",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-442": {
-    "target_key": "NTP-7433",
+    "target_key": "NTP-11915",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48551": {
-    "target_key": "NTP-7434",
+    "target_key": "NTP-11916",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-441": {
-    "target_key": "NTP-7434",
+    "target_key": "NTP-11916",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48306": {
-    "target_key": "NTP-7435",
+    "target_key": "NTP-11917",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-440": {
-    "target_key": "NTP-7435",
+    "target_key": "NTP-11917",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48552": {
-    "target_key": "NTP-7436",
+    "target_key": "NTP-11918",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-439": {
-    "target_key": "NTP-7436",
+    "target_key": "NTP-11918",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48553": {
-    "target_key": "NTP-7437",
+    "target_key": "NTP-11919",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-438": {
-    "target_key": "NTP-7437",
+    "target_key": "NTP-11919",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48554": {
-    "target_key": "NTP-7438",
+    "target_key": "NTP-11920",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-437": {
-    "target_key": "NTP-7438",
+    "target_key": "NTP-11920",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48307": {
-    "target_key": "NTP-7439",
+    "target_key": "NTP-11921",
     "issue_type": "Epic",
     "status": "Review"
   },
   "CSTEST-436": {
-    "target_key": "NTP-7439",
+    "target_key": "NTP-11921",
     "issue_type": "Epic",
     "status": "Review"
   },
   "48308": {
-    "target_key": "NTP-7440",
+    "target_key": "NTP-11922",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-435": {
-    "target_key": "NTP-7440",
+    "target_key": "NTP-11922",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48295": {
-    "target_key": "NTP-7441",
+    "target_key": "NTP-11923",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-434": {
-    "target_key": "NTP-7441",
+    "target_key": "NTP-11923",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48530": {
-    "target_key": "NTP-7442",
+    "target_key": "NTP-11924",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "CSTEST-433": {
-    "target_key": "NTP-7442",
+    "target_key": "NTP-11924",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "48296": {
-    "target_key": "NTP-7443",
+    "target_key": "NTP-11925",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-432": {
-    "target_key": "NTP-7443",
+    "target_key": "NTP-11925",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48297": {
-    "target_key": "NTP-7444",
+    "target_key": "NTP-11926",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-431": {
-    "target_key": "NTP-7444",
+    "target_key": "NTP-11926",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48531": {
-    "target_key": "NTP-7445",
+    "target_key": "NTP-11927",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "CSTEST-430": {
-    "target_key": "NTP-7445",
+    "target_key": "NTP-11927",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "48532": {
-    "target_key": "NTP-7446",
+    "target_key": "NTP-11928",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "CSTEST-429": {
-    "target_key": "NTP-7446",
+    "target_key": "NTP-11928",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "48533": {
-    "target_key": "NTP-7447",
+    "target_key": "NTP-11929",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "CSTEST-428": {
-    "target_key": "NTP-7447",
+    "target_key": "NTP-11929",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "48298": {
-    "target_key": "NTP-7448",
+    "target_key": "NTP-11930",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-426": {
-    "target_key": "NTP-7448",
+    "target_key": "NTP-11930",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48299": {
-    "target_key": "NTP-7449",
+    "target_key": "NTP-11931",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-425": {
-    "target_key": "NTP-7449",
+    "target_key": "NTP-11931",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48300": {
-    "target_key": "NTP-7450",
+    "target_key": "NTP-11932",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-424": {
-    "target_key": "NTP-7450",
+    "target_key": "NTP-11932",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48301": {
-    "target_key": "NTP-7451",
+    "target_key": "NTP-11933",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-423": {
-    "target_key": "NTP-7451",
+    "target_key": "NTP-11933",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48302": {
-    "target_key": "NTP-7452",
+    "target_key": "NTP-11934",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-422": {
-    "target_key": "NTP-7452",
+    "target_key": "NTP-11934",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48303": {
-    "target_key": "NTP-7453",
+    "target_key": "NTP-11935",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-421": {
-    "target_key": "NTP-7453",
+    "target_key": "NTP-11935",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48304": {
-    "target_key": "NTP-7454",
+    "target_key": "NTP-11936",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-420": {
-    "target_key": "NTP-7454",
+    "target_key": "NTP-11936",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48534": {
-    "target_key": "NTP-7455",
+    "target_key": "NTP-11937",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-419": {
-    "target_key": "NTP-7455",
+    "target_key": "NTP-11937",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48535": {
-    "target_key": "NTP-7456",
+    "target_key": "NTP-11938",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-418": {
-    "target_key": "NTP-7456",
+    "target_key": "NTP-11938",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48536": {
-    "target_key": "NTP-7457",
+    "target_key": "NTP-11939",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-417": {
-    "target_key": "NTP-7457",
+    "target_key": "NTP-11939",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48537": {
-    "target_key": "NTP-7458",
+    "target_key": "NTP-11940",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-415": {
-    "target_key": "NTP-7458",
+    "target_key": "NTP-11940",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48538": {
-    "target_key": "NTP-7459",
+    "target_key": "NTP-11941",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-414": {
-    "target_key": "NTP-7459",
+    "target_key": "NTP-11941",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48539": {
-    "target_key": "NTP-7460",
+    "target_key": "NTP-11942",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-412": {
-    "target_key": "NTP-7460",
+    "target_key": "NTP-11942",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48305": {
-    "target_key": "NTP-7461",
+    "target_key": "NTP-11943",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-411": {
-    "target_key": "NTP-7461",
+    "target_key": "NTP-11943",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48540": {
-    "target_key": "NTP-7462",
+    "target_key": "NTP-11944",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-410": {
-    "target_key": "NTP-7462",
+    "target_key": "NTP-11944",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48541": {
-    "target_key": "NTP-7463",
+    "target_key": "NTP-11945",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-407": {
-    "target_key": "NTP-7463",
+    "target_key": "NTP-11945",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48542": {
-    "target_key": "NTP-7464",
+    "target_key": "NTP-11946",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-406": {
-    "target_key": "NTP-7464",
+    "target_key": "NTP-11946",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48543": {
-    "target_key": "NTP-7465",
+    "target_key": "NTP-11947",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-404": {
-    "target_key": "NTP-7465",
+    "target_key": "NTP-11947",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48544": {
-    "target_key": "NTP-7466",
+    "target_key": "NTP-11948",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-403": {
-    "target_key": "NTP-7466",
+    "target_key": "NTP-11948",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48545": {
-    "target_key": "NTP-7467",
+    "target_key": "NTP-11949",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-397": {
-    "target_key": "NTP-7467",
+    "target_key": "NTP-11949",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48546": {
-    "target_key": "NTP-7468",
+    "target_key": "NTP-11950",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-396": {
-    "target_key": "NTP-7468",
+    "target_key": "NTP-11950",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48547": {
-    "target_key": "NTP-7469",
+    "target_key": "NTP-11951",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-395": {
-    "target_key": "NTP-7469",
+    "target_key": "NTP-11951",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48548": {
-    "target_key": "NTP-7470",
+    "target_key": "NTP-11952",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-394": {
-    "target_key": "NTP-7470",
+    "target_key": "NTP-11952",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48549": {
-    "target_key": "NTP-7471",
+    "target_key": "NTP-11953",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-393": {
-    "target_key": "NTP-7471",
+    "target_key": "NTP-11953",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48555": {
-    "target_key": "NTP-7472",
+    "target_key": "NTP-11954",
     "issue_type": "Feature",
     "status": "Define"
   },
   "CSTEST-391": {
-    "target_key": "NTP-7472",
+    "target_key": "NTP-11954",
     "issue_type": "Feature",
     "status": "Define"
   },
   "48556": {
-    "target_key": "NTP-7473",
+    "target_key": "NTP-11955",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "CSTEST-390": {
-    "target_key": "NTP-7473",
+    "target_key": "NTP-11955",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "48309": {
-    "target_key": "NTP-7474",
+    "target_key": "NTP-11956",
     "issue_type": "Epic",
     "status": "Won't Do"
   },
   "CSTEST-377": {
-    "target_key": "NTP-7474",
+    "target_key": "NTP-11956",
     "issue_type": "Epic",
     "status": "Won't Do"
   },
   "48310": {
-    "target_key": "NTP-7475",
+    "target_key": "NTP-11957",
     "issue_type": "Epic",
     "status": "Won't Do"
   },
   "CSTEST-376": {
-    "target_key": "NTP-7475",
+    "target_key": "NTP-11957",
     "issue_type": "Epic",
     "status": "Won't Do"
   },
   "48311": {
-    "target_key": "NTP-7476",
+    "target_key": "NTP-11958",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-375": {
-    "target_key": "NTP-7476",
+    "target_key": "NTP-11958",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48312": {
-    "target_key": "NTP-7477",
+    "target_key": "NTP-11959",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-374": {
-    "target_key": "NTP-7477",
+    "target_key": "NTP-11959",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48313": {
-    "target_key": "NTP-7478",
+    "target_key": "NTP-11960",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-373": {
-    "target_key": "NTP-7478",
+    "target_key": "NTP-11960",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48314": {
-    "target_key": "NTP-7479",
+    "target_key": "NTP-11961",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-372": {
-    "target_key": "NTP-7479",
+    "target_key": "NTP-11961",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48315": {
-    "target_key": "NTP-7480",
+    "target_key": "NTP-11962",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-371": {
-    "target_key": "NTP-7480",
+    "target_key": "NTP-11962",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48557": {
-    "target_key": "NTP-7481",
+    "target_key": "NTP-11963",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-370": {
-    "target_key": "NTP-7481",
+    "target_key": "NTP-11963",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48316": {
-    "target_key": "NTP-7482",
+    "target_key": "NTP-11964",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-369": {
-    "target_key": "NTP-7482",
+    "target_key": "NTP-11964",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48317": {
-    "target_key": "NTP-7483",
+    "target_key": "NTP-11965",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-368": {
-    "target_key": "NTP-7483",
+    "target_key": "NTP-11965",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48318": {
-    "target_key": "NTP-7484",
+    "target_key": "NTP-11966",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-367": {
-    "target_key": "NTP-7484",
+    "target_key": "NTP-11966",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48319": {
-    "target_key": "NTP-7485",
+    "target_key": "NTP-11967",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-366": {
-    "target_key": "NTP-7485",
+    "target_key": "NTP-11967",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48320": {
-    "target_key": "NTP-7486",
+    "target_key": "NTP-11968",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-365": {
-    "target_key": "NTP-7486",
+    "target_key": "NTP-11968",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48321": {
-    "target_key": "NTP-7487",
+    "target_key": "NTP-11969",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-364": {
-    "target_key": "NTP-7487",
+    "target_key": "NTP-11969",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48322": {
-    "target_key": "NTP-7488",
+    "target_key": "NTP-11970",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-363": {
-    "target_key": "NTP-7488",
+    "target_key": "NTP-11970",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48323": {
-    "target_key": "NTP-7489",
+    "target_key": "NTP-11971",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-362": {
-    "target_key": "NTP-7489",
+    "target_key": "NTP-11971",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48324": {
-    "target_key": "NTP-7490",
+    "target_key": "NTP-11972",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-361": {
-    "target_key": "NTP-7490",
+    "target_key": "NTP-11972",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48325": {
-    "target_key": "NTP-7491",
+    "target_key": "NTP-11973",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-360": {
-    "target_key": "NTP-7491",
+    "target_key": "NTP-11973",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48326": {
-    "target_key": "NTP-7492",
+    "target_key": "NTP-11974",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-359": {
-    "target_key": "NTP-7492",
+    "target_key": "NTP-11974",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48558": {
-    "target_key": "NTP-7493",
+    "target_key": "NTP-11975",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-358": {
-    "target_key": "NTP-7493",
+    "target_key": "NTP-11975",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48327": {
-    "target_key": "NTP-7494",
+    "target_key": "NTP-11976",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-357": {
-    "target_key": "NTP-7494",
+    "target_key": "NTP-11976",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48328": {
-    "target_key": "NTP-7495",
+    "target_key": "NTP-11977",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-356": {
-    "target_key": "NTP-7495",
+    "target_key": "NTP-11977",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48329": {
-    "target_key": "NTP-7496",
+    "target_key": "NTP-11978",
     "issue_type": "Epic",
     "status": "Review"
   },
   "CSTEST-355": {
-    "target_key": "NTP-7496",
+    "target_key": "NTP-11978",
     "issue_type": "Epic",
     "status": "Review"
   },
   "48330": {
-    "target_key": "NTP-7497",
+    "target_key": "NTP-11979",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-354": {
-    "target_key": "NTP-7497",
+    "target_key": "NTP-11979",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48331": {
-    "target_key": "NTP-7498",
+    "target_key": "NTP-11980",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-353": {
-    "target_key": "NTP-7498",
+    "target_key": "NTP-11980",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48332": {
-    "target_key": "NTP-7499",
+    "target_key": "NTP-11981",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-352": {
-    "target_key": "NTP-7499",
+    "target_key": "NTP-11981",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48333": {
-    "target_key": "NTP-7500",
+    "target_key": "NTP-11982",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-351": {
-    "target_key": "NTP-7500",
+    "target_key": "NTP-11982",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48334": {
-    "target_key": "NTP-7501",
+    "target_key": "NTP-11983",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-350": {
-    "target_key": "NTP-7501",
+    "target_key": "NTP-11983",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48335": {
-    "target_key": "NTP-7502",
+    "target_key": "NTP-11984",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-349": {
-    "target_key": "NTP-7502",
+    "target_key": "NTP-11984",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48336": {
-    "target_key": "NTP-7503",
+    "target_key": "NTP-11985",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-348": {
-    "target_key": "NTP-7503",
+    "target_key": "NTP-11985",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48337": {
-    "target_key": "NTP-7504",
+    "target_key": "NTP-11986",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-347": {
-    "target_key": "NTP-7504",
+    "target_key": "NTP-11986",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48338": {
-    "target_key": "NTP-7505",
+    "target_key": "NTP-11987",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-346": {
-    "target_key": "NTP-7505",
+    "target_key": "NTP-11987",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48339": {
-    "target_key": "NTP-7506",
+    "target_key": "NTP-11988",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-345": {
-    "target_key": "NTP-7506",
+    "target_key": "NTP-11988",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48340": {
-    "target_key": "NTP-7507",
+    "target_key": "NTP-11989",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-344": {
-    "target_key": "NTP-7507",
+    "target_key": "NTP-11989",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48559": {
-    "target_key": "NTP-7508",
+    "target_key": "NTP-11990",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "CSTEST-343": {
-    "target_key": "NTP-7508",
+    "target_key": "NTP-11990",
     "issue_type": "Feature",
     "status": "Funnel"
   },
   "48341": {
-    "target_key": "NTP-7509",
+    "target_key": "NTP-11991",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-342": {
-    "target_key": "NTP-7509",
+    "target_key": "NTP-11991",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48342": {
-    "target_key": "NTP-7510",
+    "target_key": "NTP-11992",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "CSTEST-341": {
-    "target_key": "NTP-7510",
+    "target_key": "NTP-11992",
     "issue_type": "Epic",
     "status": "Backlog."
   },
   "48343": {
-    "target_key": "NTP-7511",
+    "target_key": "NTP-11993",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-340": {
-    "target_key": "NTP-7511",
+    "target_key": "NTP-11993",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48560": {
-    "target_key": "NTP-7512",
+    "target_key": "NTP-11994",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "CSTEST-339": {
-    "target_key": "NTP-7512",
+    "target_key": "NTP-11994",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "48561": {
-    "target_key": "NTP-7513",
+    "target_key": "NTP-11995",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "CSTEST-338": {
-    "target_key": "NTP-7513",
+    "target_key": "NTP-11995",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "48562": {
-    "target_key": "NTP-7514",
+    "target_key": "NTP-11996",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "CSTEST-337": {
-    "target_key": "NTP-7514",
+    "target_key": "NTP-11996",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "48563": {
-    "target_key": "NTP-7515",
+    "target_key": "NTP-11997",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "CSTEST-336": {
-    "target_key": "NTP-7515",
+    "target_key": "NTP-11997",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "48564": {
-    "target_key": "NTP-7516",
+    "target_key": "NTP-11998",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "CSTEST-335": {
-    "target_key": "NTP-7516",
+    "target_key": "NTP-11998",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "48565": {
-    "target_key": "NTP-7517",
+    "target_key": "NTP-11999",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "CSTEST-334": {
-    "target_key": "NTP-7517",
+    "target_key": "NTP-11999",
     "issue_type": "Feature",
     "status": "Backlog."
   },
   "48566": {
-    "target_key": "NTP-7518",
+    "target_key": "NTP-12000",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-333": {
-    "target_key": "NTP-7518",
+    "target_key": "NTP-12000",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48567": {
-    "target_key": "NTP-7519",
+    "target_key": "NTP-12001",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-332": {
-    "target_key": "NTP-7519",
+    "target_key": "NTP-12001",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48344": {
-    "target_key": "NTP-7520",
+    "target_key": "NTP-12002",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-331": {
-    "target_key": "NTP-7520",
+    "target_key": "NTP-12002",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48345": {
-    "target_key": "NTP-7521",
+    "target_key": "NTP-12003",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-330": {
-    "target_key": "NTP-7521",
+    "target_key": "NTP-12003",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48568": {
-    "target_key": "NTP-7522",
+    "target_key": "NTP-12004",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-329": {
-    "target_key": "NTP-7522",
+    "target_key": "NTP-12004",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48346": {
-    "target_key": "NTP-7523",
+    "target_key": "NTP-12005",
     "issue_type": "Epic",
     "status": "Review"
   },
   "CSTEST-328": {
-    "target_key": "NTP-7523",
+    "target_key": "NTP-12005",
     "issue_type": "Epic",
     "status": "Review"
   },
   "48569": {
-    "target_key": "NTP-7524",
+    "target_key": "NTP-12006",
     "issue_type": "Feature",
     "status": "Done"
   },
   "CSTEST-327": {
-    "target_key": "NTP-7524",
+    "target_key": "NTP-12006",
     "issue_type": "Feature",
     "status": "Done"
   },
   "48347": {
-    "target_key": "NTP-7525",
+    "target_key": "NTP-12007",
     "issue_type": "Epic",
     "status": "Done"
   },
   "CSTEST-326": {
-    "target_key": "NTP-7525",
+    "target_key": "NTP-12007",
     "issue_type": "Epic",
     "status": "Done"
   },
   "48348": {
-    "target_key": "NTP-7526",
+    "target_key": "NTP-12008",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-325": {
-    "target_key": "NTP-7526",
+    "target_key": "NTP-12008",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48350": {
-    "target_key": "NTP-7527",
+    "target_key": "NTP-12009",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-224": {
-    "target_key": "NTP-7527",
+    "target_key": "NTP-12009",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48351": {
-    "target_key": "NTP-7528",
+    "target_key": "NTP-12010",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-223": {
-    "target_key": "NTP-7528",
+    "target_key": "NTP-12010",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48352": {
-    "target_key": "NTP-7529",
+    "target_key": "NTP-12011",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-222": {
-    "target_key": "NTP-7529",
+    "target_key": "NTP-12011",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48353": {
-    "target_key": "NTP-7530",
+    "target_key": "NTP-12012",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-221": {
-    "target_key": "NTP-7530",
+    "target_key": "NTP-12012",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48570": {
-    "target_key": "NTP-7531",
+    "target_key": "NTP-12013",
     "issue_type": "Change",
     "status": "Archive"
   },
   "CSTEST-220": {
-    "target_key": "NTP-7531",
+    "target_key": "NTP-12013",
     "issue_type": "Change",
     "status": "Archive"
   },
   "48571": {
-    "target_key": "NTP-7532",
+    "target_key": "NTP-12014",
     "issue_type": "Story",
     "status": "Triage"
   },
   "CSTEST-219": {
-    "target_key": "NTP-7532",
+    "target_key": "NTP-12014",
     "issue_type": "Story",
     "status": "Triage"
   },
   "48600": {
-    "target_key": "NTP-7533",
+    "target_key": "NTP-12015",
     "issue_type": "Anomaly",
     "status": "Done"
   },
   "CSTEST-218": {
-    "target_key": "NTP-7533",
+    "target_key": "NTP-12015",
     "issue_type": "Anomaly",
     "status": "Done"
   },
   "48599": {
-    "target_key": "NTP-7534",
+    "target_key": "NTP-12016",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "CSTEST-217": {
-    "target_key": "NTP-7534",
+    "target_key": "NTP-12016",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "48598": {
-    "target_key": "NTP-7535",
+    "target_key": "NTP-12017",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "CSTEST-216": {
-    "target_key": "NTP-7535",
+    "target_key": "NTP-12017",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "48597": {
-    "target_key": "NTP-7536",
+    "target_key": "NTP-12018",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "CSTEST-215": {
-    "target_key": "NTP-7536",
+    "target_key": "NTP-12018",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "48354": {
-    "target_key": "NTP-7537",
+    "target_key": "NTP-12019",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-214": {
-    "target_key": "NTP-7537",
+    "target_key": "NTP-12019",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48355": {
-    "target_key": "NTP-7538",
+    "target_key": "NTP-12020",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-213": {
-    "target_key": "NTP-7538",
+    "target_key": "NTP-12020",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48356": {
-    "target_key": "NTP-7539",
+    "target_key": "NTP-12021",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-212": {
-    "target_key": "NTP-7539",
+    "target_key": "NTP-12021",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48357": {
-    "target_key": "NTP-7540",
+    "target_key": "NTP-12022",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-211": {
-    "target_key": "NTP-7540",
+    "target_key": "NTP-12022",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48358": {
-    "target_key": "NTP-7541",
+    "target_key": "NTP-12023",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-209": {
-    "target_key": "NTP-7541",
+    "target_key": "NTP-12023",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48359": {
-    "target_key": "NTP-7542",
+    "target_key": "NTP-12024",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-208": {
-    "target_key": "NTP-7542",
+    "target_key": "NTP-12024",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48360": {
-    "target_key": "NTP-7543",
+    "target_key": "NTP-12025",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-207": {
-    "target_key": "NTP-7543",
+    "target_key": "NTP-12025",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48361": {
-    "target_key": "NTP-7544",
+    "target_key": "NTP-12026",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-206": {
-    "target_key": "NTP-7544",
+    "target_key": "NTP-12026",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48362": {
-    "target_key": "NTP-7545",
+    "target_key": "NTP-12027",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-205": {
-    "target_key": "NTP-7545",
+    "target_key": "NTP-12027",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48363": {
-    "target_key": "NTP-7546",
+    "target_key": "NTP-12028",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-204": {
-    "target_key": "NTP-7546",
+    "target_key": "NTP-12028",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48364": {
-    "target_key": "NTP-7547",
+    "target_key": "NTP-12029",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-203": {
-    "target_key": "NTP-7547",
+    "target_key": "NTP-12029",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48365": {
-    "target_key": "NTP-7548",
+    "target_key": "NTP-12030",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-202": {
-    "target_key": "NTP-7548",
+    "target_key": "NTP-12030",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48366": {
-    "target_key": "NTP-7549",
+    "target_key": "NTP-12031",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-201": {
-    "target_key": "NTP-7549",
+    "target_key": "NTP-12031",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48367": {
-    "target_key": "NTP-7550",
+    "target_key": "NTP-12032",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-200": {
-    "target_key": "NTP-7550",
+    "target_key": "NTP-12032",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48368": {
-    "target_key": "NTP-7551",
+    "target_key": "NTP-12033",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-199": {
-    "target_key": "NTP-7551",
+    "target_key": "NTP-12033",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48572": {
-    "target_key": "NTP-7552",
+    "target_key": "NTP-12034",
     "issue_type": "Technical Debt",
     "status": "Triage"
   },
   "CSTEST-197": {
-    "target_key": "NTP-7552",
+    "target_key": "NTP-12034",
     "issue_type": "Technical Debt",
     "status": "Triage"
   },
   "48573": {
-    "target_key": "NTP-7553",
+    "target_key": "NTP-12035",
     "issue_type": "Technical Debt",
     "status": "Triage"
   },
   "CSTEST-196": {
-    "target_key": "NTP-7553",
+    "target_key": "NTP-12035",
     "issue_type": "Technical Debt",
     "status": "Triage"
   },
   "48369": {
-    "target_key": "NTP-7554",
+    "target_key": "NTP-12036",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-195": {
-    "target_key": "NTP-7554",
+    "target_key": "NTP-12036",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48370": {
-    "target_key": "NTP-7555",
+    "target_key": "NTP-12037",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-194": {
-    "target_key": "NTP-7555",
+    "target_key": "NTP-12037",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48574": {
-    "target_key": "NTP-7556",
+    "target_key": "NTP-12038",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "CSTEST-193": {
-    "target_key": "NTP-7556",
+    "target_key": "NTP-12038",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "48575": {
-    "target_key": "NTP-7557",
+    "target_key": "NTP-12039",
     "issue_type": "Task",
     "status": "Triage"
   },
   "CSTEST-192": {
-    "target_key": "NTP-7557",
+    "target_key": "NTP-12039",
     "issue_type": "Task",
     "status": "Triage"
   },
   "48583": {
-    "target_key": "NTP-7558",
+    "target_key": "NTP-12040",
     "issue_type": "Bug",
     "status": "Review"
   },
   "CSTEST-191": {
-    "target_key": "NTP-7558",
+    "target_key": "NTP-12040",
     "issue_type": "Bug",
     "status": "Review"
   },
   "48576": {
-    "target_key": "NTP-7559",
+    "target_key": "NTP-12041",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "CSTEST-190": {
-    "target_key": "NTP-7559",
+    "target_key": "NTP-12041",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "48577": {
-    "target_key": "NTP-7560",
+    "target_key": "NTP-12042",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "CSTEST-189": {
-    "target_key": "NTP-7560",
+    "target_key": "NTP-12042",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "48578": {
-    "target_key": "NTP-7561",
+    "target_key": "NTP-12043",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "CSTEST-188": {
-    "target_key": "NTP-7561",
+    "target_key": "NTP-12043",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "48579": {
-    "target_key": "NTP-7562",
+    "target_key": "NTP-12044",
     "issue_type": "Story",
     "status": "Triage"
   },
   "CSTEST-185": {
-    "target_key": "NTP-7562",
+    "target_key": "NTP-12044",
     "issue_type": "Story",
     "status": "Triage"
   },
   "48371": {
-    "target_key": "NTP-7563",
+    "target_key": "NTP-12045",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-183": {
-    "target_key": "NTP-7563",
+    "target_key": "NTP-12045",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48417": {
-    "target_key": "NTP-7564",
+    "target_key": "NTP-12046",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-182": {
-    "target_key": "NTP-7564",
+    "target_key": "NTP-12046",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48372": {
-    "target_key": "NTP-7565",
+    "target_key": "NTP-12047",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-169": {
-    "target_key": "NTP-7565",
+    "target_key": "NTP-12047",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48373": {
-    "target_key": "NTP-7566",
+    "target_key": "NTP-12048",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-168": {
-    "target_key": "NTP-7566",
+    "target_key": "NTP-12048",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48374": {
-    "target_key": "NTP-7567",
+    "target_key": "NTP-12049",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-167": {
-    "target_key": "NTP-7567",
+    "target_key": "NTP-12049",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48375": {
-    "target_key": "NTP-7568",
+    "target_key": "NTP-12050",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-166": {
-    "target_key": "NTP-7568",
+    "target_key": "NTP-12050",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48376": {
-    "target_key": "NTP-7569",
+    "target_key": "NTP-12051",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-165": {
-    "target_key": "NTP-7569",
+    "target_key": "NTP-12051",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48377": {
-    "target_key": "NTP-7570",
+    "target_key": "NTP-12052",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-164": {
-    "target_key": "NTP-7570",
+    "target_key": "NTP-12052",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48378": {
-    "target_key": "NTP-7571",
+    "target_key": "NTP-12053",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-163": {
-    "target_key": "NTP-7571",
+    "target_key": "NTP-12053",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48580": {
-    "target_key": "NTP-7572",
+    "target_key": "NTP-12054",
     "issue_type": "Story",
     "status": "Triage"
   },
   "CSTEST-162": {
-    "target_key": "NTP-7572",
+    "target_key": "NTP-12054",
     "issue_type": "Story",
     "status": "Triage"
   },
   "48581": {
-    "target_key": "NTP-7573",
+    "target_key": "NTP-12055",
     "issue_type": "Story",
     "status": "Triage"
   },
   "CSTEST-161": {
-    "target_key": "NTP-7573",
+    "target_key": "NTP-12055",
     "issue_type": "Story",
     "status": "Triage"
   },
   "48582": {
-    "target_key": "NTP-7574",
+    "target_key": "NTP-12056",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "CSTEST-160": {
-    "target_key": "NTP-7574",
+    "target_key": "NTP-12056",
     "issue_type": "Anomaly",
     "status": "Triage"
   },
   "48379": {
-    "target_key": "NTP-7575",
+    "target_key": "NTP-12057",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "CSTEST-159": {
-    "target_key": "NTP-7575",
+    "target_key": "NTP-12057",
     "issue_type": "Epic",
     "status": "Funnel"
   },
   "48380": {
-    "target_key": "NTP-7576",
+    "target_key": "NTP-12058",
     "issue_type": "Epic",
     "status": "Define"
   },
   "CSTEST-158": {
-    "target_key": "NTP-7576",
+    "target_key": "NTP-12058",
     "issue_type": "Epic",
     "status": "Define"
   },
   "48381": {
-    "target_key": "NTP-7577",
+    "target_key": "NTP-12059",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-157": {
-    "target_key": "NTP-7577",
+    "target_key": "NTP-12059",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48382": {
-    "target_key": "NTP-7578",
+    "target_key": "NTP-12060",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-156": {
-    "target_key": "NTP-7578",
+    "target_key": "NTP-12060",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48383": {
-    "target_key": "NTP-7579",
+    "target_key": "NTP-12061",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-155": {
-    "target_key": "NTP-7579",
+    "target_key": "NTP-12061",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48384": {
-    "target_key": "NTP-7580",
+    "target_key": "NTP-12062",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-154": {
-    "target_key": "NTP-7580",
+    "target_key": "NTP-12062",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48385": {
-    "target_key": "NTP-7581",
+    "target_key": "NTP-12063",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-151": {
-    "target_key": "NTP-7581",
+    "target_key": "NTP-12063",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48386": {
-    "target_key": "NTP-7582",
+    "target_key": "NTP-12064",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-148": {
-    "target_key": "NTP-7582",
+    "target_key": "NTP-12064",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48387": {
-    "target_key": "NTP-7583",
+    "target_key": "NTP-12065",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-147": {
-    "target_key": "NTP-7583",
+    "target_key": "NTP-12065",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48388": {
-    "target_key": "NTP-7584",
+    "target_key": "NTP-12066",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-145": {
-    "target_key": "NTP-7584",
+    "target_key": "NTP-12066",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48389": {
-    "target_key": "NTP-7585",
+    "target_key": "NTP-12067",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-144": {
-    "target_key": "NTP-7585",
+    "target_key": "NTP-12067",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48390": {
-    "target_key": "NTP-7586",
+    "target_key": "NTP-12068",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-143": {
-    "target_key": "NTP-7586",
+    "target_key": "NTP-12068",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48391": {
-    "target_key": "NTP-7587",
+    "target_key": "NTP-12069",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-142": {
-    "target_key": "NTP-7587",
+    "target_key": "NTP-12069",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48392": {
-    "target_key": "NTP-7588",
+    "target_key": "NTP-12070",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-141": {
-    "target_key": "NTP-7588",
+    "target_key": "NTP-12070",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48393": {
-    "target_key": "NTP-7589",
+    "target_key": "NTP-12071",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-140": {
-    "target_key": "NTP-7589",
+    "target_key": "NTP-12071",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48394": {
-    "target_key": "NTP-7590",
+    "target_key": "NTP-12072",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-139": {
-    "target_key": "NTP-7590",
+    "target_key": "NTP-12072",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48395": {
-    "target_key": "NTP-7591",
+    "target_key": "NTP-12073",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-138": {
-    "target_key": "NTP-7591",
+    "target_key": "NTP-12073",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48436": {
-    "target_key": "NTP-7592",
+    "target_key": "NTP-12074",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-91": {
-    "target_key": "NTP-7592",
+    "target_key": "NTP-12074",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48396": {
-    "target_key": "NTP-7593",
+    "target_key": "NTP-12075",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-90": {
-    "target_key": "NTP-7593",
+    "target_key": "NTP-12075",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48397": {
-    "target_key": "NTP-7594",
+    "target_key": "NTP-12076",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-89": {
-    "target_key": "NTP-7594",
+    "target_key": "NTP-12076",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48398": {
-    "target_key": "NTP-7595",
+    "target_key": "NTP-12077",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-88": {
-    "target_key": "NTP-7595",
+    "target_key": "NTP-12077",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48399": {
-    "target_key": "NTP-7596",
+    "target_key": "NTP-12078",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-87": {
-    "target_key": "NTP-7596",
+    "target_key": "NTP-12078",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48400": {
-    "target_key": "NTP-7597",
+    "target_key": "NTP-12079",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-86": {
-    "target_key": "NTP-7597",
+    "target_key": "NTP-12079",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48401": {
-    "target_key": "NTP-7598",
+    "target_key": "NTP-12080",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-85": {
-    "target_key": "NTP-7598",
+    "target_key": "NTP-12080",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48402": {
-    "target_key": "NTP-7599",
+    "target_key": "NTP-12081",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-84": {
-    "target_key": "NTP-7599",
+    "target_key": "NTP-12081",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48403": {
-    "target_key": "NTP-7600",
+    "target_key": "NTP-12082",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-81": {
-    "target_key": "NTP-7600",
+    "target_key": "NTP-12082",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48404": {
-    "target_key": "NTP-7601",
+    "target_key": "NTP-12083",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-80": {
-    "target_key": "NTP-7601",
+    "target_key": "NTP-12083",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48405": {
-    "target_key": "NTP-7602",
+    "target_key": "NTP-12084",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-79": {
-    "target_key": "NTP-7602",
+    "target_key": "NTP-12084",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48406": {
-    "target_key": "NTP-7603",
+    "target_key": "NTP-12085",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-78": {
-    "target_key": "NTP-7603",
+    "target_key": "NTP-12085",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48407": {
-    "target_key": "NTP-7604",
+    "target_key": "NTP-12086",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-76": {
-    "target_key": "NTP-7604",
+    "target_key": "NTP-12086",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48408": {
-    "target_key": "NTP-7605",
+    "target_key": "NTP-12087",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-75": {
-    "target_key": "NTP-7605",
+    "target_key": "NTP-12087",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48409": {
-    "target_key": "NTP-7606",
+    "target_key": "NTP-12088",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-74": {
-    "target_key": "NTP-7606",
+    "target_key": "NTP-12088",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48410": {
-    "target_key": "NTP-7607",
+    "target_key": "NTP-12089",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-73": {
-    "target_key": "NTP-7607",
+    "target_key": "NTP-12089",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48411": {
-    "target_key": "NTP-7608",
+    "target_key": "NTP-12090",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-72": {
-    "target_key": "NTP-7608",
+    "target_key": "NTP-12090",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48412": {
-    "target_key": "NTP-7609",
+    "target_key": "NTP-12091",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-71": {
-    "target_key": "NTP-7609",
+    "target_key": "NTP-12091",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48413": {
-    "target_key": "NTP-7610",
+    "target_key": "NTP-12092",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-70": {
-    "target_key": "NTP-7610",
+    "target_key": "NTP-12092",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48414": {
-    "target_key": "NTP-7611",
+    "target_key": "NTP-12093",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-69": {
-    "target_key": "NTP-7611",
+    "target_key": "NTP-12093",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48415": {
-    "target_key": "NTP-7612",
+    "target_key": "NTP-12094",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-68": {
-    "target_key": "NTP-7612",
+    "target_key": "NTP-12094",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48416": {
-    "target_key": "NTP-7613",
+    "target_key": "NTP-12095",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-67": {
-    "target_key": "NTP-7613",
+    "target_key": "NTP-12095",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48418": {
-    "target_key": "NTP-7614",
+    "target_key": "NTP-12096",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-64": {
-    "target_key": "NTP-7614",
+    "target_key": "NTP-12096",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48419": {
-    "target_key": "NTP-7615",
+    "target_key": "NTP-12097",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-63": {
-    "target_key": "NTP-7615",
+    "target_key": "NTP-12097",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48420": {
-    "target_key": "NTP-7616",
+    "target_key": "NTP-12098",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-62": {
-    "target_key": "NTP-7616",
+    "target_key": "NTP-12098",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48421": {
-    "target_key": "NTP-7617",
+    "target_key": "NTP-12099",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-61": {
-    "target_key": "NTP-7617",
+    "target_key": "NTP-12099",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48422": {
-    "target_key": "NTP-7618",
+    "target_key": "NTP-12100",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-60": {
-    "target_key": "NTP-7618",
+    "target_key": "NTP-12100",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48423": {
-    "target_key": "NTP-7619",
+    "target_key": "NTP-12101",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-59": {
-    "target_key": "NTP-7619",
+    "target_key": "NTP-12101",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48424": {
-    "target_key": "NTP-7620",
+    "target_key": "NTP-12102",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-58": {
-    "target_key": "NTP-7620",
+    "target_key": "NTP-12102",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48425": {
-    "target_key": "NTP-7621",
+    "target_key": "NTP-12103",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-57": {
-    "target_key": "NTP-7621",
+    "target_key": "NTP-12103",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48426": {
-    "target_key": "NTP-7622",
+    "target_key": "NTP-12104",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-56": {
-    "target_key": "NTP-7622",
+    "target_key": "NTP-12104",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48427": {
-    "target_key": "NTP-7623",
+    "target_key": "NTP-12105",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-55": {
-    "target_key": "NTP-7623",
+    "target_key": "NTP-12105",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48428": {
-    "target_key": "NTP-7624",
+    "target_key": "NTP-12106",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-54": {
-    "target_key": "NTP-7624",
+    "target_key": "NTP-12106",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48429": {
-    "target_key": "NTP-7625",
+    "target_key": "NTP-12107",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-53": {
-    "target_key": "NTP-7625",
+    "target_key": "NTP-12107",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48430": {
-    "target_key": "NTP-7626",
+    "target_key": "NTP-12108",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-52": {
-    "target_key": "NTP-7626",
+    "target_key": "NTP-12108",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48431": {
-    "target_key": "NTP-7627",
+    "target_key": "NTP-12109",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-50": {
-    "target_key": "NTP-7627",
+    "target_key": "NTP-12109",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48432": {
-    "target_key": "NTP-7628",
+    "target_key": "NTP-12110",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-49": {
-    "target_key": "NTP-7628",
+    "target_key": "NTP-12110",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48433": {
-    "target_key": "NTP-7629",
+    "target_key": "NTP-12111",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-48": {
-    "target_key": "NTP-7629",
+    "target_key": "NTP-12111",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48434": {
-    "target_key": "NTP-7630",
+    "target_key": "NTP-12112",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-47": {
-    "target_key": "NTP-7630",
+    "target_key": "NTP-12112",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48435": {
-    "target_key": "NTP-7631",
+    "target_key": "NTP-12113",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-45": {
-    "target_key": "NTP-7631",
+    "target_key": "NTP-12113",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48437": {
-    "target_key": "NTP-7632",
+    "target_key": "NTP-12114",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-43": {
-    "target_key": "NTP-7632",
+    "target_key": "NTP-12114",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48438": {
-    "target_key": "NTP-7633",
+    "target_key": "NTP-12115",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-42": {
-    "target_key": "NTP-7633",
+    "target_key": "NTP-12115",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48584": {
-    "target_key": "NTP-7634",
+    "target_key": "NTP-12116",
     "issue_type": "Story",
     "status": "Triage"
   },
   "CSTEST-41": {
-    "target_key": "NTP-7634",
+    "target_key": "NTP-12116",
     "issue_type": "Story",
     "status": "Triage"
   },
   "48585": {
-    "target_key": "NTP-7635",
+    "target_key": "NTP-12117",
     "issue_type": "Story",
     "status": "Archive"
   },
   "CSTEST-39": {
-    "target_key": "NTP-7635",
+    "target_key": "NTP-12117",
     "issue_type": "Story",
     "status": "Archive"
   },
   "48586": {
-    "target_key": "NTP-7636",
+    "target_key": "NTP-12118",
     "issue_type": "Story",
     "status": "Archive"
   },
   "CSTEST-37": {
-    "target_key": "NTP-7636",
+    "target_key": "NTP-12118",
     "issue_type": "Story",
     "status": "Archive"
   },
   "48587": {
-    "target_key": "NTP-7637",
+    "target_key": "NTP-12119",
     "issue_type": "Story",
     "status": "Archive"
   },
   "CSTEST-36": {
-    "target_key": "NTP-7637",
+    "target_key": "NTP-12119",
     "issue_type": "Story",
     "status": "Archive"
   },
   "48588": {
-    "target_key": "NTP-7638",
+    "target_key": "NTP-12120",
     "issue_type": "Story",
     "status": "Archive"
   },
   "CSTEST-35": {
-    "target_key": "NTP-7638",
+    "target_key": "NTP-12120",
     "issue_type": "Story",
     "status": "Archive"
   },
   "48589": {
-    "target_key": "NTP-7639",
+    "target_key": "NTP-12121",
     "issue_type": "Story",
     "status": "Archive"
   },
   "CSTEST-34": {
-    "target_key": "NTP-7639",
+    "target_key": "NTP-12121",
     "issue_type": "Story",
     "status": "Archive"
   },
   "48590": {
-    "target_key": "NTP-7640",
+    "target_key": "NTP-12122",
     "issue_type": "Story",
     "status": "Triage"
   },
   "CSTEST-33": {
-    "target_key": "NTP-7640",
+    "target_key": "NTP-12122",
     "issue_type": "Story",
     "status": "Triage"
   },
   "48591": {
-    "target_key": "NTP-7641",
+    "target_key": "NTP-12123",
     "issue_type": "Story",
     "status": "Triage"
   },
   "CSTEST-32": {
-    "target_key": "NTP-7641",
+    "target_key": "NTP-12123",
     "issue_type": "Story",
     "status": "Triage"
   },
   "48592": {
-    "target_key": "NTP-7642",
+    "target_key": "NTP-12124",
     "issue_type": "Story",
     "status": "Triage"
   },
   "CSTEST-31": {
-    "target_key": "NTP-7642",
+    "target_key": "NTP-12124",
     "issue_type": "Story",
     "status": "Triage"
   },
   "48593": {
-    "target_key": "NTP-7643",
+    "target_key": "NTP-12125",
     "issue_type": "Story",
     "status": "Triage"
   },
   "CSTEST-30": {
-    "target_key": "NTP-7643",
+    "target_key": "NTP-12125",
     "issue_type": "Story",
     "status": "Triage"
   },
   "48594": {
-    "target_key": "NTP-7644",
+    "target_key": "NTP-12126",
     "issue_type": "Story",
     "status": "Triage"
   },
   "CSTEST-29": {
-    "target_key": "NTP-7644",
+    "target_key": "NTP-12126",
     "issue_type": "Story",
     "status": "Triage"
   },
   "48439": {
-    "target_key": "NTP-7645",
+    "target_key": "NTP-12127",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-28": {
-    "target_key": "NTP-7645",
+    "target_key": "NTP-12127",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48440": {
-    "target_key": "NTP-7646",
+    "target_key": "NTP-12128",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-27": {
-    "target_key": "NTP-7646",
+    "target_key": "NTP-12128",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48441": {
-    "target_key": "NTP-7647",
+    "target_key": "NTP-12129",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-22": {
-    "target_key": "NTP-7647",
+    "target_key": "NTP-12129",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48442": {
-    "target_key": "NTP-7648",
+    "target_key": "NTP-12130",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-19": {
-    "target_key": "NTP-7648",
+    "target_key": "NTP-12130",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48443": {
-    "target_key": "NTP-7649",
+    "target_key": "NTP-12131",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-18": {
-    "target_key": "NTP-7649",
+    "target_key": "NTP-12131",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48444": {
-    "target_key": "NTP-7650",
+    "target_key": "NTP-12132",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-15": {
-    "target_key": "NTP-7650",
+    "target_key": "NTP-12132",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48445": {
-    "target_key": "NTP-7651",
+    "target_key": "NTP-12133",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-12": {
-    "target_key": "NTP-7651",
+    "target_key": "NTP-12133",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48446": {
-    "target_key": "NTP-7652",
+    "target_key": "NTP-12134",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-6": {
-    "target_key": "NTP-7652",
+    "target_key": "NTP-12134",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48447": {
-    "target_key": "NTP-7653",
+    "target_key": "NTP-12135",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-5": {
-    "target_key": "NTP-7653",
+    "target_key": "NTP-12135",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48595": {
-    "target_key": "NTP-7654",
+    "target_key": "NTP-12136",
     "issue_type": "Task",
     "status": "Triage"
   },
   "CSTEST-4": {
-    "target_key": "NTP-7654",
+    "target_key": "NTP-12136",
     "issue_type": "Task",
     "status": "Triage"
   },
   "48448": {
-    "target_key": "NTP-7655",
+    "target_key": "NTP-12137",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-3": {
-    "target_key": "NTP-7655",
+    "target_key": "NTP-12137",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48449": {
-    "target_key": "NTP-7656",
+    "target_key": "NTP-12138",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "CSTEST-2": {
-    "target_key": "NTP-7656",
+    "target_key": "NTP-12138",
     "issue_type": "Epic",
     "status": "Archive"
   },
   "48596": {
-    "target_key": "NTP-7657",
+    "target_key": "NTP-12139",
     "issue_type": "Story",
     "status": "Triage"
   },
   "CSTEST-1": {
-    "target_key": "NTP-7657",
+    "target_key": "NTP-12139",
     "issue_type": "Story",
     "status": "Triage"
   }
