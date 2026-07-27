@@ -115,10 +115,13 @@ class JiraConnector(Connector):
         username = self._resolve_config_value(config, "username", default=None, env_names=("JIRA_USERNAME",))
         password = self._resolve_config_value(config, "password", default=None, env_names=("JIRA_PASSWORD",))
         token = self._resolve_config_value(config, "token", default=None, env_names=("JIRA_TOKEN",))
+        api_token = self._resolve_config_value(config, "api_token", default=None, env_names=("JIRA_API_TOKEN",))
         if username and password:
             return str(username), str(password)
         if username and token:
             return str(username), str(token)
+        if username and api_token:
+            return str(username), str(api_token)
         return None
 
     def _parse_bearer_token(self, config: dict) -> str | None:
@@ -126,10 +129,12 @@ class JiraConnector(Connector):
         if isinstance(bearer_token, str) and bearer_token.strip():
             return bearer_token.strip()
 
-        if self._resolve_auth_type(config) == "bearer":
-            token = self._resolve_config_value(config, "token", default=None, env_names=("JIRA_TOKEN",))
-            if isinstance(token, str) and token.strip():
-                return token.strip()
+        if self._resolve_auth_type(config) != "bearer":
+            return None
+
+        token = self._resolve_config_value(config, "token", "api_token", default=None, env_names=("JIRA_TOKEN",))
+        if isinstance(token, str) and token.strip():
+            return token.strip()
         return None
 
     def _normalize_server_url(self, server: str) -> str:

@@ -1,12 +1,12 @@
 {
   "project_info": {
-    "id": "CSTEST",
-    "name": "Cori SaaS Test",
+    "id": "TM",
+    "name": "Test Migration",
     "description": "test description"
   },
   "target_project": {
-    "id": "NTP",
-    "name": "New test project1",
+    "id": "TM",
+    "name": "Test Migration",
     "description": "ABC description",
     "lead_account_id": "Hemanth.Raghav@smith-nephew.com"
   },

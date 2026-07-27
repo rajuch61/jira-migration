@@ -25,6 +25,45 @@ class JiraConnectorTests(unittest.TestCase):
         self.assertEqual(connector.project, "ABC")
         self.assertFalse(connector.verify_ssl)
 
+    def test_jira_connector_accepts_api_token_for_bearer_auth(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        config = {
+            "type": "jira",
+            "server": "https://example.atlassian.net",
+            "auth_type": "bearer",
+            "api_token": "bearer-token-value",
+            "project": "ABC",
+            "verify_ssl": False,
+        }
+
+        connector = JiraConnector(config)
+
+        self.assertEqual(connector.server, "https://example.atlassian.net")
+        self.assertEqual(connector.bearer_token, "bearer-token-value")
+        self.assertIsNone(connector.basic_auth)
+
+    def test_jira_connector_accepts_api_token_with_username_for_basic_auth(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        config = {
+            "type": "jira",
+            "server": "https://example.atlassian.net",
+            "auth_type": "basic",
+            "username": "user@example.com",
+            "api_token": "api-token-value",
+            "project": "ABC",
+            "verify_ssl": False,
+        }
+
+        connector = JiraConnector(config)
+
+        self.assertEqual(connector.server, "https://example.atlassian.net")
+        self.assertEqual(connector.basic_auth, ("user@example.com", "api-token-value"))
+        self.assertIsNone(connector.bearer_token)
+
     def test_normalizes_repeated_scheme_prefixes(self):
         connector_module = importlib.import_module("connectors.jira_connector")
         JiraConnector = connector_module.JiraConnector

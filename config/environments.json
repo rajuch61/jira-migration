@@ -13,9 +13,9 @@
     },
     "target": {
       "type": "jira",
-      "server": "https://usazrapnjiira02.sncorp.smith-nephew.com:8443",
-      "auth_type": "bearer",
-      "bearer_token": "Token",
+      "server": "https://smithandnephew-prod-sandbox.atlassian.net",
+      "auth_type": "basic",
+      "basic_auth": ["user", "Token"],
       "verify_ssl": false,
       "api_path": "/rest/api/2",
       "timeout": 60,
