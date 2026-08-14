@@ -119,8 +119,8 @@ class JiraConnectorTests(unittest.TestCase):
         with patch.object(connector, "_request", return_value={"issues": []}) as request_mock:
             connector.read_issues()
 
-        expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks"
-        request_mock.assert_called_once_with("GET", expected_path)
+        expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks%2Ccreated%2Cupdated%2Cassignee%2Creporter&expand=changelog"
+        request_mock.assert_any_call("GET", expected_path)
 
     def test_read_issues_fetches_individual_issues_from_csv_issue_keys(self):
         connector_module = importlib.import_module("connectors.jira_connector")
@@ -163,13 +163,13 @@ class JiraConnectorTests(unittest.TestCase):
                 },
             }
 
-            with patch.object(connector, "_request", side_effect=[issue_payload_1, issue_payload_2]) as request_mock:
+            with patch.object(connector, "_request", side_effect=[[], issue_payload_1, issue_payload_2]) as request_mock:
                 issues = connector.read_issues()
 
             self.assertEqual(len(issues), 2)
-            self.assertEqual(request_mock.call_count, 2)
-            self.assertEqual(request_mock.call_args_list[0].args[1], "/issue/CSTEST-721?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks&expand=changelog")
-            self.assertEqual(request_mock.call_args_list[1].args[1], "/issue/CSTEST-720?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks&expand=changelog")
+            self.assertEqual(request_mock.call_count, 3)
+            self.assertEqual(request_mock.call_args_list[1].args[1], "/issue/CSTEST-721?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks%2Ccreated%2Cupdated%2Cassignee%2Creporter&expand=changelog")
+            self.assertEqual(request_mock.call_args_list[2].args[1], "/issue/CSTEST-720?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks%2Ccreated%2Cupdated%2Cassignee%2Creporter&expand=changelog")
         finally:
             os.unlink(csv_path)
 
@@ -237,8 +237,8 @@ class JiraConnectorTests(unittest.TestCase):
         with patch.object(connector, "_request", return_value={"issues": []}) as request_mock:
             connector.read_issues()
 
-        expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks&expand=changelog"
-        request_mock.assert_called_once_with("GET", expected_path)
+        expected_path = "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks%2Ccreated%2Cupdated%2Cassignee%2Creporter&expand=changelog"
+        request_mock.assert_any_call("GET", expected_path)
 
     def test_read_issues_falls_back_to_key_search_when_search_returns_no_items(self):
         connector_module = importlib.import_module("connectors.jira_connector")
@@ -265,14 +265,14 @@ class JiraConnectorTests(unittest.TestCase):
             },
         }
 
-        with patch.object(connector, "_request", side_effect=[search_response, {"issues": [{"key": "ABC-1"}]}, issue_payload]) as request_mock:
+        with patch.object(connector, "_request", side_effect=[[], search_response, {"issues": [{"key": "ABC-1"}]}, issue_payload]) as request_mock:
             issues = connector.read_issues()
 
         self.assertEqual(len(issues), 1)
         self.assertEqual(issues[0]["summary"], "Added summary")
-        self.assertEqual(request_mock.call_args_list[0].args[1], "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks&expand=changelog")
-        self.assertEqual(request_mock.call_args_list[1].args[1], "/search?jql=project%3D%22ABC%22")
-        self.assertEqual(request_mock.call_args_list[2].args[1], "/issue/ABC-1?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks")
+        self.assertEqual(request_mock.call_args_list[1].args[1], "/search?jql=project%3D%22ABC%22&maxResults=100&fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks%2Ccreated%2Cupdated%2Cassignee%2Creporter&expand=changelog")
+        self.assertEqual(request_mock.call_args_list[2].args[1], "/search?jql=project%3D%22ABC%22")
+        self.assertEqual(request_mock.call_args_list[3].args[1], "/issue/ABC-1?fields=summary%2Cdescription%2Cissuetype%2Cstatus%2Cparent%2Ccomment%2Cattachment%2Cissuelinks%2Ccreated%2Cupdated%2Cassignee%2Creporter&expand=changelog")
 
     def test_read_issues_paginates_search_results(self):
         connector_module = importlib.import_module("connectors.jira_connector")
@@ -287,24 +287,25 @@ class JiraConnectorTests(unittest.TestCase):
             }
         )
 
+        common_fields = {"comment": {"comments": []}, "attachment": [], "issuelinks": []}
         responses = [
             {
                 "total": 250,
                 "startAt": 0,
                 "maxResults": 100,
-                "issues": [{"key": "ABC-1", "fields": {"summary": "One", "issuetype": {"name": "Task"}, "status": {"name": "Open"}}}],
+                "issues": [{"key": "ABC-1", "fields": {"summary": "One", "issuetype": {"name": "Task"}, "status": {"name": "Open"}, **common_fields}}],
             },
             {
                 "total": 250,
                 "startAt": 100,
                 "maxResults": 100,
-                "issues": [{"key": "ABC-2", "fields": {"summary": "Two", "issuetype": {"name": "Task"}, "status": {"name": "Open"}}}],
+                "issues": [{"key": "ABC-2", "fields": {"summary": "Two", "issuetype": {"name": "Task"}, "status": {"name": "Open"}, **common_fields}}],
             },
             {
                 "total": 250,
                 "startAt": 200,
                 "maxResults": 100,
-                "issues": [{"key": "ABC-3", "fields": {"summary": "Three", "issuetype": {"name": "Task"}, "status": {"name": "Open"}}}],
+                "issues": [{"key": "ABC-3", "fields": {"summary": "Three", "issuetype": {"name": "Task"}, "status": {"name": "Open"}, **common_fields}}],
             },
             {
                 "total": 250,
@@ -314,7 +315,7 @@ class JiraConnectorTests(unittest.TestCase):
             },
         ]
 
-        with patch.object(connector, "_request", side_effect=responses) as request_mock:
+        with patch.object(connector, "_request", side_effect=[[], *responses]) as request_mock:
             issues = connector.read_issues()
 
         self.assertEqual(len(issues), 3)
@@ -394,6 +395,7 @@ class JiraConnectorTests(unittest.TestCase):
             }
         )
         connector.created_issue_keys["ABC-2"] = "TGT-2"
+        connector._link_types_by_name = {"implements": "Implements"}
 
         with patch.object(connector, "_request", return_value={"id": "456", "key": "ABC-456"}) as request_mock:
             connector._create_issue_links(
@@ -604,6 +606,37 @@ class JiraConnectorTests(unittest.TestCase):
 
         self.assertEqual(connector.created_issue_keys["10051"], "ABC-456")
 
+    def test_create_issue_supports_real_jira_cloud_createmeta_response_shape(self):
+        # Jira Cloud's actual /issue/createmeta/{key}/issuetypes response nests issue
+        # types under "issueTypes", not "values". A previous bug only checked "values",
+        # which silently made every sub-task fall back to a plain Task + "Relates" link.
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+        connector.created_issue_keys["10037"] = "ABC-1"
+
+        def side_effect(method, path, payload=None):
+            if method == "GET" and path == "/issue/createmeta/ABC/issuetypes":
+                return {"issueTypes": [{"name": "Sub-task", "subtask": True}]}
+            if method == "POST" and path == "/issue":
+                return {"id": "456", "key": "ABC-456"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue({"id": "10051", "summary": "x", "description": "hello", "issueType": "Sub-task", "sourceIssueType": "Sub-task", "parent": "10037"})
+
+        create_call = request_mock.call_args_list[1]
+        self.assertEqual(create_call.args[2]["fields"]["issuetype"]["name"], "Sub-task")
+        self.assertEqual(create_call.args[2]["fields"]["parent"], {"key": "ABC-1"})
+
     def test_create_project_uses_target_project_override(self):
         connector_module = importlib.import_module("connectors.jira_connector")
         JiraConnector = connector_module.JiraConnector
@@ -676,6 +709,8 @@ class JiraConnectorTests(unittest.TestCase):
                                 }
                             ]
                         },
+                        "attachment": [],
+                        "issuelinks": [],
                     },
                 }
             ]
@@ -761,17 +796,376 @@ class JiraConnectorTests(unittest.TestCase):
         self.assertEqual(request_mock.call_args_list[1].args[1], "/issue/456/comment")
         self.assertEqual(
             request_mock.call_args_list[1].args[2]["body"],
-            {
-                "type": "doc",
-                "version": 1,
-                "content": [
-                    {
-                        "type": "paragraph",
-                        "content": [{"type": "text", "text": "First comment"}],
-                    }
-                ],
-            },
+            "First comment",
         )
+
+    def test_create_issue_does_not_add_provenance_prefix_to_comments(self):
+        # Comments are posted with their original body text as-is, with no injected
+        # "(originally posted ... by ...)" prefix - the target's native comment
+        # author/timestamp on the Jira UI reflects the API call itself, and that is
+        # not annotated in the comment body.
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        def side_effect(method, path, payload):
+            if method == "POST" and path == "/issue":
+                return {"id": "456", "key": "ABC-456"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Story",
+                    "comments": [
+                        {"body": "Test 1", "author": "Hemanth.Raghav", "created": "2026-07-23T19:23:38.020+0000"},
+                        {"body": "test 2", "author": "Hemanth.Raghav", "created": "2026-07-23T19:23:43.477+0000"},
+                    ],
+                }
+            )
+
+        self.assertEqual(request_mock.call_args_list[1].args[2]["body"], "Test 1")
+        self.assertEqual(request_mock.call_args_list[2].args[2]["body"], "test 2")
+
+    def test_create_issue_resolves_assignee_and_reporter_on_target_by_email(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        def side_effect(method, path, payload=None):
+            if method == "GET" and path.startswith("/user/search?query=assignee%40example.com"):
+                return [{"accountId": "target-assignee-account-id"}]
+            if method == "GET" and path.startswith("/user/search?query=reporter%40example.com"):
+                return [{"accountId": "target-reporter-account-id"}]
+            if method == "POST" and path == "/issue":
+                return {"id": "456", "key": "ABC-456"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Story",
+                    "assignee": {"emailAddress": "assignee@example.com", "displayName": "Assignee Person"},
+                    "reporter": {"emailAddress": "reporter@example.com", "displayName": "Reporter Person"},
+                }
+            )
+
+        create_call = next(call for call in request_mock.call_args_list if call.args[0] == "POST" and call.args[1] == "/issue")
+        fields = create_call.args[2]["fields"]
+        self.assertEqual(fields["assignee"], {"accountId": "target-assignee-account-id"})
+        self.assertEqual(fields["reporter"], {"accountId": "target-reporter-account-id"})
+
+    def test_create_issue_omits_assignee_when_no_matching_target_user_found(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        def side_effect(method, path, payload=None):
+            if method == "GET" and path.startswith("/user/search"):
+                return []
+            if method == "POST" and path == "/issue":
+                return {"id": "456", "key": "ABC-456"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Story",
+                    "assignee": {"emailAddress": "nobody@example.com"},
+                }
+            )
+
+        create_call = next(call for call in request_mock.call_args_list if call.args[0] == "POST" and call.args[1] == "/issue")
+        self.assertNotIn("assignee", create_call.args[2]["fields"])
+
+    def test_create_issue_resolves_sprint_via_agile_api_for_top_level_issue(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "TM",
+                "verify_ssl": False,
+            }
+        )
+
+        def side_effect(method, path, payload=None):
+            if method == "GET" and path == "/field":
+                return [{"id": "customfield_10020", "name": "Sprint"}]
+            if method == "GET" and path.startswith("https://example.atlassian.net/rest/agile/1.0/board?"):
+                return {"values": [{"id": 37}]}
+            if method == "GET" and path.startswith("https://example.atlassian.net/rest/agile/1.0/board/37/sprint"):
+                return {"values": [{"id": 91, "name": "TM Sprint 1"}], "isLast": True}
+            if method == "POST" and path == "/issue":
+                return {"id": "456", "key": "TM-456"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Story",
+                    "sprint": "TM Sprint 1",
+                }
+            )
+
+        create_call = next(call for call in request_mock.call_args_list if call.args[0] == "POST" and call.args[1] == "/issue")
+        self.assertEqual(create_call.args[2]["fields"]["customfield_10020"], 91)
+
+    def test_create_issue_skips_sprint_field_for_subtasks(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "TM",
+                "verify_ssl": False,
+            }
+        )
+
+        def side_effect(method, path, payload=None):
+            if method == "GET" and path == "/field":
+                return [{"id": "customfield_10020", "name": "Sprint"}]
+            if method == "POST" and path == "/issue":
+                return {"id": "789", "key": "TM-789"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Sub-task",
+                    "sprint": "TM Sprint 1",
+                }
+            )
+
+        create_call = next(call for call in request_mock.call_args_list if call.args[0] == "POST" and call.args[1] == "/issue")
+        self.assertNotIn("customfield_10020", create_call.args[2]["fields"])
+        agile_calls = [call for call in request_mock.call_args_list if "agile" in call.args[1]]
+        self.assertEqual(agile_calls, [])
+
+    def test_create_issue_maps_original_created_to_existing_date_created_field(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "TM",
+                "verify_ssl": False,
+            }
+        )
+
+        def side_effect(method, path, payload=None):
+            if method == "GET" and path == "/field":
+                return [{"id": "customfield_10337", "name": "Date Created"}]
+            if method == "POST" and path == "/issue":
+                return {"id": "500", "key": "TM-500"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Task",
+                    "originalCreated": "2020-01-15T10:30:00.000+0000",
+                }
+            )
+
+        create_call = next(call for call in request_mock.call_args_list if call.args[0] == "POST" and call.args[1] == "/issue")
+        self.assertEqual(create_call.args[2]["fields"]["customfield_10337"], "2020-01-15T10:30:00.000+0000")
+        field_creation_calls = [call for call in request_mock.call_args_list if call.args[0] == "POST" and call.args[1] == "/field"]
+        self.assertEqual(field_creation_calls, [])
+
+    def test_create_issue_creates_date_created_field_and_provisions_screens_when_missing(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "TM",
+                "verify_ssl": False,
+            }
+        )
+
+        def side_effect(method, path, payload=None):
+            if method == "GET" and path == "/field":
+                return []
+            if method == "POST" and path == "/field":
+                return {"id": "customfield_10337", "name": "Date Created"}
+            if method == "GET" and path == "/project/TM":
+                return {"id": "10034"}
+            if method == "GET" and path == "/issuetypescreenscheme/project?projectId=10034":
+                return {"values": [{"issueTypeScreenScheme": {"id": "10037"}}]}
+            if method == "GET" and path == "/issuetypescreenscheme/mapping?issueTypeScreenSchemeId=10037":
+                return {"values": [{"screenSchemeId": "10055"}]}
+            if method == "GET" and path == "/screenscheme?id=10055":
+                return {"values": [{"screens": {"default": 10055}}]}
+            if method == "GET" and path == "/screens/10055/tabs":
+                return {"id": 10058, "name": "Field Tab"}
+            if method == "POST" and path == "/screens/10055/tabs/10058/fields":
+                return {}
+            if method == "POST" and path == "/issue":
+                return {"id": "501", "key": "TM-501"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Task",
+                    "originalCreated": "2020-01-15T10:30:00.000+0000",
+                }
+            )
+
+        create_call = next(call for call in request_mock.call_args_list if call.args[0] == "POST" and call.args[1] == "/issue")
+        self.assertEqual(create_call.args[2]["fields"]["customfield_10337"], "2020-01-15T10:30:00.000+0000")
+        screen_field_calls = [call for call in request_mock.call_args_list if call.args[0] == "POST" and call.args[1] == "/screens/10055/tabs/10058/fields"]
+        self.assertEqual(len(screen_field_calls), 1)
+
+    def test_create_issue_skips_date_created_field_when_original_created_missing(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "TM",
+                "verify_ssl": False,
+            }
+        )
+
+        def side_effect(method, path, payload=None):
+            if method == "POST" and path == "/issue":
+                return {"id": "502", "key": "TM-502"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Task",
+                }
+            )
+
+        create_call = next(call for call in request_mock.call_args_list if call.args[0] == "POST" and call.args[1] == "/issue")
+        self.assertNotIn("customfield_10337", create_call.args[2]["fields"])
+        field_lookup_calls = [call for call in request_mock.call_args_list if call.args[0] == "GET" and call.args[1] == "/field"]
+        self.assertEqual(field_lookup_calls, [])
+
+    def test_create_issue_replays_allowed_history_fields_as_target_updates(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        def side_effect(method, path, payload=None):
+            if method == "POST" and path == "/issue":
+                return {"id": "456", "key": "ABC-456"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Story",
+                    "history": [
+                        {"field": "description", "from": "old text", "to": "new text"},
+                        {"field": "Priority", "from": "Low", "to": "High"},
+                        {"field": "Labels", "from": "", "to": "urgent backend"},
+                        {"field": "status", "from": "Open", "to": "In Progress"},
+                        {"field": "Link", "from": None, "to": "This issue relates to ABC-1"},
+                    ],
+                }
+            )
+
+        put_calls = [call for call in request_mock.call_args_list if call.args[0] == "PUT"]
+        self.assertEqual(len(put_calls), 3)
+        self.assertEqual(put_calls[0].args[1], "/issue/456")
+        self.assertEqual(put_calls[0].args[2], {"fields": {"description": "new text"}})
+        self.assertEqual(put_calls[1].args[2], {"fields": {"priority": {"name": "High"}}})
+        self.assertEqual(put_calls[2].args[2], {"fields": {"labels": ["urgent", "backend"]}})
+
+    def test_create_issue_skips_history_replay_when_no_history(self):
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+
+        def side_effect(method, path, payload=None):
+            if method == "POST" and path == "/issue":
+                return {"id": "456", "key": "ABC-456"}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue(
+                {
+                    "summary": "x",
+                    "description": "hello",
+                    "issueType": "Story",
+                }
+            )
+
+        put_calls = [call for call in request_mock.call_args_list if call.args[0] == "PUT"]
+        self.assertEqual(put_calls, [])
 
     def test_request_sends_binary_attachment_payload_as_multipart(self):
         connector_module = importlib.import_module("connectors.jira_connector")
@@ -983,7 +1377,7 @@ class JiraConnectorTests(unittest.TestCase):
 
         self.assertEqual(request_mock.call_args.args[2]["fields"]["parent"], {"key": "ABC-1"})
 
-    def test_create_issue_creates_issue_links_after_issue_creation(self):
+    def test_create_issue_links_creates_links_for_a_migrated_issue(self):
         connector_module = importlib.import_module("connectors.jira_connector")
         JiraConnector = connector_module.JiraConnector
 
@@ -1003,7 +1397,7 @@ class JiraConnectorTests(unittest.TestCase):
             return {}
 
         with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
-            connector.create_issue(
+            created = connector.create_issue(
                 {
                     "id": "10051",
                     "summary": "x",
@@ -1012,10 +1406,148 @@ class JiraConnectorTests(unittest.TestCase):
                     "linked_issues": [{"target_key": "ABC-2", "relation": "Relates"}],
                 }
             )
+            # Links are not created inline; they are created explicitly once every
+            # issue in the migration batch exists, so link targets always resolve.
+            self.assertEqual(request_mock.call_count, 1)
+
+            connector.created_issue_keys["ABC-2"] = "TGT-2"
+            # Pre-seed the target link type cache so this test focuses purely on link
+            # creation/resolution, not on link-type discovery/creation (covered by
+            # dedicated tests below).
+            connector._link_types_by_name = {"relates": "Relates"}
+            connector.create_issue_links(created["key"], created["linked_issues"])
 
         self.assertEqual(request_mock.call_count, 2)
         self.assertEqual(request_mock.call_args_list[1].args[1], "/issueLink")
-        self.assertEqual(request_mock.call_args_list[1].args[2]["outwardIssue"], {"key": "ABC-2"})
+        self.assertEqual(request_mock.call_args_list[1].args[2]["outwardIssue"], {"key": "TGT-2"})
+
+    def test_create_issue_links_creates_missing_link_type_on_target_when_absent(self):
+        # Some source Jira instances have custom link types (e.g. "1 Implements",
+        # canonicalized to "Implements") that don't exist on the target Jira Cloud
+        # instance at all. The migration must create the missing link type on the
+        # target rather than send a payload that Jira Cloud will reject with 404.
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+        connector.created_issue_keys["ABC-1"] = "TGT-1"
+        connector.created_issue_keys["ABC-2"] = "TGT-2"
+
+        def side_effect(method, path, payload):
+            if method == "GET" and path == "/issueLinkType":
+                return {"issueLinkTypes": [{"id": "10003", "name": "Relates", "inward": "relates to", "outward": "relates to"}]}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue_links(
+                "TGT-1",
+                [
+                    {
+                        "target_key": "ABC-2",
+                        "relation": "1 Implements",
+                        "direction": "outward",
+                        "type_raw": {"id": "10500", "name": "1 Implements", "inward": "Implemented by", "outward": "Implements"},
+                    }
+                ],
+            )
+
+        calls = request_mock.call_args_list
+        self.assertEqual(calls[0].args[:2], ("GET", "/issueLinkType"))
+        self.assertEqual(
+            calls[1].args,
+            ("POST", "/issueLinkType", {"name": "Implements", "inward": "Implemented by", "outward": "Implements"}),
+        )
+        self.assertEqual(
+            calls[2].args,
+            (
+                "POST",
+                "/issueLink",
+                {
+                    "type": {"name": "Implements"},
+                    "inwardIssue": {"key": "TGT-1"},
+                    "outwardIssue": {"key": "TGT-2"},
+                },
+            ),
+        )
+
+    def test_create_issue_links_reuses_existing_target_link_type_name(self):
+        # If the target already has a link type matching the canonicalized relation
+        # name (case-insensitively), reuse its exact configured name and never try
+        # to create a duplicate link type.
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+        connector.created_issue_keys["ABC-1"] = "TGT-1"
+        connector.created_issue_keys["ABC-2"] = "TGT-2"
+
+        def side_effect(method, path, payload):
+            if method == "GET" and path == "/issueLinkType":
+                return {"issueLinkTypes": [{"id": "10000", "name": "Blocks", "inward": "is blocked by", "outward": "blocks"}]}
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue_links(
+                "TGT-1",
+                [{"target_key": "ABC-2", "relation": "1 Blocks", "direction": "outward"}],
+            )
+
+        calls = request_mock.call_args_list
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(calls[0].args[:2], ("GET", "/issueLinkType"))
+        self.assertEqual(calls[1].args[0], "POST")
+        self.assertEqual(calls[1].args[1], "/issueLink")
+        self.assertEqual(calls[1].args[2]["type"], {"name": "Blocks"})
+
+    def test_create_issue_links_falls_back_to_relates_when_link_type_creation_fails(self):
+        # If creating the missing link type on the target fails (e.g. insufficient
+        # permissions), fall back to the universally-available "Relates" type rather
+        # than dropping the link entirely.
+        connector_module = importlib.import_module("connectors.jira_connector")
+        JiraConnector = connector_module.JiraConnector
+
+        connector = JiraConnector(
+            {
+                "type": "jira",
+                "server": "https://example.atlassian.net",
+                "project": "ABC",
+                "verify_ssl": False,
+            }
+        )
+        connector.created_issue_keys["ABC-1"] = "TGT-1"
+        connector.created_issue_keys["ABC-2"] = "TGT-2"
+
+        def side_effect(method, path, payload):
+            if method == "GET" and path == "/issueLinkType":
+                return {"issueLinkTypes": []}
+            if method == "POST" and path == "/issueLinkType":
+                raise RuntimeError("Jira request failed (403): Forbidden")
+            return {}
+
+        with patch.object(connector, "_request", side_effect=side_effect) as request_mock:
+            connector.create_issue_links(
+                "TGT-1",
+                [{"target_key": "ABC-2", "relation": "1 Implements", "direction": "outward"}],
+            )
+
+        calls = request_mock.call_args_list
+        self.assertEqual(calls[-1].args[0], "POST")
+        self.assertEqual(calls[-1].args[1], "/issueLink")
+        self.assertEqual(calls[-1].args[2]["type"], {"name": "Relates"})
 
     def test_create_project_uses_current_account_id_when_email_is_configured(self):
         connector_module = importlib.import_module("connectors.jira_connector")

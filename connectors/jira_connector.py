@@ -62,6 +62,17 @@ class JiraConnector(Connector):
         self._createmeta_cache: dict[str, str | None] = {}
         self._adf_supported = True
         self._created_links: set[tuple[str, str, str]] = set()
+        self._field_name_to_id_cache: dict[str, str | None] = {}
+        self.custom_field_mapping = config.get("custom_field_mapping") if isinstance(config.get("custom_field_mapping"), dict) else {}
+        self._resolved_custom_field_ids: dict[str, str] = {}
+        self._user_reference_cache: dict[str, dict[str, str] | None] = {}
+        self._sprint_field_id: str | None = None
+        self._sprint_id_cache: dict[tuple[str, str], int | None] = {}
+        self._date_created_field_id: str | None = None
+        self._date_created_field_setup_attempted = False
+        self._date_created_field_screens_ensured: set[str] = set()
+        self._link_types_by_name: dict[str, str] | None = None
+        self._created_link_type_names: set[str] = set()
 
     def _resolve_config_value(self, config: dict, *keys: str, default: Any = None, env_names: tuple[str, ...] = ()) -> Any:
         for env_name in env_names:
@@ -300,13 +311,35 @@ class JiraConnector(Connector):
         )
         if isinstance(configured_fields, str):
             configured_fields = [field.strip() for field in configured_fields.split(",") if field.strip()]
-        fields = list(configured_fields) if isinstance(configured_fields, list) else []
-        if not fields:
-            fields = ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks"]
-        else:
-            for mandatory in ("comment", "attachment", "issuelinks"):
-                if mandatory not in fields:
-                    fields.append(mandatory)
+        # The base set of fields is always required for core migration logic (summary,
+        # description, issue type/status/parent, comments, attachments, links, the
+        # original created/updated timestamps needed for the migration provenance note,
+        # and assignee/reporter so those are always attempted on migration). Any
+        # "search_fields"/"fields"/"allowed_fields" configured on top (e.g. duedate,
+        # priority, labels) are additive extras, not a replacement of the base set.
+        fields = ["summary", "description", "issuetype", "status", "parent", "comment", "attachment", "issuelinks", "created", "updated", "assignee", "reporter"]
+        if isinstance(configured_fields, list):
+            for extra_field in configured_fields:
+                if extra_field not in fields:
+                    fields.append(extra_field)
+
+        # Resolve any name-mapped custom fields (config: custom_field_mapping) so their
+        # instance-specific field ids are included in the fields fetched from this server.
+        self._resolved_custom_field_ids = {}
+        for source_field_name in self.custom_field_mapping:
+            field_id = self._resolve_field_id_by_name(source_field_name)
+            if field_id:
+                self._resolved_custom_field_ids[source_field_name] = field_id
+                if field_id not in fields:
+                    fields.append(field_id)
+
+        # Sprint is always resolved (not just when custom_field_mapping opts in) so the
+        # issue's current sprint assignment can be migrated to the matching sprint on the
+        # target board (see create_issue()/_resolve_target_sprint_id()).
+        self._sprint_field_id = self._resolve_field_id_by_name("Sprint")
+        if self._sprint_field_id and self._sprint_field_id not in fields:
+            fields.append(self._sprint_field_id)
+
         query = self._build_search_jql(issue_keys)
         self.logger.info(f"Fetching issues with JQL query: {query}")
 
@@ -508,6 +541,15 @@ class JiraConnector(Connector):
                 if isinstance(history, dict)
             ]
 
+            sprint_name = None
+            if self._sprint_field_id:
+                sprint_name = self._extract_current_sprint_name(fields_data.get(self._sprint_field_id))
+
+            custom_fields = {}
+            for source_field_name, field_id in self._resolved_custom_field_ids.items():
+                if field_id in fields_data:
+                    custom_fields[source_field_name] = fields_data.get(field_id)
+
             issue = {
                 "id": issue_data.get("id"),
                 "key": issue_data.get("key"),
@@ -516,10 +558,17 @@ class JiraConnector(Connector):
                 "issueType": fields_data.get("issuetype", {}).get("name", "Task"),
                 "parent": fields_data.get("parent", {}).get("key") if isinstance(fields_data.get("parent"), dict) else None,
                 "status": fields_data.get("status", {}).get("name", "Open"),
+                "dueDate": fields_data.get("duedate"),
+                "originalCreated": fields_data.get("created"),
+                "originalUpdated": fields_data.get("updated"),
+                "assignee": fields_data.get("assignee"),
+                "reporter": fields_data.get("reporter"),
                 "comments": comments,
                 "attachments": attachments,
                 "linked_issues": linked_issues,
                 "history": history,
+                "sprint": sprint_name,
+                "customFields": custom_fields,
             }
             self.logger.info(
                 "Fetched source issue %s (%s): summary=%r description=%r issueType=%r status=%r parent=%r",
@@ -778,6 +827,39 @@ class JiraConnector(Connector):
             reporter_field = self._normalize_user_reference(reporter)
             if reporter_field is not None:
                 payload["fields"]["reporter"] = reporter_field
+        due_date = issue.get("dueDate") or issue.get("duedate")
+        if isinstance(due_date, str) and due_date.strip():
+            # Jira's "duedate" field expects a plain "YYYY-MM-DD" string; source payloads
+            # from the search API are already in that format, so pass through as-is.
+            payload["fields"]["duedate"] = due_date.strip()[:10]
+        custom_field_values = issue.get("customFields")
+        if isinstance(custom_field_values, dict) and self.custom_field_mapping:
+            for source_field_name, value in custom_field_values.items():
+                if value is None or value == "":
+                    continue
+                target_field_name = self.custom_field_mapping.get(source_field_name)
+                if not target_field_name:
+                    continue
+                target_field_id = self._resolve_field_id_by_name(target_field_name)
+                if target_field_id:
+                    payload["fields"][target_field_id] = value
+        sprint_name = issue.get("sprint")
+        # Sub-tasks always inherit their parent's sprint automatically in Jira Cloud and
+        # reject an explicit Sprint value on creation ("subtasks cannot be associated to
+        # a sprint"), so only attempt this for top-level (non-subtask) issues.
+        if isinstance(sprint_name, str) and sprint_name.strip() and not is_source_subtask:
+            sprint_field_id = self._resolve_field_id_by_name("Sprint")
+            sprint_id = self._resolve_target_sprint_id(sprint_name.strip(), target_project_key)
+            if sprint_field_id and sprint_id is not None:
+                payload["fields"][sprint_field_id] = sprint_id
+        original_created = issue.get("originalCreated")
+        if isinstance(original_created, str) and original_created.strip():
+            # Jira Cloud's native "created" system field always reflects the actual API
+            # call time and cannot be overridden, so the source's real creation timestamp
+            # is preserved in a dedicated "Date Created" custom field instead.
+            date_created_field_id = self._resolve_or_create_date_created_field(target_project_key)
+            if date_created_field_id:
+                payload["fields"][date_created_field_id] = original_created.strip()
         if is_source_subtask and parent_reference and parent_key:
             if use_parent_field:
                 payload["fields"]["parent"] = {"key": str(parent_key)}
@@ -815,20 +897,28 @@ class JiraConnector(Connector):
                         self.created_issue_ids[str(issue.get("key"))] = str(response.get("id"))
             self._create_comments(issue_id, issue.get("comments", []))
             self._create_attachments(issue_id, issue.get("attachments", []))
-            linked_issues = list(issue.get("linked_issues") or [])
+            self._replay_history_field_changes(issue_id, issue.get("history", []))
             if is_source_subtask and parent_reference and not use_parent_field and parent_key:
-                self._request(
-                    "POST",
-                    "/issueLink",
-                    {
-                        "type": {"name": "Relates"},
-                        "inwardIssue": {"key": str(target_issue_key or issue_id)},
-                        "outwardIssue": {"key": str(parent_key)},
-                    },
-                )
-            self._create_issue_links(target_issue_key or issue_id, linked_issues)
-            self._process_pending_issue_links()
-            self._process_pending_child_issues()
+                # The target project does not support a real Sub-task issue type (or the
+                # target rejected it), so preserve the parent/child relationship as an
+                # explicit "Relates" link instead of silently dropping it.
+                try:
+                    self._request(
+                        "POST",
+                        "/issueLink",
+                        {
+                            "type": {"name": "Relates"},
+                            "inwardIssue": {"key": str(target_issue_key or issue_id)},
+                            "outwardIssue": {"key": str(parent_key)},
+                        },
+                    )
+                except Exception as exc:
+                    self.logger.warning("Unable to link sub-task %s to parent %s: %s", target_issue_key or issue_id, parent_key, exc)
+            # NOTE: issuelinks captured from the source (e.g. "Implements"/"Blocks") are
+            # intentionally NOT created here. They are created in a dedicated final phase
+            # (see MigrationEngine.run) after every issue in the batch has been migrated,
+            # so link targets always resolve on the first attempt instead of relying on a
+            # best-effort pending queue.
 
         return {
             "id": response.get("id"),
@@ -955,19 +1045,255 @@ class JiraConnector(Connector):
             return self._request("POST", "/issue", payload)
         return None
 
+    def _resolve_field_id_by_name(self, field_name: str) -> str | None:
+        """Resolve a Jira field's id (e.g. "customfield_10015") from its display name.
+
+        Field ids for custom fields are instance-specific, so migrating a custom field
+        by name requires looking it up via GET /field on whichever server this connector
+        instance talks to. Results are cached for the lifetime of the connector.
+        """
+        if not field_name:
+            return None
+        if field_name in self._field_name_to_id_cache:
+            return self._field_name_to_id_cache[field_name]
+        try:
+            data = self._request("GET", "/field")
+        except Exception as exc:
+            self.logger.warning("Unable to fetch field metadata to resolve %r: %s", field_name, exc)
+            return None
+        if not isinstance(data, list):
+            return None
+        exact_match = None
+        case_insensitive_match = None
+        for item in data:
+            if not isinstance(item, dict):
+                continue
+            name = item.get("name")
+            field_id = item.get("id")
+            if not isinstance(name, str) or not isinstance(field_id, str):
+                continue
+            self._field_name_to_id_cache.setdefault(name, field_id)
+            if name == field_name:
+                exact_match = field_id
+            elif case_insensitive_match is None and name.lower() == field_name.lower():
+                case_insensitive_match = field_id
+        resolved = exact_match or case_insensitive_match
+        self._field_name_to_id_cache[field_name] = resolved
+        if not resolved:
+            self.logger.warning("No Jira field named %r was found on %s", field_name, self.server)
+        return resolved
+
+    def _extract_current_sprint_name(self, raw_value: Any) -> str | None:
+        """Extract the current sprint's name from a source issue's raw Sprint field value.
+
+        Jira Server's "Sprint" custom field returns a list, either of structured objects
+        (newer versions: {"id", "name", "state", ...}) or of legacy Greenhopper-style
+        strings (e.g. "com.atlassian.greenhopper.service.sprint.Sprint@...[id=2,...,
+        state=ACTIVE,name=TM Sprint 1,...]"). An issue can carry more than one sprint
+        entry if it moved between sprints, so prefer the ACTIVE one; otherwise fall back
+        to the most recently listed entry (Jira appends sprints in chronological order).
+        """
+        if not isinstance(raw_value, list) or not raw_value:
+            return None
+        parsed: list[tuple[str, str | None]] = []
+        for entry in raw_value:
+            if isinstance(entry, dict):
+                name = entry.get("name")
+                state = entry.get("state")
+                if isinstance(name, str) and name.strip():
+                    parsed.append((name.strip(), state if isinstance(state, str) else None))
+            elif isinstance(entry, str):
+                name_match = re.search(r"name=([^,\]]+)", entry)
+                state_match = re.search(r"state=([^,\]]+)", entry)
+                if name_match:
+                    parsed.append((name_match.group(1).strip(), state_match.group(1).strip() if state_match else None))
+        if not parsed:
+            return None
+        for name, state in reversed(parsed):
+            if isinstance(state, str) and state.upper() == "ACTIVE":
+                return name
+        return parsed[-1][0]
+
+    def _resolve_target_sprint_id(self, sprint_name: str, target_project_key: str) -> int | None:
+        """Resolve a source sprint name to the matching sprint's id on the target's board.
+
+        Uses the Jira Agile REST API (/rest/agile/1.0), which is separate from the core
+        /rest/api/2 path this connector otherwise talks to, so full URLs are passed to
+        _request() directly (it treats any "http..." path as already-absolute).
+        """
+        if not sprint_name or not target_project_key:
+            return None
+        cache_key = (target_project_key, sprint_name.lower())
+        if cache_key in self._sprint_id_cache:
+            return self._sprint_id_cache[cache_key]
+
+        sprint_id: int | None = None
+        try:
+            boards_response = self._request(
+                "GET", f"{self.server}/rest/agile/1.0/board?projectKeyOrId={quote(target_project_key, safe='')}"
+            )
+            boards = boards_response.get("values", []) if isinstance(boards_response, dict) else []
+            for board in boards:
+                if not isinstance(board, dict) or board.get("id") is None:
+                    continue
+                board_id = board["id"]
+                start_at = 0
+                while sprint_id is None:
+                    sprints_response = self._request(
+                        "GET",
+                        f"{self.server}/rest/agile/1.0/board/{board_id}/sprint?startAt={start_at}&maxResults=50",
+                    )
+                    if not isinstance(sprints_response, dict):
+                        break
+                    for sprint in sprints_response.get("values", []):
+                        if isinstance(sprint, dict) and isinstance(sprint.get("name"), str) and sprint["name"].strip().lower() == sprint_name.lower():
+                            sprint_id = sprint.get("id")
+                            break
+                    if sprint_id is not None or sprints_response.get("isLast", True):
+                        break
+                    start_at += 50
+                if sprint_id is not None:
+                    break
+        except Exception as exc:
+            self.logger.warning("Unable to resolve target sprint %r for project %s: %s", sprint_name, target_project_key, exc)
+
+        self._sprint_id_cache[cache_key] = sprint_id
+        if sprint_id is None:
+            self.logger.warning(
+                "No matching sprint named %r found on any target board for project %s; leaving Sprint unset.",
+                sprint_name, target_project_key,
+            )
+        return sprint_id
+
+    def _resolve_or_create_date_created_field(self, target_project_key: str) -> str | None:
+        """Resolve (or create) a "Date Created" custom field on the target to hold the
+        source issue's original creation timestamp.
+
+        Jira Cloud's native "created" system field always reflects the actual API call
+        time and cannot be set/overridden on creation, so this preserves the real source
+        timestamp in a dedicated custom field instead. Field creation and lookup are only
+        attempted once per connector instance (cached), since the field is global to the
+        target site rather than per-project.
+        """
+        if self._date_created_field_id is not None:
+            self._ensure_field_on_project_screens(self._date_created_field_id, target_project_key)
+            return self._date_created_field_id
+        if self._date_created_field_setup_attempted:
+            return None
+        self._date_created_field_setup_attempted = True
+
+        field_id = self._resolve_field_id_by_name("Date Created")
+        if not field_id:
+            try:
+                created = self._request(
+                    "POST",
+                    "/field",
+                    {
+                        "name": "Date Created",
+                        "description": (
+                            "Original creation date/time preserved from the migrated source "
+                            "issue (Jira Cloud's built-in Created field cannot be overridden "
+                            "via the API)."
+                        ),
+                        "type": "com.atlassian.jira.plugin.system.customfieldtypes:datetime",
+                    },
+                )
+                field_id = created.get("id") if isinstance(created, dict) else None
+                if field_id:
+                    self._field_name_to_id_cache["Date Created"] = field_id
+                    self.logger.info("Created new custom field 'Date Created' (%s) on %s", field_id, self.server)
+            except Exception as exc:
+                self.logger.warning("Unable to create 'Date Created' custom field on %s: %s", self.server, exc)
+                return None
+
+        if not field_id:
+            return None
+        self._date_created_field_id = field_id
+        self._ensure_field_on_project_screens(field_id, target_project_key)
+        return field_id
+
+    def _ensure_field_on_project_screens(self, field_id: str, target_project_key: str) -> None:
+        """Best-effort: make sure `field_id` is present on every screen used by the given
+        project, since a custom field's value can't be set via the API until it is on the
+        appropriate screen(s). Safe to call repeatedly (results cached per project).
+        """
+        if target_project_key in self._date_created_field_screens_ensured:
+            return
+        self._date_created_field_screens_ensured.add(target_project_key)
+        try:
+            project = self._request("GET", f"/project/{quote(target_project_key, safe='')}")
+            project_id = project.get("id") if isinstance(project, dict) else None
+            if not project_id:
+                return
+            scheme_response = self._request("GET", f"/issuetypescreenscheme/project?projectId={project_id}")
+            scheme_values = scheme_response.get("values", []) if isinstance(scheme_response, dict) else []
+            screen_scheme_ids: set[str] = set()
+            for value in scheme_values:
+                issue_type_screen_scheme = value.get("issueTypeScreenScheme") if isinstance(value, dict) else None
+                scheme_id = issue_type_screen_scheme.get("id") if isinstance(issue_type_screen_scheme, dict) else None
+                if not scheme_id:
+                    continue
+                mapping_response = self._request("GET", f"/issuetypescreenscheme/mapping?issueTypeScreenSchemeId={scheme_id}")
+                mapping_values = mapping_response.get("values", []) if isinstance(mapping_response, dict) else []
+                for mapping in mapping_values:
+                    screen_scheme_id = mapping.get("screenSchemeId") if isinstance(mapping, dict) else None
+                    if screen_scheme_id:
+                        screen_scheme_ids.add(str(screen_scheme_id))
+
+            if not screen_scheme_ids:
+                return
+            query = "&".join(f"id={sid}" for sid in screen_scheme_ids)
+            screen_scheme_response = self._request("GET", f"/screenscheme?{query}")
+            screen_scheme_list = screen_scheme_response.get("values", []) if isinstance(screen_scheme_response, dict) else []
+            screen_ids: set[str] = set()
+            for screen_scheme in screen_scheme_list:
+                screens = screen_scheme.get("screens") if isinstance(screen_scheme, dict) else None
+                if isinstance(screens, dict):
+                    for screen_id in screens.values():
+                        if screen_id is not None:
+                            screen_ids.add(str(screen_id))
+
+            for screen_id in screen_ids:
+                try:
+                    tabs_response = self._request("GET", f"/screens/{screen_id}/tabs")
+                except Exception:
+                    continue
+                tabs = tabs_response if isinstance(tabs_response, list) else [tabs_response]
+                for tab in tabs:
+                    tab_id = tab.get("id") if isinstance(tab, dict) else None
+                    if tab_id is None:
+                        continue
+                    try:
+                        self._request("POST", f"/screens/{screen_id}/tabs/{tab_id}/fields", {"fieldId": field_id})
+                    except Exception:
+                        # Field may already be on this tab, or the tab may not accept it;
+                        # either way this is best-effort provisioning.
+                        continue
+        except Exception as exc:
+            self.logger.warning(
+                "Unable to ensure 'Date Created' field is on project %s's screens: %s", target_project_key, exc
+            )
+
     def _resolve_target_subtask_issue_type(self, target_project_key: str) -> str | None:
         if not target_project_key:
             return None
-        # Return cached value if available
+        # Return cached value if available. Only successful lookups are cached; a
+        # transient failure (e.g. the project's issue type scheme not being ready yet)
+        # must not permanently disable sub-task creation for the rest of the run.
         cached = self._createmeta_cache.get(target_project_key)
         if cached is not None:
             return cached
         try:
             data = self._request("GET", f"/issue/createmeta/{target_project_key}/issuetypes")
-        except Exception:
-            self._createmeta_cache[target_project_key] = None
+        except Exception as exc:
+            self.logger.warning("Unable to determine sub-task issue type for project %s: %s", target_project_key, exc)
             return None
-        values = data.get("values") if isinstance(data, dict) else None
+        # Jira Cloud's REST API v2 returns issue types under the "issueTypes" key for this
+        # endpoint; the paginated v3-style shape uses "values" instead. Support both so the
+        # lookup works regardless of which shape the target server returns.
+        values = None
+        if isinstance(data, dict):
+            values = data.get("issueTypes") if isinstance(data.get("issueTypes"), list) else data.get("values")
         if not isinstance(values, list):
             return None
         for item in values:
@@ -978,7 +1304,6 @@ class JiraConnector(Connector):
                 if isinstance(name, str) and name.strip():
                     self._createmeta_cache[target_project_key] = name.strip()
                     return name.strip()
-        self._createmeta_cache[target_project_key] = None
         return None
 
     def _should_drop_parent_for_fallback(self, issue_type: Any, fallback_issue_type: str) -> bool:
@@ -1010,19 +1335,58 @@ class JiraConnector(Connector):
         return None
 
     def _normalize_user_reference(self, user_value: Any) -> dict[str, str] | None:
+        # Account ids (and even usernames/keys) are NOT portable across separate Jira
+        # instances - the same person has a different accountId on the source Server
+        # and the target Cloud site. Resolve the source's user reference (preferring
+        # email, the identifier most likely to be shared across both systems) against
+        # THIS Jira instance's own user directory via /user/search instead of blindly
+        # reusing the source's id, which would silently fail (or worse, point at the
+        # wrong person) on the target.
+        query = self._extract_user_search_query(user_value)
+        if not query:
+            return None
+        if query in self._user_reference_cache:
+            return self._user_reference_cache[query]
+        resolved = self._search_user_reference(query)
+        self._user_reference_cache[query] = resolved
+        if not resolved:
+            self.logger.warning(
+                "Unable to find a matching user for %r on %s; leaving assignee/reporter unset for this issue.",
+                query,
+                self.server,
+            )
+        return resolved
+
+    def _extract_user_search_query(self, user_value: Any) -> str | None:
         if user_value is None:
             return None
-        if isinstance(user_value, str) and user_value.strip():
+        if isinstance(user_value, str):
             value = user_value.strip()
-            if self._looks_like_email(value):
-                return {"accountId": value}
-            if self._looks_like_issue_key(value):
-                return {"name": value}
-            return {"accountId": value}
+            return value or None
         if isinstance(user_value, dict):
-            account_id = self._extract_account_id(user_value)
-            if account_id:
-                return {"accountId": account_id}
+            for key in ("emailAddress", "name", "accountId", "key", "displayName"):
+                value = user_value.get(key)
+                if isinstance(value, str) and value.strip():
+                    return value.strip()
+        return None
+
+    def _search_user_reference(self, query: str) -> dict[str, str] | None:
+        try:
+            results = self._request("GET", f"/user/search?query={quote(query, safe='')}")
+        except Exception as exc:
+            self.logger.warning("User search failed for %r on %s: %s", query, self.server, exc)
+            return None
+        if not isinstance(results, list):
+            return None
+        for item in results:
+            if not isinstance(item, dict):
+                continue
+            account_id = item.get("accountId")
+            if isinstance(account_id, str) and account_id.strip():
+                return {"accountId": account_id.strip()}
+            name = item.get("name") or item.get("key")
+            if isinstance(name, str) and name.strip():
+                return {"name": name.strip()}
         return None
 
     def _create_comments(self, issue_id: Any, comments: list[dict[str, Any]]) -> None:
@@ -1060,6 +1424,57 @@ class JiraConnector(Connector):
                         pass
                 raise
 
+    # Jira Cloud's REST API has no endpoint to write/backdate History (changelog)
+    # entries directly, and any field update Jira DOES log always uses the real
+    # "now" timestamp plus the authenticated API user as author - never the original
+    # historical date/author. This is a curated allow-list of simple, low-risk fields
+    # we can safely replay as real update calls after issue creation so genuine (but
+    # re-dated/re-authored) History entries appear in the target's native History
+    # tab. Fields that require id-resolution or workflow transitions (status, sprint,
+    # fixVersions, components, assignee/reporter, links, attachments, rank, etc.) are
+    # intentionally excluded to avoid fragile/incorrect side effects.
+    _HISTORY_REPLAY_FIELD_MAP = {
+        "description": "description",
+        "summary": "summary",
+        "priority": "priority",
+        "environment": "environment",
+        "duedate": "duedate",
+        "due date": "duedate",
+        "labels": "labels",
+    }
+
+    def _replay_history_field_changes(self, issue_id: Any, history: list[dict[str, Any]]) -> None:
+        for entry in history or []:
+            if not isinstance(entry, dict):
+                continue
+            field_name = entry.get("field")
+            if not isinstance(field_name, str):
+                continue
+            target_field = self._HISTORY_REPLAY_FIELD_MAP.get(field_name.strip().lower())
+            if not target_field:
+                self.logger.debug(
+                    "History replay: skipping field %r on %s (not in the safe replay allow-list)",
+                    field_name, issue_id,
+                )
+                continue
+
+            to_value = entry.get("to")
+            if target_field == "priority":
+                if not isinstance(to_value, str) or not to_value.strip():
+                    continue
+                field_value: Any = {"name": to_value.strip()}
+            elif target_field == "labels":
+                field_value = to_value.split() if isinstance(to_value, str) and to_value.strip() else []
+            else:
+                field_value = to_value if isinstance(to_value, str) else ""
+
+            try:
+                self._request("PUT", f"/issue/{issue_id}", {"fields": {target_field: field_value}})
+            except Exception as exc:
+                self.logger.warning(
+                    "History replay: unable to set %s=%r on %s: %s", target_field, to_value, issue_id, exc,
+                )
+
     def _create_attachments(self, issue_id: Any, attachments: list[dict[str, Any]]) -> None:
         for attachment in attachments or []:
             if not isinstance(attachment, dict):
@@ -1083,17 +1498,25 @@ class JiraConnector(Connector):
         if not isinstance(url, str) or not url.strip():
             return None
         attachment_url = url.strip()
+        download_connector = self
+        if hasattr(self, "source_connector") and isinstance(self.source_connector, JiraConnector):
+            download_connector = self.source_connector
+
+        base_server = getattr(download_connector, "server", None) or getattr(self, "server", None)
         if attachment_url.startswith("/"):
-            attachment_url = f"{self.server.rstrip('/')}{attachment_url}"
+            if base_server:
+                attachment_url = f"{base_server.rstrip('/')}{attachment_url}"
+            else:
+                attachment_url = f"{self.server.rstrip('/')}{attachment_url}"
         elif not attachment_url.lower().startswith(("http://", "https://")):
             attachment_url = self._build_url(attachment_url)
 
         self.logger.debug("Downloading attachment from %s", attachment_url)
         req = JiraRequest(attachment_url, method="GET")
-        if self.bearer_token:
-            req.add_header("Authorization", f"Bearer {self.bearer_token}")
-        elif self.basic_auth:
-            username, password = self.basic_auth
+        if getattr(download_connector, "bearer_token", None):
+            req.add_header("Authorization", f"Bearer {download_connector.bearer_token}")
+        elif getattr(download_connector, "basic_auth", None):
+            username, password = download_connector.basic_auth
             token = base64.b64encode(f"{username}:{password}".encode("utf-8")).decode("ascii")
             req.add_header("Authorization", f"Basic {token}")
 
@@ -1111,6 +1534,12 @@ class JiraConnector(Connector):
         stripped = value.strip()
         return stripped.lower().startswith(("http://", "https://")) or stripped.startswith("/")
 
+    def create_issue_links(self, issue_id: Any, linked_issues: list[dict[str, Any]]) -> None:
+        """Public entry point used by the migration engine's dedicated link-creation
+        phase, once every issue in the batch has already been migrated."""
+        self._create_issue_links(issue_id, linked_issues)
+        self._process_pending_issue_links()
+
     def _create_issue_links(self, issue_id: Any, linked_issues: list[dict[str, Any]]) -> None:
         for link in linked_issues or []:
             if not isinstance(link, dict):
@@ -1125,7 +1554,14 @@ class JiraConnector(Connector):
                 continue
 
             # Determine relation name and direction (outward means current -> target)
-            relation_name = link.get("relation") or (link.get("type_raw", {}).get("name") if isinstance(link.get("type_raw"), dict) else "Relates")
+            raw_relation_name = link.get("relation") or (link.get("type_raw", {}).get("name") if isinstance(link.get("type_raw"), dict) else "Relates")
+            # Source systems (e.g. Jira Server) can export link type names with a leading
+            # sequence number (e.g. "1 Implements"). The target Jira Cloud instance only
+            # recognizes the canonical name (e.g. "Implements"), so always canonicalize
+            # before sending the payload, not just for the internal dedupe key.
+            relation_name = self._canonicalize_relation_name(raw_relation_name)
+            type_raw = link.get("type_raw") if isinstance(link.get("type_raw"), dict) else {}
+            relation_name = self._resolve_or_create_link_type(relation_name, type_raw)
             direction = link.get("direction") or "outward"
 
             try:
@@ -1183,6 +1619,60 @@ class JiraConnector(Connector):
         if normalized in {"contains", "contained by"}:
             return "Contains"
         return compact
+
+    def _fetch_target_link_types(self) -> dict[str, str]:
+        """Return a mapping of lower-cased link type name -> exact name as configured
+        on the target Jira instance, fetched once and cached for the connector's lifetime."""
+        if self._link_types_by_name is not None:
+            return self._link_types_by_name
+
+        link_types: dict[str, str] = {}
+        try:
+            response = self._request("GET", "/issueLinkType", None)
+            for link_type in (response.get("issueLinkTypes") or []) if isinstance(response, dict) else []:
+                name = link_type.get("name") if isinstance(link_type, dict) else None
+                if name:
+                    link_types[str(name).strip().lower()] = str(name).strip()
+        except Exception as exc:
+            self.logger.warning("Unable to fetch issue link types from target: %s", exc)
+
+        self._link_types_by_name = link_types
+        return link_types
+
+    def _resolve_or_create_link_type(self, relation_name: str, type_raw: dict[str, Any]) -> str:
+        """Ensure a link type with the given canonical name exists on the target Jira
+        instance, creating it if necessary (e.g. a custom link type like "Implements"
+        that only exists on the source). Falls back to "Relates" if it cannot be
+        resolved or created."""
+        link_types = self._fetch_target_link_types()
+        existing_name = link_types.get(relation_name.strip().lower())
+        if existing_name:
+            return existing_name
+
+        if relation_name in self._created_link_type_names:
+            # Already attempted (and presumably created or failed) this run; avoid retrying.
+            return relation_name if relation_name.strip().lower() in link_types else "Relates"
+
+        self._created_link_type_names.add(relation_name)
+        inward_hint = str(type_raw.get("inward")).strip() if isinstance(type_raw, dict) and type_raw.get("inward") else f"is {relation_name.lower()} by"
+        outward_hint = str(type_raw.get("outward")).strip() if isinstance(type_raw, dict) and type_raw.get("outward") else relation_name
+
+        try:
+            self._request(
+                "POST",
+                "/issueLinkType",
+                {"name": relation_name, "inward": inward_hint, "outward": outward_hint},
+            )
+            self.logger.info("Created missing issue link type '%s' on target", relation_name)
+            link_types[relation_name.strip().lower()] = relation_name
+            return relation_name
+        except Exception as exc:
+            self.logger.warning(
+                "Unable to create issue link type '%s' on target (%s); falling back to 'Relates'",
+                relation_name,
+                exc,
+            )
+            return "Relates"
 
     def _process_pending_child_issues(self) -> None:
         if self._processing_pending_child_issues or not self.pending_child_issues:

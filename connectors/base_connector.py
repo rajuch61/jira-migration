@@ -29,6 +29,11 @@ class Connector(ABC):
     def update_issue(self, issue_id: str, issue: dict) -> dict:
         raise NotImplementedError
 
+    def create_issue_links(self, issue_id, linked_issues: list) -> None:
+        """Create issue links for a previously created issue. Default is a no-op;
+        connectors that support issue linking (e.g. Jira) should override this."""
+        return None
+
     @abstractmethod
     def close(self) -> None:
         raise NotImplementedError

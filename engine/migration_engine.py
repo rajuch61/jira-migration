@@ -23,6 +23,9 @@ class MigrationEngine:
         self.source_connector = self._create_connector(config.get("source", {}), config)
         self.target_connector = self._create_connector(config.get("target", {}), config)
 
+        if isinstance(self.target_connector, JiraConnector) and isinstance(self.source_connector, JiraConnector):
+            self.target_connector.source_connector = self.source_connector
+
     @classmethod
     def from_file(cls, config_path: str | Path) -> "MigrationEngine":
         path = Path(config_path)
@@ -43,6 +46,10 @@ class MigrationEngine:
             target_project = shared_config.get("target_project")
             if isinstance(target_project, dict) and "target_project" not in effective_config:
                 effective_config["target_project"] = target_project
+
+            custom_field_mapping = shared_config.get("custom_field_mapping")
+            if isinstance(custom_field_mapping, dict) and "custom_field_mapping" not in effective_config:
+                effective_config["custom_field_mapping"] = custom_field_mapping
 
         if module_name and class_name:
             module = importlib.import_module(module_name)
@@ -73,54 +80,110 @@ class MigrationEngine:
         target_project = self.target_connector.create_project(transformed_project)
         self.logger.info("Created project '%s'", target_project.get("name"))
 
-        migrated = 0
         created_target_issues: list[dict] = []
         failed_issues: list[dict] = []
+
         ordered_issues = self._order_issues_for_creation(source_issues)
+        parent_issues, subtask_issues = self._split_parent_and_subtask_issues(ordered_issues)
+        self.logger.info(
+            "Migration plan: %s parent issue(s), then %s sub-task issue(s), then issue links",
+            len(parent_issues),
+            len(subtask_issues),
+        )
 
-        for issue in ordered_issues:
-            transformed_issue = self.transformer.transform_issue(issue, self.config.get("source", {}).get("type", "json"), self.config.get("target", {}).get("type", "json"))
-            validation_errors = self.validator.validate_issue(transformed_issue)
-            if validation_errors:
-                self.logger.warning("Skipping issue %s due to %s", transformed_issue.get("id"), validation_errors)
-                continue
+        # Phase 1: migrate every non-subtask issue (Epics, Stories, Tasks, Bugs, ...) first so
+        # that sub-tasks can always resolve their parent in the target system.
+        self.logger.info("Phase 1/3: migrating parent issues")
+        for issue in parent_issues:
+            self._migrate_single_issue(issue, created_target_issues, failed_issues)
 
-            try:
-                target_issue = self.target_connector.create_issue(transformed_issue)
-            except Exception as exc:
-                self.logger.error("Failed to migrate issue %s (%s): %s", issue.get("id"), issue.get("key"), exc)
-                failed_issue = {
-                    "source_issue": issue,
-                    "transformed_issue": transformed_issue,
-                    "error": str(exc),
-                }
-                failed_issues.append(failed_issue)
-                continue
+        # Phase 2: migrate sub-tasks now that all of their potential parents already exist.
+        self.logger.info("Phase 2/3: migrating sub-task issues")
+        for issue in subtask_issues:
+            self._migrate_single_issue(issue, created_target_issues, failed_issues)
 
-            if target_issue.get("deferred"):
-                self.logger.info("Deferred issue %s until parent exists", issue.get("id"))
+        # Phase 3: create issue links (e.g. "Implements"/"Blocks") last, once every issue in
+        # the batch has a target key, so link targets always resolve on the first attempt.
+        self.logger.info("Phase 3/3: creating issue links")
+        for target_issue in created_target_issues:
+            linked_issues = target_issue.get("linked_issues") or []
+            if not linked_issues:
                 continue
-            target_key = str(target_issue.get("key") or target_issue.get("id") or issue.get("id"))
-            target_id = str(target_issue.get("id") or "")
-            self.mapper.add_issue_mapping(
-                str(issue.get("id")),
-                issue.get("key"),
-                target_key,
-                target_id=target_id,
-                issue_type=issue.get("issueType"),
-                status=issue.get("status"),
-            )
-            created_target_issues.append(target_issue)
-            migrated += 1
-            self.logger.info("Migrated issue %s", issue.get("id"))
+            issue_ref = target_issue.get("key") or target_issue.get("id")
+            if not issue_ref:
+                continue
+            self.target_connector.create_issue_links(issue_ref, linked_issues)
 
         self._write_issue_exports(source_issues, created_target_issues)
         self._write_failed_issues(failed_issues)
         self.mapper.save()
-        self.logger.info("Migration completed. %s issues migrated, %s failed", migrated, len(failed_issues))
+        self.logger.info(
+            "Migration completed. %s issues migrated, %s failed",
+            len(created_target_issues),
+            len(failed_issues),
+        )
 
         self.source_connector.close()
         self.target_connector.close()
+
+    def _split_parent_and_subtask_issues(self, issues: list[dict]) -> tuple[list[dict], list[dict]]:
+        parent_issues: list[dict] = []
+        subtask_issues: list[dict] = []
+        for issue in issues:
+            issue_type = str(issue.get("issueType") or "").strip().lower()
+            if issue_type in {"sub-task", "subtask"}:
+                subtask_issues.append(issue)
+            else:
+                parent_issues.append(issue)
+        return parent_issues, subtask_issues
+
+    def _migrate_single_issue(self, issue: dict, created_target_issues: list[dict], failed_issues: list[dict]) -> None:
+        transformed_issue = self.transformer.transform_issue(
+            issue,
+            self.config.get("source", {}).get("type", "json"),
+            self.config.get("target", {}).get("type", "json"),
+        )
+        validation_errors = self.validator.validate_issue(transformed_issue)
+        if validation_errors:
+            self.logger.warning("Skipping issue %s due to %s", transformed_issue.get("id"), validation_errors)
+            return
+
+        try:
+            target_issue = self.target_connector.create_issue(transformed_issue)
+        except Exception as exc:
+            self.logger.error("Failed to migrate issue %s (%s): %s", issue.get("id"), issue.get("key"), exc)
+            failed_issues.append({
+                "source_issue": issue,
+                "transformed_issue": transformed_issue,
+                "error": str(exc),
+            })
+            return
+
+        if target_issue.get("deferred"):
+            self.logger.error(
+                "Could not migrate sub-task %s (%s) because its parent issue was not found in the target system",
+                issue.get("id"),
+                issue.get("key"),
+            )
+            failed_issues.append({
+                "source_issue": issue,
+                "transformed_issue": transformed_issue,
+                "error": "Parent issue was not available in the target system",
+            })
+            return
+
+        target_key = str(target_issue.get("key") or target_issue.get("id") or issue.get("id"))
+        target_id = str(target_issue.get("id") or "")
+        self.mapper.add_issue_mapping(
+            str(issue.get("id")),
+            issue.get("key"),
+            target_key,
+            target_id=target_id,
+            issue_type=issue.get("issueType"),
+            status=issue.get("status"),
+        )
+        created_target_issues.append(target_issue)
+        self.logger.info("Migrated issue %s -> %s", issue.get("id"), target_key)
 
     def retry_failed_issues(self) -> None:
         if not self.target_dir:

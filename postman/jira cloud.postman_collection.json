@@ -1,0 +1,63 @@
+{
+  "info": {
+    "_postman_id": "02600774-226d-4cc2-9267-42afa943b500",
+    "name": "jira cloud",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57183986",
+    "_collection_link": "https://go.postman.co/collection/57183986-02600774-226d-4cc2-9267-42afa943b500?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "create sub-task",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "Hemanth.Raghav@smith-nephew.com",
+              "type": "string"
+            },
+            {
+              "key": "password",
+              "value": "Test",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\"fields\": {\r\n\"project\": { \"key\": \"TM\" },\r\n\"summary\": \"Sub-task: Investigate X\",\r\n\"description\": \"Details about the sub-task\",\r\n\"issuetype\": { \"name\": \"Sub-task\" },\r\n\"parent\": { \"key\": \"TM-58\" }\r\n}\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://smithandnephew-prod-sandbox.atlassian.net/rest/api/2/issue",
+          "protocol": "https",
+          "host": [
+            "smithandnephew-prod-sandbox",
+            "atlassian",
+            "net"
+          ],
+          "path": [
+            "rest",
+            "api",
+            "2",
+            "issue"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

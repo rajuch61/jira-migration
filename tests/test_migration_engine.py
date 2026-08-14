@@ -29,6 +29,26 @@ class MigrationEngineTests(unittest.TestCase):
         self.assertEqual(engine.source_connector.config.get("project_info")["id"], "shared-project")
         self.assertEqual(engine.target_connector.config.get("project_info")["name"], "Shared Project")
 
+    def test_target_connector_can_access_source_connector_for_attachment_downloads(self):
+        config = {
+            "source": {
+                "type": "jira",
+                "server": "https://source.example.com",
+                "auth_type": "bearer",
+                "bearer_token": "source-token",
+            },
+            "target": {
+                "type": "jira",
+                "server": "https://target.example.com",
+                "auth_type": "basic",
+                "basic_auth": ["user@example.com", "password"],
+            },
+        }
+
+        engine = MigrationEngine(config)
+
+        self.assertIs(engine.target_connector.source_connector, engine.source_connector)
+
     def test_export_writes_source_and_target_issues_to_local_files(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
